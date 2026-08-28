@@ -175,7 +175,7 @@ export function buildExportBundle(tables, { className, pseudonymised, generatedA
 
 function readme({ className, pseudonymised, generatedAt, tables }) {
   const counts = Object.entries(tables).map(([k, v]) => `  ${k}: ${v.length} filas`).join('\n');
-  return `STATLAB — exportación de datos
+  return `STATLAB Loyola — exportación de datos
 ==============================================================
 
 Clase:          ${className || '—'}
