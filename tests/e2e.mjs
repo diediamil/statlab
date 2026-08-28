@@ -71,7 +71,7 @@ try {
   step('El HUD muestra nivel y XP', (await page.locator('#hud .hud__item').count()) >= 2);
   step('Aparece el banner de modo demo', await page.locator('#demoBanner').isVisible());
   const modes = await page.locator('.mode').count();
-  step('Se ofrecen los 7 modos', modes === 7, `${modes} modos`);
+  step('Se ofrecen los 8 modos', modes === 8, `${modes} modos`);
 
   /* 2. Mapa de progresión ----------------------------------------------- */
   await goto('#/campaign');
@@ -188,14 +188,24 @@ try {
   /* 7. Progreso y errores --------------------------------------------------- */
   await goto('#/progress');
   await page.waitForSelector('.stats');
-  // La fórmula se publica en MathML, así que no basta con buscar texto: se
-  // comprueba que existan las ecuaciones compuestas y la nomenclatura.
-  const mathdoc = await page.locator('.mathdoc').first();
+  step('El progreso enlaza con las fórmulas',
+    await page.locator('a[href="#/metrics"]').count() > 0);
+
+  /* 7 bis. Cómo se mide --------------------------------------------------- */
+  // Las fórmulas se publican en MathML, así que no basta con buscar texto: se
+  // comprueban las ecuaciones compuestas y la nomenclatura de cada métrica.
+  await goto('#/metrics');
+  await page.waitForSelector('.mathdoc');
+  const secciones = await page.locator('section.card .mathdoc').count();
   const ecuaciones = await page.locator('.mathdoc .eq math').count();
-  step('El progreso documenta la fórmula del mastery',
-    (await mathdoc.count()) > 0 && ecuaciones >= 5
-    && /Nomenclatura/i.test(await page.textContent('.mathdoc'))
-    && /κ/.test(await page.textContent('.mathdoc')));
+  const textoMetricas = await page.textContent('.wrap');
+  step('«Cómo se mide» documenta mastery y Challenge Points',
+    secciones === 2 && ecuaciones >= 10
+    && /Nomenclatura/i.test(textoMetricas)
+    && /κ/.test(textoMetricas)
+    && /Challenge Points/i.test(textoMetricas));
+  step('Ninguna tabla de fórmulas desborda la página',
+    await page.evaluate(() => document.documentElement.scrollWidth <= document.documentElement.clientWidth + 1));
 
   await goto('#/mistakes');
   await page.waitForSelector('.wrap');
