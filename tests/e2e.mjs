@@ -35,11 +35,16 @@ page.on('pageerror', (e) => errors.push('pageerror: ' + e.message));
 async function answerCurrentActivity(page) {
   if (await page.locator('.option:visible').count()) {
     await page.locator('.option:visible').first().click();
-  } else if (await page.locator('.token:visible').count()) {
-    // Clasificación: se coloca cada ficha en el primer contenedor.
-    const tokens = await page.locator('.token:visible').count();
-    for (let i = 0; i < tokens; i++) {
-      await page.locator('.token:visible').first().click();
+  } else if (await page.locator('.dnd__pool .token').count()) {
+    // Clasificación: se vacía el depósito colocando cada ficha en un
+    // contenedor. Hay que seleccionar SOLO las que siguen sin clasificar: una
+    // ficha ya colocada mantiene la clase `.token`, así que tomar «la primera
+    // visible» volvía a pinchar una ya puesta y el depósito no se vaciaba
+    // nunca (de ahí que la prueba fallara de forma intermitente).
+    for (let guard = 0; guard < 30; guard++) {
+      const pending = page.locator('.dnd__pool .token');
+      if (!(await pending.count())) break;
+      await pending.first().click();
       await page.locator('.dnd__bin').first().click();
     }
   } else if (await page.locator('.input--num:visible').count()) {
@@ -50,7 +55,11 @@ async function answerCurrentActivity(page) {
     return false;
   }
   const btn = page.locator('button:visible:has-text("Comprobar")').first();
-  if (!(await btn.count()) || await btn.isDisabled()) return false;
+  if (!(await btn.count())) return false;
+  // El botón se habilita al detectar respuesta; esperar en vez de rendirse.
+  try { await btn.waitFor({ state: 'visible', timeout: 2000 }); } catch { /* ignorar */ }
+  for (let i = 0; i < 20 && await btn.isDisabled(); i++) await page.waitForTimeout(100);
+  if (await btn.isDisabled()) return false;
   await btn.click();
   return true;
 }
