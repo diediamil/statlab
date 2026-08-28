@@ -1,0 +1,290 @@
+{
+  "version": 1,
+  "meta": {
+    "note": "Mapa de contenidos de STATLAB. Cada mundo declara sus conceptos (unidad mínima de mastery), sus laboratorios y el mundo que lo desbloquea. Añadir un mundo aquí lo hace aparecer en el mapa sin tocar código."
+  },
+  "worlds": [
+    {
+      "id": "w01",
+      "num": 1,
+      "title": "Conoce tus datos",
+      "subtitle": "Población, muestra, individuo, variable, parámetro y estadístico",
+      "icon": "🧭",
+      "requires": null,
+      "labs": [],
+      "concepts": [
+        { "id": "poblacion", "label": "Población", "misconception": "Confundir la población con «toda la humanidad» en lugar de con el conjunto que define la pregunta de investigación." },
+        { "id": "muestra", "label": "Muestra", "misconception": "Creer que una muestra grande es automáticamente representativa." },
+        { "id": "individuo", "label": "Individuo y dato", "misconception": "Confundir el número de datos con el número de individuos cuando hay varias medidas por persona." },
+        { "id": "variable", "label": "Variable", "misconception": "Llamar variable al valor concreto de una observación." },
+        { "id": "parametro-estadistico", "label": "Parámetro frente a estadístico", "misconception": "Usar «media de la población» y «media de la muestra» como sinónimos." },
+        { "id": "representatividad", "label": "Representatividad y sesgo de selección", "misconception": "Pensar que el sesgo se corrige aumentando el tamaño muestral." }
+      ]
+    },
+    {
+      "id": "w02",
+      "num": 2,
+      "title": "Tipos de variables",
+      "subtitle": "Cualitativas, cuantitativas y escalas de medida",
+      "icon": "🏷️",
+      "requires": "w01",
+      "labs": ["variable-classifier"],
+      "concepts": [
+        { "id": "cualitativa", "label": "Variable cualitativa", "misconception": "Considerar cuantitativa una variable solo porque está codificada con números (1 = hombre, 2 = mujer)." },
+        { "id": "cuantitativa", "label": "Variable cuantitativa", "misconception": "Tratar como continua una variable que solo admite recuentos." },
+        { "id": "nominal-ordinal", "label": "Nominal frente a ordinal", "misconception": "Calcular medias de una escala ordinal como si las distancias entre categorías fueran iguales." },
+        { "id": "discreta-continua", "label": "Discreta frente a continua", "misconception": "Creer que «con decimales» equivale a continua." },
+        { "id": "escalas", "label": "Escalas de medida", "misconception": "Ignorar que la escala determina qué estadísticos tienen sentido." },
+        { "id": "tipo-variable-analisis", "label": "El tipo de variable decide el análisis", "misconception": "Elegir la prueba estadística antes de identificar el tipo de variable." }
+      ]
+    },
+    {
+      "id": "w03",
+      "num": 3,
+      "title": "Estadística descriptiva",
+      "subtitle": "Frecuencias, centro, dispersión, posición y valores atípicos",
+      "icon": "📊",
+      "requires": "w02",
+      "labs": [],
+      "concepts": [
+        { "id": "frecuencias", "label": "Tablas de frecuencias", "misconception": "Confundir frecuencia absoluta, relativa y acumulada." },
+        { "id": "media", "label": "Media aritmética", "misconception": "Usar la media como resumen de una distribución muy asimétrica o con atípicos." },
+        { "id": "mediana", "label": "Mediana", "misconception": "Calcular la mediana sin ordenar los datos." },
+        { "id": "moda", "label": "Moda", "misconception": "Suponer que toda distribución tiene exactamente una moda." },
+        { "id": "centro-eleccion", "label": "Elegir la medida de centro", "misconception": "Informar siempre la media, sea cual sea la forma de la distribución." },
+        { "id": "rango", "label": "Rango", "misconception": "Usar el rango como medida principal de dispersión pese a depender solo de dos valores." },
+        { "id": "varianza-sd", "label": "Varianza y desviación típica", "misconception": "Interpretar la varianza en las unidades originales (están al cuadrado)." },
+        { "id": "iqr", "label": "Rango intercuartílico", "misconception": "Confundir el IQR con el intervalo Q1–Q3 informado como «rango»." },
+        { "id": "percentiles", "label": "Percentiles y cuartiles", "misconception": "Leer el percentil 90 como «el 90 % de la puntuación máxima»." },
+        { "id": "outliers", "label": "Valores atípicos", "misconception": "Eliminar los atípicos por sistema en lugar de investigarlos." }
+      ]
+    },
+    {
+      "id": "w04",
+      "num": 4,
+      "title": "Visualización",
+      "subtitle": "El gráfico adecuado y el gráfico engañoso",
+      "icon": "📈",
+      "requires": "w03",
+      "labs": ["chart-hospital"],
+      "concepts": [
+        { "id": "barras", "label": "Diagrama de barras", "misconception": "Unir con líneas categorías sin orden." },
+        { "id": "sectores", "label": "Diagrama de sectores", "misconception": "Usar sectores para comparar magnitudes o con categorías no exhaustivas." },
+        { "id": "histograma", "label": "Histograma", "misconception": "Confundir histograma con diagrama de barras: el histograma exige variable cuantitativa y clases contiguas." },
+        { "id": "boxplot", "label": "Diagrama de caja", "misconception": "Leer la línea central de la caja como la media." },
+        { "id": "dispersion", "label": "Diagrama de dispersión", "misconception": "Usarlo con una variable cualitativa en un eje." },
+        { "id": "grafico-adecuado", "label": "Elegir el gráfico adecuado", "misconception": "Elegir el gráfico por estética y no por el tipo de variable." },
+        { "id": "grafico-enganoso", "label": "Gráficos engañosos", "misconception": "No detectar un eje truncado, una escala manipulada o un área desproporcionada." }
+      ]
+    },
+    {
+      "id": "w05",
+      "num": 5,
+      "title": "Probabilidad",
+      "subtitle": "Sucesos, operaciones, independencia y Bayes",
+      "icon": "🎲",
+      "requires": "w04",
+      "labs": ["bayes-machine"],
+      "concepts": [
+        { "id": "sucesos", "label": "Sucesos y espacio muestral", "misconception": "Olvidar que las probabilidades del espacio muestral suman 1." },
+        { "id": "union-interseccion", "label": "Unión e intersección", "misconception": "Sumar probabilidades de sucesos no disjuntos sin restar la intersección." },
+        { "id": "complemento", "label": "Complemento", "misconception": "No aprovechar que P(al menos uno) = 1 − P(ninguno)." },
+        { "id": "independencia", "label": "Independencia", "misconception": "Confundir sucesos independientes con sucesos mutuamente excluyentes." },
+        { "id": "condicionada", "label": "Probabilidad condicionada", "misconception": "Invertir el condicionante: confundir P(A|B) con P(B|A)." },
+        { "id": "bayes", "label": "Teorema de Bayes", "misconception": "Ignorar la prevalencia (probabilidad a priori) al interpretar un resultado positivo." }
+      ]
+    },
+    {
+      "id": "w06",
+      "num": 6,
+      "title": "Distribuciones",
+      "subtitle": "Variables aleatorias, binomial, normal y puntuación z",
+      "icon": "🔔",
+      "requires": "w05",
+      "labs": ["build-the-normal"],
+      "concepts": [
+        { "id": "variable-aleatoria", "label": "Variable aleatoria", "misconception": "Confundir la variable aleatoria con el valor observado." },
+        { "id": "binomial", "label": "Distribución binomial", "misconception": "Aplicarla sin que se cumplan ensayos independientes con probabilidad constante." },
+        { "id": "normal", "label": "Distribución normal", "misconception": "Suponer que cualquier variable biológica es normal." },
+        { "id": "puntuacion-z", "label": "Puntuación z", "misconception": "Interpretar z como un porcentaje." },
+        { "id": "percentil-normal", "label": "Percentiles en la normal", "misconception": "Confundir el valor de z con la probabilidad acumulada." },
+        { "id": "regla-68-95", "label": "Regla 68–95–99,7", "misconception": "Aplicar la regla a distribuciones claramente no normales." }
+      ]
+    },
+    {
+      "id": "w07",
+      "num": 7,
+      "title": "Muestreo",
+      "subtitle": "Variabilidad muestral, error estándar y Teorema Central del Límite",
+      "icon": "🎯",
+      "requires": "w06",
+      "labs": ["sampling-simulator"],
+      "concepts": [
+        { "id": "variabilidad-muestral", "label": "Variabilidad muestral", "misconception": "Esperar que dos muestras de la misma población den el mismo resultado." },
+        { "id": "error-estandar", "label": "Error estándar", "misconception": "Confundir el error estándar (variabilidad de la media) con la desviación típica (variabilidad de los individuos)." },
+        { "id": "distribucion-muestral", "label": "Distribución muestral", "misconception": "Confundir la distribución de los datos con la distribución de las medias." },
+        { "id": "tamano-muestra", "label": "Efecto del tamaño de muestra", "misconception": "Creer que duplicar n reduce el error estándar a la mitad (lo divide por √2)." },
+        { "id": "tcl", "label": "Teorema Central del Límite", "misconception": "Pensar que el TCL vuelve normales los DATOS, y no la distribución de la media." }
+      ]
+    },
+    {
+      "id": "w08",
+      "num": 8,
+      "title": "Estimación",
+      "subtitle": "Estimación puntual, intervalos de confianza y margen de error",
+      "icon": "📐",
+      "requires": "w07",
+      "labs": ["sampling-simulator"],
+      "concepts": [
+        { "id": "estimacion-puntual", "label": "Estimación puntual", "misconception": "Presentar una estimación puntual sin ninguna medida de precisión." },
+        { "id": "ic", "label": "Intervalo de confianza", "misconception": "Leer «95 % de confianza» como «hay un 95 % de probabilidad de que el parámetro esté en ESTE intervalo»." },
+        { "id": "margen-error", "label": "Margen de error", "misconception": "Ignorar que el margen depende de n, de la variabilidad y del nivel de confianza." },
+        { "id": "nivel-confianza", "label": "Nivel de confianza", "misconception": "Suponer que subir al 99 % mejora el estudio (solo ensancha el intervalo)." },
+        { "id": "ic-interpretacion", "label": "Interpretación clínica del IC", "misconception": "No mirar si el intervalo incluye valores clínicamente irrelevantes." }
+      ]
+    },
+    {
+      "id": "w09",
+      "num": 9,
+      "title": "Contraste de hipótesis",
+      "subtitle": "H0, H1, alfa, p-valor, errores y potencia",
+      "icon": "⚖️",
+      "requires": "w08",
+      "labs": [],
+      "concepts": [
+        { "id": "h0-h1", "label": "Hipótesis nula y alternativa", "misconception": "Formular H0 con lo que se quiere demostrar." },
+        { "id": "alfa", "label": "Nivel de significación α", "misconception": "Tratar 0,05 como una frontera natural en lugar de una convención." },
+        { "id": "p-valor", "label": "p-valor", "misconception": "Interpretar el p-valor como la probabilidad de que H0 sea cierta." },
+        { "id": "error-tipo-i", "label": "Error de tipo I", "misconception": "Confundirlo con un error de cálculo y no con rechazar una H0 cierta." },
+        { "id": "error-tipo-ii", "label": "Error de tipo II", "misconception": "Concluir igualdad a partir de un resultado no significativo." },
+        { "id": "potencia", "label": "Potencia estadística", "misconception": "Ignorar que un estudio pequeño puede no detectar un efecto real e importante." },
+        { "id": "decision", "label": "Decisión estadística", "misconception": "Confundir significación estadística con relevancia clínica." },
+        { "id": "una-dos-colas", "label": "Una o dos colas", "misconception": "Cambiar a una cola después de ver los datos para conseguir significación." }
+      ]
+    },
+    {
+      "id": "w10",
+      "num": 10,
+      "title": "Elección de pruebas",
+      "subtitle": "Del diseño a la prueba: independientes, relacionadas, paramétricas y no paramétricas",
+      "icon": "🧪",
+      "requires": "w09",
+      "labs": ["choose-your-test"],
+      "concepts": [
+        { "id": "independientes-relacionadas", "label": "Muestras independientes o relacionadas", "misconception": "Aplicar una t independiente a medidas antes-después del mismo paciente." },
+        { "id": "n-grupos", "label": "Número de grupos", "misconception": "Hacer varias t de dos en dos en lugar de un ANOVA (inflación del error de tipo I)." },
+        { "id": "normalidad-supuesto", "label": "Comprobación de la normalidad", "misconception": "Contrastar la normalidad de las variables en vez de la de los residuos o las diferencias." },
+        { "id": "parametrica-no", "label": "Paramétrica frente a no paramétrica", "misconception": "Pensar que las no paramétricas «no tienen supuestos»." },
+        { "id": "t-una-muestra", "label": "t de una muestra", "misconception": "Usarla para comparar dos grupos." },
+        { "id": "t-independiente", "label": "t para muestras independientes", "misconception": "Olvidar comprobar la homogeneidad de varianzas o no usar Welch." },
+        { "id": "t-pareada", "label": "t para muestras relacionadas", "misconception": "Perder la información del emparejamiento." },
+        { "id": "anova", "label": "ANOVA de un factor", "misconception": "Concluir qué grupos difieren sin comparaciones post hoc." },
+        { "id": "chi2", "label": "Chi-cuadrado", "misconception": "Aplicarlo con frecuencias esperadas menores que 5." },
+        { "id": "fisher", "label": "Prueba exacta de Fisher", "misconception": "No recurrir a ella cuando las frecuencias esperadas son pequeñas." },
+        { "id": "mann-whitney", "label": "U de Mann–Whitney", "misconception": "Describir sus resultados con medias en lugar de medianas o rangos." },
+        { "id": "wilcoxon", "label": "Wilcoxon de rangos con signo", "misconception": "Usarla con grupos independientes." },
+        { "id": "kruskal", "label": "H de Kruskal–Wallis", "misconception": "Interpretarla como comparación de medias." }
+      ]
+    },
+    {
+      "id": "w11",
+      "num": 11,
+      "title": "Correlación",
+      "subtitle": "Pearson, Spearman, dirección, intensidad y la trampa de la causalidad",
+      "icon": "🔗",
+      "requires": "w10",
+      "labs": ["correlation-lab"],
+      "concepts": [
+        { "id": "pearson", "label": "Correlación de Pearson", "misconception": "Aplicarla a relaciones claramente curvas." },
+        { "id": "spearman", "label": "Correlación de Spearman", "misconception": "Considerarla equivalente a Pearson en todos los casos." },
+        { "id": "direccion", "label": "Dirección de la asociación", "misconception": "Interpretar el signo como calidad («negativo = malo»)." },
+        { "id": "intensidad", "label": "Intensidad de la asociación", "misconception": "Interpretar r = 0,5 como «la mitad de los casos se explican»." },
+        { "id": "significacion-r", "label": "Significación de r", "misconception": "Confundir «r significativo» con «r grande»: con n enorme, r = 0,08 sale significativo." },
+        { "id": "scatter-r", "label": "Leer r en el diagrama de dispersión", "misconception": "Estimar r sin mirar la forma de la nube." },
+        { "id": "outliers-r", "label": "Atípicos y correlación", "misconception": "No advertir que un solo punto puede crear o destruir la correlación." },
+        { "id": "causalidad", "label": "Correlación y causalidad", "misconception": "Deducir causalidad de una asociación observacional, ignorando la confusión y la causalidad inversa." }
+      ]
+    },
+    {
+      "id": "w12",
+      "num": 12,
+      "title": "Regresión",
+      "subtitle": "El modelo predictivo: recta, residuos, R² y extrapolación",
+      "icon": "📉",
+      "requires": "w11",
+      "labs": ["regression-lab"],
+      "concepts": [
+        { "id": "modelo-lineal", "label": "Modelo de regresión lineal simple", "misconception": "Tratar la regresión como una correlación con otro nombre." },
+        { "id": "dependiente-independiente", "label": "Variable dependiente e independiente", "misconception": "Intercambiarlas: la regresión NO es simétrica." },
+        { "id": "intercepto", "label": "Intercepto", "misconception": "Interpretarlo cuando x = 0 está fuera del rango observado o no tiene sentido." },
+        { "id": "pendiente", "label": "Pendiente", "misconception": "Interpretarla sin unidades («sube 0,7» sin decir de qué)." },
+        { "id": "prediccion", "label": "Predicción", "misconception": "Dar la predicción como valor exacto y sin intervalo." },
+        { "id": "residuos", "label": "Residuos", "misconception": "No revisar los residuos para comprobar linealidad y homocedasticidad." },
+        { "id": "minimos-cuadrados", "label": "Mínimos cuadrados", "misconception": "Creer que la recta minimiza las distancias perpendiculares." },
+        { "id": "r2", "label": "Coeficiente de determinación R²", "misconception": "Leer R² como prueba de causalidad o como porcentaje de aciertos." },
+        { "id": "extrapolacion", "label": "Extrapolación", "misconception": "Predecir fuera del rango observado como si el modelo siguiera siendo válido." },
+        { "id": "outliers-regresion", "label": "Puntos influyentes", "misconception": "Confundir un residuo grande con un punto influyente." }
+      ]
+    },
+    {
+      "id": "w13",
+      "num": 13,
+      "title": "Pruebas diagnósticas",
+      "subtitle": "Sensibilidad, especificidad, valores predictivos y ROC",
+      "icon": "🩺",
+      "requires": "w12",
+      "labs": ["diagnostic-table", "bayes-machine"],
+      "concepts": [
+        { "id": "vp-vn-fp-fn", "label": "VP, VN, FP y FN", "misconception": "Colocar mal las casillas y calcular sobre el total en lugar de sobre la fila o columna correcta." },
+        { "id": "sensibilidad", "label": "Sensibilidad", "misconception": "Definirla como «probabilidad de estar enfermo si el resultado es positivo»." },
+        { "id": "especificidad", "label": "Especificidad", "misconception": "Confundirla con el valor predictivo negativo." },
+        { "id": "vpp", "label": "Valor predictivo positivo", "misconception": "Creer que es una propiedad fija de la prueba y no dependiente de la prevalencia." },
+        { "id": "vpn", "label": "Valor predictivo negativo", "misconception": "Ignorar que sube cuando la prevalencia baja." },
+        { "id": "prevalencia", "label": "Prevalencia", "misconception": "Interpretar un cribado poblacional como si la prevalencia fuera la de una consulta especializada." },
+        { "id": "roc", "label": "Curva ROC", "misconception": "Leer los ejes al revés o confundir el punto de corte con la AUC." },
+        { "id": "auc", "label": "Área bajo la curva", "misconception": "Interpretar la AUC como porcentaje de diagnósticos correctos." },
+        { "id": "youden", "label": "Índice de Youden y punto de corte", "misconception": "Buscar un punto de corte óptimo único sin considerar el uso clínico (cribado o confirmación)." },
+        { "id": "cribado-confirmacion", "label": "Cribado frente a confirmación", "misconception": "Priorizar la especificidad en un cribado poblacional." }
+      ]
+    },
+    {
+      "id": "w14",
+      "num": 14,
+      "title": "Tamaños del efecto",
+      "subtitle": "Cuánto, no solo si: d, r, eta², V de Cramér y relevancia clínica",
+      "icon": "📏",
+      "requires": "w13",
+      "labs": [],
+      "concepts": [
+        { "id": "cohen-d", "label": "d de Cohen", "misconception": "Interpretar los umbrales 0,2/0,5/0,8 como categorías absolutas." },
+        { "id": "r-efecto", "label": "r como tamaño del efecto", "misconception": "Confundir r con r²." },
+        { "id": "eta2", "label": "Eta cuadrado", "misconception": "Informar η² sin mencionar su sesgo al alza con muestras pequeñas." },
+        { "id": "epsilon2", "label": "Epsilon cuadrado", "misconception": "No usar un tamaño del efecto adecuado tras una prueba no paramétrica." },
+        { "id": "cramer-v", "label": "V de Cramér", "misconception": "Interpretar la V con los umbrales de la d." },
+        { "id": "kendall-w", "label": "W de Kendall", "misconception": "Confundir concordancia con correlación." },
+        { "id": "r2-efecto", "label": "R² como tamaño del efecto", "misconception": "Elevar R² a categoría de calidad del estudio." },
+        { "id": "significacion-vs-importancia", "label": "Significación frente a importancia", "misconception": "Concluir relevancia clínica a partir de un p pequeño con n enorme." },
+        { "id": "mcid", "label": "Diferencia mínima clínicamente importante", "misconception": "No comparar el efecto observado con la MCID de la escala usada." }
+      ]
+    },
+    {
+      "id": "w15",
+      "num": 15,
+      "title": "Proyecto final",
+      "subtitle": "Un caso completo. Nadie te dirá qué prueba usar.",
+      "icon": "🏁",
+      "requires": "w14",
+      "labs": ["choose-your-test"],
+      "concepts": [
+        { "id": "diseno-estudio", "label": "Diseño del estudio", "misconception": "Aplicar análisis de ensayo clínico a datos observacionales." },
+        { "id": "plan-analisis", "label": "Plan de análisis", "misconception": "Improvisar el análisis después de mirar los resultados." },
+        { "id": "integracion", "label": "Integración de resultados", "misconception": "Informar el p-valor y olvidar el tamaño del efecto y el intervalo." },
+        { "id": "conclusiones", "label": "Conclusiones defendibles", "misconception": "Extraer conclusiones causales o generalizaciones no sostenidas por el diseño." },
+        { "id": "limitaciones", "label": "Limitaciones", "misconception": "Presentar limitaciones genéricas sin relación con el estudio concreto." }
+      ]
+    }
+  ],
+  "flow": ["Datos", "Variables", "Descriptiva", "Visualización", "Probabilidad", "Distribuciones",
+    "Muestreo", "Estimación", "Contrastes", "Elección de pruebas", "Correlación", "Regresión",
+    "Diagnóstico", "Tamaños del efecto", "Proyecto final"]
+}

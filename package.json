@@ -1,0 +1,13 @@
+{
+  "name": "statlab",
+  "version": "1.0.0",
+  "description": "STATLAB — aprende estadística experimentando. Plataforma docente de Bioestadística para Ciencias de la Salud.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "test": "node tests/run.js",
+    "serve": "python3 -m http.server 8080",
+    "validate-content": "node tests/validate-content.js"
+  }
+}

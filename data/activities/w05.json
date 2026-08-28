@@ -1,0 +1,139 @@
+{
+  "world": "w05",
+  "activities": [
+    {
+      "id": "w05-01",
+      "concept": "independencia",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 15,
+      "prompt": "Dos sucesos son MUTUAMENTE EXCLUYENTES cuando no pueden ocurrir a la vez. Dos sucesos son INDEPENDIENTES cuando uno no cambia la probabilidad del otro. ¿Cuál de estas parejas es independiente pero NO excluyente?",
+      "options": [
+        { "id": "a", "text": "Que un paciente tenga grupo A y que tenga grupo B", "why": "Son excluyentes (no puede tener los dos) y por tanto NO independientes: saber uno determina el otro." },
+        { "id": "b", "text": "Que llueva en Sevilla hoy y que un paciente de Oviedo tenga hipertensión", "why": "Correcto: pueden ocurrir juntos y ninguno informa del otro." },
+        { "id": "c", "text": "Que una prueba dé positivo y que dé negativo", "why": "Excluyentes, no independientes." },
+        { "id": "d", "text": "Que un paciente fume y que tenga EPOC", "why": "Pueden ocurrir juntos, pero NO son independientes: fumar aumenta la probabilidad de EPOC." },
+        { "id": "e", "text": "Sobrevivir y fallecer durante el ingreso", "why": "Excluyentes." }
+      ],
+      "answer": "b",
+      "explanation": "Excluyentes e independientes son conceptos distintos y casi opuestos: si A y B son excluyentes con probabilidad no nula, saber que ocurrió A te dice con certeza que B no ocurrió, así que son máximamente dependientes. Comprobación formal de independencia: P(A ∩ B) = P(A) · P(B).",
+      "hints": [
+        "Independencia significa que P(A|B) = P(A).",
+        "Excluyentes significa que P(A ∩ B) = 0.",
+        "Si dos sucesos no pueden coincidir, saber uno te informa mucho del otro."
+      ]
+    },
+    {
+      "id": "w05-02",
+      "concept": "condicionada",
+      "type": "numeric",
+      "difficulty": 2,
+      "xp": 20,
+      "stem": "En una consulta, de 200 pacientes: 60 tienen dolor lumbar, 40 tienen dolor cervical y 15 tienen ambos.",
+      "prompt": "Si un paciente tiene dolor lumbar, ¿cuál es la probabilidad de que además tenga dolor cervical? Da el resultado en tanto por uno con dos decimales.",
+      "answer": 0.25,
+      "tolerance": 0.005,
+      "explanation": "P(cervical | lumbar) = P(ambos) / P(lumbar) = 15/60 = 0,25. La clave está en el DENOMINADOR: al condicionar, se reduce el espacio muestral a los 60 pacientes con dolor lumbar, no a los 200. Comprobación de la independencia: P(cervical) = 40/200 = 0,20 ≠ 0,25 → los dos dolores no son independientes.",
+      "misconceptionFeedback": {
+        "0.075": "Has dividido 15 entre 200. Al condicionar, el denominador es el grupo con dolor lumbar (60), no toda la consulta.",
+        "0.375": "Has calculado P(lumbar | cervical) = 15/40. Cuidado con el orden del condicionante."
+      },
+      "hints": [
+        "Condicionar restringe el grupo de referencia.",
+        "El denominador es el número de pacientes con dolor lumbar.",
+        "P(A|B) = P(A ∩ B) / P(B)."
+      ]
+    },
+    {
+      "id": "w05-03",
+      "concept": "union-interseccion",
+      "type": "numeric",
+      "difficulty": 2,
+      "xp": 20,
+      "stem": "Mismos datos: 200 pacientes, 60 con dolor lumbar, 40 con cervical, 15 con ambos.",
+      "prompt": "¿Qué probabilidad tiene un paciente tomado al azar de tener dolor lumbar O cervical (al menos uno)? Tanto por uno, dos decimales.",
+      "answer": 0.43,
+      "tolerance": 0.006,
+      "explanation": "P(A ∪ B) = P(A) + P(B) − P(A ∩ B) = 0,30 + 0,20 − 0,075 = 0,425 ≈ 0,43. Si sumaras 0,30 + 0,20 = 0,50 estarías contando dos veces a los 15 pacientes que tienen ambos dolores. La resta de la intersección no es un tecnicismo: es evitar contar personas dos veces.",
+      "misconceptionFeedback": { "0.5": "Has sumado las dos probabilidades sin restar la intersección: los 15 pacientes con ambos dolores se cuentan dos veces." },
+      "hints": [
+        "Los sucesos no son excluyentes: hay 15 pacientes en los dos grupos.",
+        "Fórmula de la unión: suma menos intersección.",
+        "Cuenta cuántos pacientes distintos tienen al menos un dolor: 60 + 40 − 15 = 85."
+      ]
+    },
+    {
+      "id": "w05-04",
+      "concept": "bayes",
+      "type": "numeric",
+      "difficulty": 3,
+      "xp": 30,
+      "case": "D",
+      "stem": "Una prueba de cribado tiene sensibilidad 90 % y especificidad 95 %. La prevalencia de la enfermedad en la población cribada es del 1 %.\n\nImagina 10.000 personas: 100 enfermas y 9.900 sanas.",
+      "prompt": "Si el resultado es positivo, ¿cuál es la probabilidad de estar realmente enfermo (VPP)? Expresa el resultado en porcentaje, con un decimal.",
+      "answer": 15.4,
+      "tolerance": 0.6,
+      "unit": "%",
+      "explanation": "De 100 enfermos, la prueba detecta 90 (verdaderos positivos) y falla en 10. De 9.900 sanos, la prueba acierta en 9.405 y da 495 falsos positivos. Total de positivos = 90 + 495 = 585. VPP = 90/585 = 0,1538 = 15,4 %. Es decir: con una prueba «buena» (90 % y 95 %) y prevalencia baja, MÁS DE OCHO DE CADA DIEZ POSITIVOS SON FALSOS. Esta es la razón por la que los programas de cribado siempre exigen una prueba de confirmación, y por la que la sensibilidad no responde nunca a la pregunta del paciente («¿estoy enfermo?»).",
+      "misconceptionFeedback": {
+        "90": "90 % es la SENSIBILIDAD: P(positivo | enfermo). El paciente pregunta lo contrario: P(enfermo | positivo).",
+        "95": "95 % es la especificidad, que se refiere a los sanos."
+      },
+      "hints": [
+        "Construye la tabla con 10.000 personas: 100 enfermas y 9.900 sanas.",
+        "Verdaderos positivos = 90 % de 100. Falsos positivos = 5 % de 9.900.",
+        "VPP = verdaderos positivos / TOTAL de positivos."
+      ]
+    },
+    {
+      "id": "w05-05",
+      "concept": "complemento",
+      "type": "numeric",
+      "difficulty": 2,
+      "xp": 20,
+      "stem": "La probabilidad de que una vacuna produzca una reacción local leve es 0,15 en cada persona, de forma independiente.",
+      "prompt": "Se vacunan 4 personas. ¿Cuál es la probabilidad de que AL MENOS UNA tenga reacción? Tanto por uno, tres decimales.",
+      "answer": 0.478,
+      "tolerance": 0.004,
+      "explanation": "P(al menos una) = 1 − P(ninguna) = 1 − 0,85⁴ = 1 − 0,5220 = 0,478. Este es el uso más rentable del complemento: calcular «al menos uno» directamente exigiría sumar los casos de 1, 2, 3 y 4 reacciones. Atención también al efecto acumulativo: un riesgo individual bajo (15 %) se convierte en casi un 50 % al considerar cuatro personas.",
+      "misconceptionFeedback": { "0.6": "Has multiplicado 0,15 × 4. Las probabilidades no se suman así, y el resultado podría superar 1 con más personas." },
+      "hints": [
+        "«Al menos una» es el complemento de «ninguna».",
+        "P(ninguna) = 0,85 elevado al número de personas.",
+        "Resta ese resultado de 1."
+      ]
+    },
+    {
+      "id": "w05-06",
+      "concept": "bayes",
+      "type": "sim",
+      "difficulty": 3,
+      "xp": 30,
+      "game": "bayes-machine",
+      "config": { "sensitivity": 0.9, "specificity": 0.95, "prevalence": 0.01 },
+      "prompt": "Máquina de Bayes: mueve la prevalencia y observa qué le pasa al VPP.",
+      "explanation": "Ver la población en personas (y no en porcentajes) es la forma más eficaz de entender por qué el VPP depende de la prevalencia. Si al bajar la prevalencia el VPP se hunde, has entendido el punto central del mundo."
+    },
+    {
+      "id": "w05-07",
+      "concept": "condicionada",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 20,
+      "prompt": "«El 80 % de las personas que sufren un infarto tienen colesterol elevado». Un paciente con colesterol elevado deduce que tiene un 80 % de probabilidad de infartarse. ¿Qué error ha cometido?",
+      "options": [
+        { "id": "a", "text": "Ninguno: es una lectura correcta del dato", "why": "No lo es: ha invertido el condicionante." },
+        { "id": "b", "text": "Ha confundido P(colesterol alto | infarto) con P(infarto | colesterol alto)", "why": "Correcto. Son dos probabilidades distintas y aquí difieren enormemente." },
+        { "id": "c", "text": "El dato del 80 % está mal calculado", "why": "El dato puede ser correcto; el problema es su interpretación." },
+        { "id": "d", "text": "Ha olvidado la especificidad de la prueba", "why": "No hay ninguna prueba diagnóstica en el enunciado." }
+      ],
+      "answer": "b",
+      "explanation": "Es la falacia de la transposición del condicional, exactamente el mismo error que confundir sensibilidad con VPP. Para pasar de P(colesterol | infarto) a P(infarto | colesterol) hace falta la prevalencia del infarto y la del colesterol elevado: como los infartos son mucho menos frecuentes que el colesterol elevado, la probabilidad real es muy inferior al 80 %.",
+      "hints": [
+        "Escribe las dos probabilidades con notación condicional.",
+        "¿Qué está antes de la barra y qué después en cada caso?",
+        "¿Qué dato adicional necesitarías para invertir el condicional?"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,174 @@
+{
+  "world": "w02",
+  "activities": [
+    {
+      "id": "w02-01",
+      "concept": "cualitativa",
+      "type": "mcq",
+      "difficulty": 1,
+      "xp": 10,
+      "stem": "En la base de datos del hospital, la variable «sexo» está codificada como 1 = mujer, 2 = hombre. El programa calcula automáticamente que la media es 1,47.",
+      "prompt": "¿Qué significa esa media de 1,47?",
+      "options": [
+        { "id": "a", "text": "Que la edad media del grupo es intermedia", "why": "No tiene nada que ver con la edad." },
+        { "id": "b", "text": "Nada interpretable: la variable es cualitativa nominal y su media no tiene sentido", "why": "Correcto. Los números son etiquetas, no cantidades." },
+        { "id": "c", "text": "Que hay un 47 % de hombres", "why": "Casualmente el 47 % está relacionado, pero la media de códigos arbitrarios no es una proporción interpretable: si el código fuera 0/1 el número cambiaría sin cambiar los datos." },
+        { "id": "d", "text": "Que la distribución del sexo es normal", "why": "La normalidad no aplica a una variable nominal." }
+      ],
+      "answer": "b",
+      "explanation": "Codificar con números no convierte una variable en cuantitativa. Con sexo nominal, los códigos 1 y 2 son etiquetas: si se hubieran elegido 7 y 9, la media cambiaría sin que los datos cambiaran. Lo que sí tiene sentido es la FRECUENCIA de cada categoría (por ejemplo, 53 % mujeres). El software calcula lo que le pidas: la responsabilidad de que tenga sentido es tuya.",
+      "hints": [
+        "¿Cambiaría la media si codificaras 0 y 1 en lugar de 1 y 2? ¿Cambian los datos?",
+        "¿Qué operaciones tienen sentido con etiquetas?",
+        "Con variables nominales se usan frecuencias y proporciones."
+      ]
+    },
+    {
+      "id": "w02-02",
+      "concept": "nominal-ordinal",
+      "type": "classify",
+      "difficulty": 2,
+      "xp": 20,
+      "prompt": "Clasifica cada variable según su tipo.",
+      "bins": [
+        { "id": "nominal", "title": "Cualitativa nominal", "desc": "Categorías sin orden" },
+        { "id": "ordinal", "title": "Cualitativa ordinal", "desc": "Categorías ordenadas, distancias no iguales" },
+        { "id": "discreta", "title": "Cuantitativa discreta", "desc": "Recuentos: valores aislados" },
+        { "id": "continua", "title": "Cuantitativa continua", "desc": "Cualquier valor de un intervalo" }
+      ],
+      "items": [
+        { "id": "i1", "text": "Grupo sanguíneo (A, B, AB, 0)", "bin": "nominal" },
+        { "id": "i2", "text": "Estadio del cáncer (I, II, III, IV)", "bin": "ordinal" },
+        { "id": "i3", "text": "Número de caídas en un año", "bin": "discreta" },
+        { "id": "i4", "text": "Concentración de hemoglobina (g/dL)", "bin": "continua" },
+        { "id": "i5", "text": "Nivel de dolor (leve, moderado, intenso)", "bin": "ordinal" },
+        { "id": "i6", "text": "Servicio hospitalario de ingreso", "bin": "nominal" },
+        { "id": "i7", "text": "Número de hijos", "bin": "discreta" },
+        { "id": "i8", "text": "Tiempo de marcha en 6 minutos (metros)", "bin": "continua" }
+      ],
+      "explanation": "Dos preguntas resuelven casi todos los casos: (1) ¿los valores son categorías o cantidades?; (2) si son categorías, ¿tienen un orden natural?; si son cantidades, ¿se cuentan (discreta) o se miden (continua)? «Número de caídas» es discreta aunque su media sea 1,8: la media puede tener decimales, los valores posibles no.",
+      "hints": [
+        "Primero decide: ¿categoría o cantidad?",
+        "Si es categoría, ¿hay un orden natural entre los valores?",
+        "Si es cantidad, ¿la cuentas de uno en uno o la mides con un instrumento?"
+      ]
+    },
+    {
+      "id": "w02-03",
+      "concept": "discreta-continua",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 15,
+      "prompt": "¿Cuál de estas variables es cuantitativa DISCRETA?",
+      "options": [
+        { "id": "a", "text": "Peso corporal en kilogramos", "why": "Continua: entre 70 y 71 kg hay infinitos valores posibles." },
+        { "id": "b", "text": "Número de sesiones de fisioterapia completadas", "why": "Discreta: se cuenta en unidades enteras. No existe «7,3 sesiones»." },
+        { "id": "c", "text": "Temperatura corporal en °C", "why": "Continua." },
+        { "id": "d", "text": "Tiempo de reacción en milisegundos", "why": "Continua, aunque el instrumento la redondee." }
+      ],
+      "answer": "b",
+      "explanation": "Discreta ≠ «sin decimales al informarla». Lo que decide es si los valores POSIBLES son aislados (recuentos) o forman un continuo. El tiempo de reacción es continuo aunque el cronómetro dé milisegundos enteros: la limitación es del instrumento, no de la variable.",
+      "hints": [
+        "¿Puedes imaginar un valor intermedio entre dos consecutivos?",
+        "«Número de…» suele indicar recuento.",
+        "La precisión del instrumento no cambia la naturaleza de la variable."
+      ]
+    },
+    {
+      "id": "w02-04",
+      "concept": "escalas",
+      "type": "claim-audit",
+      "difficulty": 3,
+      "xp": 20,
+      "prompt": "Escala EVA de dolor de 0 a 10. Marca qué afirmaciones son correctas.",
+      "claims": [
+        { "id": "c1", "text": "Un dolor de 8 es exactamente el doble de intenso que uno de 4.", "correct": false, "why": "La EVA no es una escala de razón: sus intervalos no son necesariamente iguales y el 0 no garantiza ausencia absoluta comparable entre personas." },
+        { "id": "c2", "text": "Un paciente con 8 declara más dolor que otro con 4.", "correct": true, "why": "El orden sí es interpretable: es una escala al menos ordinal." },
+        { "id": "c3", "text": "Es habitual (y aceptado en la práctica clínica) tratar la EVA como cuantitativa para calcular medias, siempre que se informe también la mediana o la distribución.", "correct": true, "why": "Es una convención pragmática discutida pero muy extendida en investigación sanitaria; lo importante es ser transparente." },
+        { "id": "c4", "text": "Como la EVA da números, cualquier prueba paramétrica es siempre adecuada.", "correct": false, "why": "El tipo de escala es solo uno de los criterios: también hay que comprobar la forma de la distribución y el diseño." }
+      ],
+      "explanation": "Las escalas clínicas tipo EVA o Likert viven en una zona gris entre ordinal y de intervalo. La postura defendible: informar mediana e IQR además de la media, comprobar la forma de la distribución y, si es muy asimétrica o hay muchos empates, usar pruebas basadas en rangos. Lo que nunca es defendible es afirmar que un 8 duele «el doble» que un 4.",
+      "hints": [
+        "¿Están garantizadas las mismas distancias entre 2-3 y entre 8-9?",
+        "El orden sí se puede interpretar; las razones no.",
+        "Una convención práctica no es lo mismo que una propiedad de la escala."
+      ]
+    },
+    {
+      "id": "w02-05",
+      "concept": "tipo-variable-analisis",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 20,
+      "stem": "Quieres describir la variable «servicio de ingreso» (Urgencias, Medicina Interna, Cirugía, Traumatología) de 480 pacientes.",
+      "prompt": "¿Qué resumen es adecuado?",
+      "options": [
+        { "id": "a", "text": "Media y desviación típica", "why": "No tienen sentido con una variable nominal." },
+        { "id": "b", "text": "Frecuencia absoluta y porcentaje de cada servicio", "why": "Correcto: es el resumen propio de una variable cualitativa." },
+        { "id": "c", "text": "Mediana y rango intercuartílico", "why": "Requieren un orden entre las categorías, y aquí no existe." },
+        { "id": "d", "text": "Coeficiente de variación", "why": "Exige una escala de razón con media distinta de cero." }
+      ],
+      "answer": "b",
+      "explanation": "El tipo de variable determina qué estadísticos son legítimos: nominal → frecuencias, proporciones y moda; ordinal → además mediana y percentiles; cuantitativa → además media, desviación típica y correlaciones. Este orden lógico (primero el tipo, después el estadístico y solo entonces la prueba) es la columna vertebral de todo lo que viene después.",
+      "hints": [
+        "¿Existe un orden entre Urgencias y Cirugía?",
+        "Con categorías sin orden, ¿qué puedes contar?",
+        "La moda sí es válida; la mediana necesita orden."
+      ]
+    },
+    {
+      "id": "w02-06",
+      "concept": "cuantitativa",
+      "type": "classify",
+      "difficulty": 3,
+      "xp": 20,
+      "case": "A",
+      "prompt": "Estas son las variables del caso REHAB-LUMBAR. Clasifícalas por su papel en el estudio.",
+      "bins": [
+        { "id": "resultado", "title": "Variable resultado", "desc": "Lo que el estudio quiere explicar o mejorar" },
+        { "id": "explicativa", "title": "Variable explicativa", "desc": "Lo que se manipula o se cree que influye" },
+        { "id": "confusora", "title": "Posible confusora", "desc": "Se mide para controlarla, no es el objetivo" }
+      ],
+      "items": [
+        { "id": "i1", "text": "Grupo de tratamiento (ejercicio / ejercicio + educación)", "bin": "explicativa" },
+        { "id": "i2", "text": "Dolor a las 8 semanas (END 0–10)", "bin": "resultado" },
+        { "id": "i3", "text": "Índice de Oswestry final", "bin": "resultado" },
+        { "id": "i4", "text": "Edad", "bin": "confusora" },
+        { "id": "i5", "text": "Dolor basal", "bin": "confusora" },
+        { "id": "i6", "text": "Sexo", "bin": "confusora" }
+      ],
+      "explanation": "Identificar el papel de cada variable es previo a cualquier cálculo: la variable resultado determina qué familia de pruebas se usa, la explicativa determina cuántos grupos se comparan y las confusoras determinan si hace falta ajustar. En un ensayo aleatorizado la aleatorización reparte las confusoras; en un estudio observacional hay que ajustarlas explícitamente.",
+      "hints": [
+        "¿Qué quiere mejorar el estudio? Eso es el resultado.",
+        "¿Qué es lo que se ha asignado a los pacientes?",
+        "Edad y sexo casi nunca son el objetivo: se miden para controlar."
+      ]
+    },
+    {
+      "id": "w02-07",
+      "concept": "nominal-ordinal",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 15,
+      "generator": "variableTypes",
+      "prompt": "Identifica el tipo de la variable descrita.",
+      "explanation": "Recuerda la secuencia de dos preguntas: ¿categoría o cantidad? y después ¿hay orden? o ¿se cuenta o se mide?",
+      "hints": [
+        "Primero: ¿categoría o cantidad?",
+        "Si es categoría, busca un orden natural.",
+        "Si es cantidad, decide entre contar y medir."
+      ]
+    },
+    {
+      "id": "w02-08",
+      "concept": "tipo-variable-analisis",
+      "type": "sim",
+      "difficulty": 2,
+      "xp": 25,
+      "game": "variable-classifier",
+      "config": { "rounds": 10, "timed": false },
+      "prompt": "Clasificador de variables: coloca diez variables sanitarias en su tipo correcto.",
+      "explanation": "Cuanto más automática sea esta clasificación, menos errores cometerás al elegir el análisis: casi todos los errores de prueba estadística nacen aquí."
+    }
+  ]
+}

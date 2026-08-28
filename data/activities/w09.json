@@ -1,0 +1,162 @@
+{
+  "world": "w09",
+  "activities": [
+    {
+      "id": "w09-01",
+      "concept": "p-valor",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 20,
+      "stem": "Un ensayo compara dos analgésicos y obtiene p = 0,03.",
+      "prompt": "¿Qué significa exactamente ese p = 0,03?",
+      "options": [
+        { "id": "a", "text": "Hay un 3 % de probabilidad de que la hipótesis nula sea cierta", "why": "Es el error más extendido. El p-valor no es la probabilidad de H0: se calcula SUPONIENDO H0 cierta." },
+        { "id": "b", "text": "Si no hubiera diferencia real, la probabilidad de obtener unos datos tan o más extremos que los observados sería del 3 %", "why": "Correcto: es la definición del p-valor." },
+        { "id": "c", "text": "Hay un 97 % de probabilidad de que el tratamiento funcione", "why": "1 − p no es la probabilidad de que la alternativa sea cierta." },
+        { "id": "d", "text": "El efecto observado es pequeño", "why": "El p-valor no informa del tamaño del efecto." }
+      ],
+      "answer": "b",
+      "explanation": "p = P(datos tan o más extremos | H0 cierta). La dirección del condicional es lo esencial: se condiciona en H0, no en los datos. Consecuencias que conviene memorizar: (1) p no es P(H0); (2) p no mide el tamaño del efecto; (3) con n enorme, efectos triviales dan p diminutos; (4) con n pequeño, efectos importantes pueden dar p grandes.",
+      "hints": [
+        "¿Qué se supone cierto al calcular el p-valor?",
+        "Escribe el p-valor como probabilidad condicionada.",
+        "El condicionante es H0, no los datos."
+      ]
+    },
+    {
+      "id": "w09-02",
+      "concept": "error-tipo-ii",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 25,
+      "stem": "Un ensayo con 18 pacientes por grupo compara un tratamiento nuevo con el habitual. Diferencia observada: 1,9 puntos de dolor. p = 0,21. IC 95 %: −1,1 a 4,9.",
+      "prompt": "¿Qué conclusión es defendible?",
+      "options": [
+        { "id": "a", "text": "Los tratamientos son equivalentes", "why": "No se ha demostrado equivalencia: para eso hace falta un diseño y un análisis de equivalencia con un margen predefinido." },
+        { "id": "b", "text": "El estudio no ha detectado diferencia, pero es poco potente: el intervalo incluye efectos clínicamente importantes", "why": "Correcto: no concluyente ≠ negativo." },
+        { "id": "c", "text": "El tratamiento nuevo no funciona", "why": "Es la misma confusión: ausencia de evidencia no es evidencia de ausencia." },
+        { "id": "d", "text": "Hay que repetir el análisis con una prueba unilateral para conseguir significación", "why": "Cambiar la cola después de ver los datos es una mala práctica que infla el error de tipo I." }
+      ],
+      "answer": "b",
+      "explanation": "«Ausencia de evidencia no es evidencia de ausencia.» Con 18 pacientes por grupo, la potencia para detectar diferencias moderadas es baja, así que un p = 0,21 es perfectamente compatible con un efecto real e importante. La lectura honesta se apoya en el INTERVALO: va de −1,1 (el nuevo algo peor) a 4,9 (el nuevo bastante mejor). El estudio simplemente no responde a la pregunta. Para afirmar equivalencia habría que diseñarlo como estudio de no inferioridad o equivalencia.",
+      "hints": [
+        "Mira la anchura del intervalo de confianza.",
+        "¿Qué valores clínicamente relevantes son compatibles con estos datos?",
+        "Distingue «no concluyente» de «negativo»."
+      ]
+    },
+    {
+      "id": "w09-03",
+      "concept": "h0-h1",
+      "type": "classify",
+      "difficulty": 2,
+      "xp": 20,
+      "case": "A",
+      "prompt": "Estudio del caso REHAB-LUMBAR: ¿el programa con educación reduce más el dolor? Clasifica cada enunciado.",
+      "bins": [
+        { "id": "h0", "title": "Hipótesis nula (H0)", "desc": "Lo que se supone cierto para calcular el p-valor: ausencia de efecto" },
+        { "id": "h1", "title": "Hipótesis alternativa (H1)", "desc": "Lo que el estudio quiere poner a prueba" },
+        { "id": "ni", "title": "Ni una ni otra", "desc": "No es una hipótesis estadística" }
+      ],
+      "items": [
+        { "id": "i1", "text": "μ(ejercicio) = μ(ejercicio + educación)", "bin": "h0" },
+        { "id": "i2", "text": "μ(ejercicio) ≠ μ(ejercicio + educación)", "bin": "h1" },
+        { "id": "i3", "text": "La media de dolor en la muestra fue 4,1 en un grupo y 5,9 en el otro", "bin": "ni" },
+        { "id": "i4", "text": "Las dos medias poblacionales son iguales, y cualquier diferencia observada es azar muestral", "bin": "h0" },
+        { "id": "i5", "text": "El programa con educación produce menor dolor medio en la población", "bin": "h1" },
+        { "id": "i6", "text": "p = 0,012", "bin": "ni" }
+      ],
+      "explanation": "H0 y H1 son afirmaciones sobre PARÁMETROS de la población, nunca sobre los estadísticos de la muestra: escribir «H0: x̄₁ = x̄₂» es un error, porque las medias muestrales son datos observados, no hipótesis. H0 es la que se supone cierta para calcular el p-valor, y siempre es la de «no hay efecto»: no se elige por conveniencia.",
+      "hints": [
+        "Las hipótesis se formulan sobre parámetros (letras griegas), no sobre datos.",
+        "Un resultado observado no es una hipótesis.",
+        "H0 siempre expresa ausencia de efecto o de diferencia."
+      ]
+    },
+    {
+      "id": "w09-04",
+      "concept": "decision",
+      "type": "claim-audit",
+      "difficulty": 3,
+      "xp": 25,
+      "stem": "Un estudio con 40.000 participantes encuentra que un suplemento reduce el colesterol total en 0,8 mg/dL, con p < 0,001.",
+      "prompt": "Marca las conclusiones defendibles.",
+      "claims": [
+        { "id": "c1", "text": "La diferencia es estadísticamente significativa.", "correct": true, "why": "Con p < 0,001 y α = 0,05, se rechaza H0." },
+        { "id": "c2", "text": "La diferencia es clínicamente relevante.", "correct": false, "why": "0,8 mg/dL no cambia ninguna decisión clínica: es un efecto trivial detectado por el tamaño enorme de la muestra." },
+        { "id": "c3", "text": "Con n = 40.000, incluso efectos irrelevantes producen p muy pequeños.", "correct": true, "why": "El p-valor depende del tamaño del efecto Y del tamaño de la muestra." },
+        { "id": "c4", "text": "Un p < 0,001 indica que el efecto es grande.", "correct": false, "why": "El p-valor no mide magnitud. Para eso están el tamaño del efecto y el IC." },
+        { "id": "c5", "text": "Para valorar la relevancia hay que mirar el tamaño del efecto y compararlo con un umbral clínico.", "correct": true, "why": "Es exactamente el procedimiento correcto." }
+      ],
+      "explanation": "Significación estadística y relevancia clínica son dimensiones independientes. Cuatro combinaciones posibles: significativo y relevante (ideal), significativo e irrelevante (este caso: muestras enormes), no significativo pero potencialmente relevante (estudios pequeños), y no significativo e irrelevante. Informar solo el p-valor hace imposible distinguirlas: por eso las guías de publicación exigen tamaño del efecto e intervalo de confianza.",
+      "hints": [
+        "Pregúntate si 0,8 mg/dL cambiaría alguna decisión clínica.",
+        "¿De qué depende el p-valor además del efecto?",
+        "Significativo y relevante no son sinónimos."
+      ]
+    },
+    {
+      "id": "w09-05",
+      "concept": "potencia",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 25,
+      "prompt": "La potencia de un contraste es la probabilidad de…",
+      "options": [
+        { "id": "a", "text": "…que H0 sea falsa", "why": "La potencia es una probabilidad condicionada al hecho de que H0 sea falsa, no la probabilidad de que lo sea." },
+        { "id": "b", "text": "…detectar un efecto cuando ese efecto realmente existe", "why": "Correcto: potencia = 1 − β = P(rechazar H0 | H0 falsa)." },
+        { "id": "c", "text": "…no cometer un error de tipo I", "why": "Eso es 1 − α, que es otra cosa." },
+        { "id": "d", "text": "…obtener un p-valor pequeño por azar", "why": "Esa es la probabilidad de error de tipo I cuando H0 es cierta." }
+      ],
+      "answer": "b",
+      "explanation": "Potencia = 1 − β, la probabilidad de rechazar H0 cuando H0 es efectivamente falsa. Depende de cuatro cosas: el tamaño del efecto real, el tamaño de la muestra, la variabilidad y el α elegido. La convención habitual es diseñar estudios con potencia ≥ 0,80. Los estudios infrapotenciados son un problema ético además de metodológico: exponen a pacientes a un estudio que probablemente no responderá a la pregunta. Y ojo con la «potencia post hoc»: calcularla después de un resultado no significativo, usando el efecto observado, no aporta información válida.",
+      "hints": [
+        "Potencia = 1 − β.",
+        "β es la probabilidad del error de tipo II.",
+        "Se trata de detectar lo que sí existe."
+      ]
+    },
+    {
+      "id": "w09-06",
+      "concept": "error-tipo-i",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 25,
+      "stem": "Un equipo analiza 20 variables secundarias en un ensayo, cada una con α = 0,05, sin ninguna corrección. Una sale significativa (p = 0,04) y se publica como hallazgo principal.",
+      "prompt": "¿Cuál es el problema?",
+      "options": [
+        { "id": "a", "text": "Ninguno: p = 0,04 < 0,05", "why": "El problema no es ese contraste aislado, sino que se han hecho 20." },
+        { "id": "b", "text": "Con 20 contrastes independientes al 5 %, la probabilidad de al menos un falso positivo es 1 − 0,95²⁰ ≈ 64 %", "why": "Correcto: es el problema de las comparaciones múltiples." },
+        { "id": "c", "text": "El tamaño de la muestra es insuficiente", "why": "No se puede saber, y no es el problema señalado." },
+        { "id": "d", "text": "Habría que haber usado α = 0,01 en todos los estudios por norma general", "why": "La solución no es cambiar α arbitrariamente, sino controlar la multiplicidad (Bonferroni, Holm, FDR) o preespecificar el análisis." }
+      ],
+      "answer": "b",
+      "explanation": "Es el problema de la multiplicidad, y su versión informal («buscar hasta que salga algo») se llama p-hacking. Con 20 pruebas independientes al 5 %, esperar al menos un falso positivo es lo NORMAL, no la excepción. Soluciones: preespecificar la variable principal antes de ver los datos, corregir por multiplicidad (Bonferroni: α/20 = 0,0025; o Holm, menos conservador; o control de FDR si hay muchísimas comparaciones), y presentar los análisis secundarios como exploratorios.",
+      "hints": [
+        "Calcula la probabilidad de NO cometer ningún error de tipo I en 20 pruebas.",
+        "0,95 elevado a 20.",
+        "El problema tiene nombre: comparaciones múltiples."
+      ]
+    },
+    {
+      "id": "w09-07",
+      "concept": "una-dos-colas",
+      "type": "claim-audit",
+      "difficulty": 3,
+      "xp": 20,
+      "prompt": "Sobre las pruebas de una y dos colas, marca lo correcto.",
+      "claims": [
+        { "id": "c1", "text": "La decisión de usar una o dos colas debe tomarse ANTES de ver los datos.", "correct": true, "why": "Decidirlo después convierte el α nominal en una ficción." },
+        { "id": "c2", "text": "Una prueba unilateral tiene más potencia para detectar un efecto en la dirección esperada.", "correct": true, "why": "Concentra todo el α en una cola." },
+        { "id": "c3", "text": "Si la prueba bilateral no sale significativa, se puede pasar a unilateral para conseguirlo.", "correct": false, "why": "Es una de las formas más claras de p-hacking." },
+        { "id": "c4", "text": "En investigación clínica lo habitual y más prudente es la prueba bilateral.", "correct": true, "why": "Un tratamiento nuevo puede ser mejor, igual o PEOR, y esa tercera posibilidad importa." }
+      ],
+      "explanation": "La prueba unilateral solo se justifica cuando un efecto en la dirección contraria sería irrelevante o imposible, y siempre preespecificada en el protocolo. En un ensayo clínico esa condición casi nunca se cumple: si el tratamiento nuevo resulta peor, eso es información crítica para la seguridad del paciente.",
+      "hints": [
+        "¿Cuándo hay que decidir la dirección del contraste?",
+        "¿Qué gana y qué pierde una prueba unilateral?",
+        "En clínica, ¿importa que el tratamiento nuevo sea peor?"
+      ]
+    }
+  ]
+}

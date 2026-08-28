@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>STATLAB — pruebas</title>
+<link rel="stylesheet" href="styles/tokens.css">
+<link rel="stylesheet" href="styles/base.css">
+<link rel="stylesheet" href="styles/components.css">
+<link rel="stylesheet" href="styles/layout.css">
+<style>
+  pre { font-family: var(--font-mono); font-size: var(--fs-sm); line-height: 1.5;
+        white-space: pre-wrap; margin: 0; }
+  .ok { color: var(--ok); }
+  .bad { color: var(--bad); font-weight: 700; }
+  .suite { font-weight: 700; margin-top: 1rem; }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <h1>STATLAB — pruebas</h1>
+  <p class="muted">Las mismas pruebas que ejecuta <code>npm test</code>, corriendo aquí en el navegador.
+  Sirve el proyecto por HTTP (por ejemplo <code>python3 -m http.server</code>) para que funcionen los módulos.</p>
+  <div id="summary" class="card" style="margin-bottom:1rem">
+    <span class="spinner"></span> Ejecutando…
+  </div>
+  <div class="card"><pre id="out"></pre></div>
+</main>
+
+<script type="module">
+  import { run } from './tests/runner.js';
+  await import('./tests/stats.test.js');
+  await import('./tests/app.test.js');
+
+  const out = document.getElementById('out');
+  const lines = [];
+  const log = (msg = '') => { lines.push(msg); };
+
+  const result = await run({ log });
+
+  out.textContent = '';
+  for (const line of lines) {
+    const span = document.createElement('span');
+    span.textContent = line + '\n';
+    if (line.includes('✓')) span.className = 'ok';
+    if (line.includes('✗')) span.className = 'bad';
+    if (/^ {2}\S/.test(line)) span.className = 'suite';
+    out.appendChild(span);
+  }
+
+  const summary = document.getElementById('summary');
+  summary.className = `card callout ${result.failed ? 'callout--bad' : 'callout--ok'}`;
+  summary.textContent = result.failed
+    ? `${result.failed} pruebas fallidas de ${result.total}.`
+    : `✅ ${result.passed} pruebas superadas.`;
+</script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+{
+  "id": "ch-demo-03",
+  "code": "RETO 3",
+  "type": "reviewer2",
+  "title": "Reviewer 2: encuentra los errores",
+  "description": "Te ha llegado un manuscrito para revisar. Los datos podrían estar bien; la estadística no. Encuentra los errores, di por qué son errores y propón la corrección. Este es el trabajo real de quien revisa un artículo.",
+  "world": "w14",
+  "concepts": ["p-valor", "error-tipo-ii", "significacion-vs-importancia", "error-estandar", "causalidad", "r2", "vpp", "chi2", "error-tipo-i"],
+  "difficulty": 3,
+  "recommendedMinutes": 18,
+  "maxAttempts": 3,
+  "competitivePolicy": "first",
+  "allowHints": true,
+  "solutionPolicy": "on_close",
+  "showRanking": true,
+  "countsForSeason": true,
+  "briefing": "Manuscrito enviado a una revista de ciencias de la salud. Título: «Efecto de un programa multicomponente sobre la calidad de vida en personas mayores». Lee cada fragmento del apartado de Resultados y Discusión y localiza el problema estadístico. Ojo: en un fragmento no hay ningún error.",
+  "steps": [
+    {
+      "id": "s1",
+      "concept": "p-valor",
+      "weight": 1.3,
+      "type": "mcq",
+      "quote": "«La diferencia entre grupos fue significativa (p = 0,018), lo que indica que existe un 98,2 % de probabilidad de que el programa sea eficaz.»",
+      "prompt": "Fragmento 1. ¿Cuál es el error?",
+      "options": [
+        { "id": "a", "text": "Interpretar 1 − p como la probabilidad de que la hipótesis alternativa sea cierta", "why": "Correcto: es la falacia de la probabilidad inversa." },
+        { "id": "b", "text": "Usar α = 0,05 en lugar de α = 0,01", "why": "El nivel elegido no es el problema." },
+        { "id": "c", "text": "No indicar el tamaño de la muestra", "why": "Sería una omisión, pero el error señalado es de interpretación." },
+        { "id": "d", "text": "No hay error", "why": "Sí lo hay: la interpretación del p-valor es incorrecta." }
+      ],
+      "answer": "a",
+      "explanation": "El p-valor es P(datos tan o más extremos | H0 cierta). Ni p ni 1 − p son probabilidades de las hipótesis. Corrección propuesta: «La diferencia fue estadísticamente significativa (p = 0,018); la diferencia estimada fue X (IC 95 %: …)».",
+      "hints": ["¿Qué se condiciona al calcular el p-valor?", "¿Es 1 − p la probabilidad de H1?", "Busca la inversión del condicional."]
+    },
+    {
+      "id": "s2",
+      "concept": "error-tipo-ii",
+      "weight": 1.3,
+      "type": "mcq",
+      "quote": "«No se encontraron diferencias entre los grupos en el dominio físico (p = 0,26; n = 19 por grupo), por lo que ambos programas son equivalentes en esta dimensión.»",
+      "prompt": "Fragmento 2. ¿Cuál es el error?",
+      "options": [
+        { "id": "a", "text": "Concluir equivalencia a partir de un resultado no significativo con muestra pequeña", "why": "Correcto: ausencia de evidencia no es evidencia de ausencia." },
+        { "id": "b", "text": "Haber usado un contraste bilateral", "why": "El bilateral es lo apropiado." },
+        { "id": "c", "text": "Informar el tamaño de la muestra", "why": "Informarlo es correcto y necesario." },
+        { "id": "d", "text": "No hay error", "why": "Sí lo hay: la conclusión de equivalencia no está sostenida." }
+      ],
+      "answer": "a",
+      "explanation": "Afirmar equivalencia exige un diseño de equivalencia o no inferioridad con un margen predefinido, y suficiente potencia. Con n = 19 por grupo, la conclusión honesta es «el estudio no detectó diferencias; el intervalo de confianza incluye efectos potencialmente relevantes, por lo que el resultado no es concluyente».",
+      "hints": ["¿Qué significa exactamente no rechazar H0?", "Mira el tamaño de la muestra.", "¿Qué haría falta para afirmar equivalencia?"]
+    },
+    {
+      "id": "s3",
+      "concept": "error-estandar",
+      "weight": 1.2,
+      "type": "mcq",
+      "quote": "«La edad de los participantes fue de 74,2 ± 0,6 años (media ± error estándar), lo que muestra una muestra muy homogénea en edad.»",
+      "prompt": "Fragmento 3. ¿Cuál es el error?",
+      "options": [
+        { "id": "a", "text": "Usar el error estándar para describir la variabilidad de los participantes: para eso se informa la desviación típica", "why": "Correcto. Con n = 120, un SE de 0,6 corresponde a una SD de ≈6,6 años: la muestra NO es homogénea." },
+        { "id": "b", "text": "Informar la media con un decimal", "why": "Es una precisión razonable." },
+        { "id": "c", "text": "Haber medido la edad en años", "why": "No es un problema." },
+        { "id": "d", "text": "No hay error", "why": "Sí lo hay: SE y SD describen cosas distintas." }
+      ],
+      "answer": "a",
+      "explanation": "SE = SD/√n. Informar el SE hace parecer los datos mucho más homogéneos de lo que son, porque el SE se reduce al aumentar n. Regla: para DESCRIBIR la muestra, desviación típica; para hablar de la PRECISIÓN de una estimación, intervalo de confianza.",
+      "hints": ["¿Qué describe el error estándar?", "Reconstruye la SD: SE × √n.", "¿Qué medida se usa para describir a los pacientes?"]
+    },
+    {
+      "id": "s4",
+      "concept": "causalidad",
+      "weight": 1.3,
+      "type": "mcq",
+      "quote": "«En el análisis transversal, la actividad física se asoció a mejor calidad de vida (r = 0,34; p < 0,001). Estos resultados demuestran que aumentar la actividad física mejora la calidad de vida en personas mayores.»",
+      "prompt": "Fragmento 4. ¿Cuál es el error?",
+      "options": [
+        { "id": "a", "text": "Extraer una conclusión causal de una asociación transversal, ignorando la causalidad inversa y la confusión", "why": "Correcto: quien tiene mejor calidad de vida puede ser precisamente quien puede hacer más ejercicio." },
+        { "id": "b", "text": "Informar r junto con su p-valor", "why": "Es correcto informar ambos (mejor aún con el IC de r)." },
+        { "id": "c", "text": "Usar r de Pearson con dos variables cuantitativas", "why": "Es apropiado si la relación es lineal." },
+        { "id": "d", "text": "No hay error", "why": "Sí lo hay: el salto a la causalidad no está justificado." }
+      ],
+      "answer": "a",
+      "explanation": "En un diseño transversal no hay temporalidad: la causalidad inversa es igual de compatible con los datos. Corrección: «se observó una asociación positiva de intensidad moderada (r = 0,34; IC 95 %: …); el diseño transversal no permite establecer la dirección causal».",
+      "hints": ["¿Qué diseño tiene el estudio?", "¿Podría el efecto ser la causa?", "Piensa en variables de confusión."]
+    },
+    {
+      "id": "s5",
+      "concept": "significacion-vs-importancia",
+      "weight": 1.3,
+      "type": "mcq",
+      "quote": "«El programa mejoró la calidad de vida en 0,9 puntos sobre 100 (IC 95 %: 0,3 a 1,5; p = 0,004; n = 2.480), un hallazgo de gran relevancia clínica.»",
+      "prompt": "Fragmento 5. ¿Cuál es el error?",
+      "options": [
+        { "id": "a", "text": "Presentar como clínicamente relevante un efecto trivial detectado gracias al gran tamaño de la muestra", "why": "Correcto: todo el intervalo está muy por debajo de cualquier umbral de relevancia razonable en una escala de 0–100." },
+        { "id": "b", "text": "Informar el intervalo de confianza", "why": "Informarlo es exactamente lo que hay que hacer." },
+        { "id": "c", "text": "Usar un IC del 95 %", "why": "Es el estándar." },
+        { "id": "d", "text": "No hay error", "why": "Sí lo hay: se confunde significación con relevancia." }
+      ],
+      "answer": "a",
+      "explanation": "Con n = 2.480 se detectan diferencias irrelevantes. La presentación honesta compara el intervalo con la MCID de la escala: si la MCID es de 5 puntos, un intervalo de 0,3 a 1,5 permite afirmar que el efecto es real Y que es clínicamente despreciable.",
+      "hints": ["Mira la magnitud en la escala de la variable.", "¿Cómo influye n = 2.480 en el p-valor?", "Compara el intervalo con un umbral clínico."]
+    },
+    {
+      "id": "s6",
+      "concept": "error-tipo-i",
+      "weight": 1.4,
+      "type": "mcq",
+      "quote": "«Se analizaron los 24 dominios del cuestionario. Tres resultaron significativos (p = 0,041; p = 0,047; p = 0,033) y se presentan como los principales hallazgos del estudio.»",
+      "prompt": "Fragmento 6. ¿Cuál es el error?",
+      "options": [
+        { "id": "a", "text": "No controlar la multiplicidad: con 24 contrastes al 5 % era esperable encontrar algún significativo solo por azar", "why": "Correcto: la probabilidad de al menos un falso positivo es 1 − 0,95²⁴ ≈ 71 %." },
+        { "id": "b", "text": "Haber medido 24 dominios", "why": "Medir muchos dominios no es un error; presentarlos sin corrección sí." },
+        { "id": "c", "text": "Informar los p-valores con tres decimales", "why": "Es una práctica adecuada." },
+        { "id": "d", "text": "No hay error", "why": "Sí lo hay: falta control de comparaciones múltiples." }
+      ],
+      "answer": "a",
+      "explanation": "Con 24 pruebas independientes al 5 %, esperar al menos un falso positivo es lo normal. Y los tres p-valores están sospechosamente pegados a 0,05. Soluciones: preespecificar una variable principal, corregir (Bonferroni α = 0,0021; Holm; o control de FDR) y presentar el resto como análisis exploratorios.",
+      "hints": ["¿Cuántas pruebas se han hecho?", "Calcula 0,95 elevado a 24.", "Fíjate en lo cerca de 0,05 que están los tres p-valores."]
+    },
+    {
+      "id": "s7",
+      "concept": "chi2",
+      "weight": 1.2,
+      "type": "mcq",
+      "quote": "«La proporción de participantes con caídas fue del 12 % (5/42) en el grupo de intervención y del 26 % (11/42) en el control. La diferencia se contrastó con chi-cuadrado (χ² = 2,84; p = 0,092). Las frecuencias esperadas mínimas fueron de 8,0.»",
+      "prompt": "Fragmento 7. ¿Cuál es el problema en este fragmento?",
+      "options": [
+        { "id": "a", "text": "No hay error estadístico: el uso de chi-cuadrado es adecuado (esperadas ≥ 5) y se informan proporciones, recuentos y el estadístico", "why": "Correcto: este es el fragmento sin error. Sería mejorable añadiendo el IC de la diferencia, pero lo informado es correcto." },
+        { "id": "b", "text": "Las frecuencias esperadas son demasiado pequeñas para chi-cuadrado", "why": "El mínimo declarado es 8,0, por encima del criterio de 5." },
+        { "id": "c", "text": "Con p = 0,092 no debería informarse el resultado", "why": "Un resultado no significativo debe informarse igualmente: no publicarlo sería sesgo de publicación." },
+        { "id": "d", "text": "Debería haberse usado la t de Student", "why": "La variable resultado es categórica (caída sí/no)." }
+      ],
+      "answer": "a",
+      "explanation": "Este fragmento está correcto: prueba adecuada al tipo de variable, supuesto comprobado y datos brutos informados. Mejoraría añadiendo la diferencia de riesgos con su IC 95 % (aquí −14 puntos porcentuales, IC aproximado de −30 a +2), que muestra que el estudio es poco potente pero apunta a un beneficio posible. Parte del trabajo de quien revisa es reconocer lo que está bien hecho.",
+      "hints": ["Comprueba el criterio de las frecuencias esperadas.", "¿Es adecuada la prueba para el tipo de variable?", "Uno de los siete fragmentos no tiene error."]
+    },
+    {
+      "id": "s8",
+      "concept": "conclusiones",
+      "weight": 1.5,
+      "type": "multi",
+      "quote": "«Conclusión: el programa multicomponente mejora significativamente la calidad de vida y debe implantarse de forma generalizada en atención primaria.»",
+      "prompt": "Fragmento 8. ¿Qué objeciones plantearías a esta conclusión? Marca todas las pertinentes.",
+      "options": [
+        { "id": "a", "text": "Usa «significativamente» como si equivaliera a «de forma importante»", "correct": true, "why": "En un artículo, «significativo» tiene un significado técnico que aquí se usa con sentido coloquial." },
+        { "id": "b", "text": "La recomendación de implantación generalizada excede lo que sostiene un solo estudio", "correct": true, "why": "Una recomendación de política sanitaria requiere replicación, coste-efectividad y valoración de la aplicabilidad." },
+        { "id": "c", "text": "No menciona la magnitud del efecto ni su relevancia clínica", "correct": true, "why": "Sin magnitud no se puede juzgar si merece la pena implantarlo." },
+        { "id": "d", "text": "No debería concluirse nada porque el estudio no es un ensayo aleatorizado multicéntrico", "correct": false, "why": "Un estudio puede concluir dentro de sus límites: el problema es excederlos, no tenerlos." },
+        { "id": "e", "text": "No declara limitaciones ni la población en la que se puede generalizar", "correct": true, "why": "Toda conclusión debe delimitar su alcance." }
+      ],
+      "answer": ["a", "b", "c", "e"],
+      "explanation": "Las conclusiones deben ser proporcionales a la evidencia: describir el efecto con su magnitud, ajustar el lenguaje al diseño, delimitar la población y separar el hallazgo científico de la recomendación de política sanitaria. Que un estudio sea pequeño o no aleatorizado no lo invalida; lo que lo invalida es concluir más de lo que puede.",
+      "hints": [
+        "Fíjate en el uso coloquial de la palabra «significativamente».",
+        "¿Qué hace falta para recomendar implantar un programa?",
+        "¿Falta la magnitud del efecto?"
+      ]
+    }
+  ],
+  "wrapUp": "Revisar no es buscar defectos por deporte: es comprobar que las afirmaciones están sostenidas por los datos y el diseño. Los siete errores de este reto (interpretación del p-valor, equivalencia falsa, SE por SD, causalidad injustificada, relevancia inflada, multiplicidad y conclusión desproporcionada) son los que aparecen realmente en la literatura sanitaria."
+}

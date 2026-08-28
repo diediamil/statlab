@@ -1,0 +1,194 @@
+{
+  "version": 1,
+  "meta": {
+    "note": "Logros de STATLAB. `rule` describe la condición en un formato que evalúa js/progress.js. Nombres deliberadamente sobrios: nada de lenguaje infantil.",
+    "kinds": {
+      "activity": "se evalúa al terminar una actividad",
+      "session": "se evalúa al cerrar una sesión de práctica",
+      "challenge": "se evalúa al terminar un reto semanal",
+      "aggregate": "se evalúa contra el histórico del estudiante"
+    }
+  },
+  "achievements": [
+    {
+      "code": "first-steps",
+      "name": "Primer contacto",
+      "description": "Completa tu primera actividad en STATLAB.",
+      "icon": "🚀",
+      "kind": "activity",
+      "xp": 20,
+      "rule": { "type": "totalActivities", "min": 1 }
+    },
+    {
+      "code": "world-1-clear",
+      "name": "Sé de qué hablo",
+      "description": "Completa el Mundo 1: población, muestra, variable, parámetro.",
+      "icon": "🧭",
+      "kind": "aggregate",
+      "xp": 50,
+      "rule": { "type": "worldCompleted", "world": "w01" }
+    },
+    {
+      "code": "typology",
+      "name": "Taxonomista",
+      "description": "Clasifica 20 variables sin ningún fallo.",
+      "icon": "🏷️",
+      "kind": "aggregate",
+      "xp": 60,
+      "rule": { "type": "conceptStreak", "concepts": ["cualitativa", "cuantitativa", "nominal-ordinal", "discreta-continua"], "correct": 20 }
+    },
+    {
+      "code": "chart-surgeon",
+      "name": "Cirujano de gráficos",
+      "description": "Diagnostica correctamente 10 gráficos defectuosos en el Hospital de gráficos.",
+      "icon": "🩹",
+      "kind": "aggregate",
+      "xp": 70,
+      "rule": { "type": "gameScore", "game": "chart-hospital", "min": 10 }
+    },
+    {
+      "code": "bayes-thinker",
+      "name": "Pensamiento bayesiano",
+      "description": "Acierta el VPP en cinco escenarios con prevalencias distintas.",
+      "icon": "🎲",
+      "kind": "aggregate",
+      "xp": 70,
+      "rule": { "type": "conceptCorrect", "concept": "vpp", "min": 5 }
+    },
+    {
+      "code": "clt-witness",
+      "name": "Testigo del TCL",
+      "description": "Simula 1000 muestras en el Simulador de muestreo y comprueba el Teorema Central del Límite.",
+      "icon": "🎯",
+      "kind": "aggregate",
+      "xp": 50,
+      "rule": { "type": "gameScore", "game": "sampling-simulator", "min": 1000 }
+    },
+    {
+      "code": "test-chooser",
+      "name": "Criterio propio",
+      "description": "Elige la prueba correcta en 15 escenarios distintos.",
+      "icon": "🧪",
+      "kind": "aggregate",
+      "xp": 90,
+      "rule": { "type": "conceptCorrect", "concept": "parametrica-no", "min": 15 }
+    },
+    {
+      "code": "not-causal",
+      "name": "Correlación no es causalidad",
+      "description": "Detecta diez conclusiones causales injustificadas.",
+      "icon": "🔗",
+      "kind": "aggregate",
+      "xp": 60,
+      "rule": { "type": "conceptCorrect", "concept": "causalidad", "min": 10 }
+    },
+    {
+      "code": "perfect-run",
+      "name": "Perfect Run",
+      "description": "Completa un reto semanal sin un solo error.",
+      "icon": "💠",
+      "kind": "challenge",
+      "xp": 100,
+      "rule": { "type": "challengeErrors", "max": 0 }
+    },
+    {
+      "code": "unaided",
+      "name": "Sin ayuda",
+      "description": "Completa un reto semanal sin usar ninguna pista.",
+      "icon": "🕯️",
+      "kind": "challenge",
+      "xp": 60,
+      "rule": { "type": "challengeHints", "max": 0 }
+    },
+    {
+      "code": "weekly-champion",
+      "name": "Weekly Champion",
+      "description": "Consigue la mayor puntuación de tu clase en un reto semanal.",
+      "icon": "🥇",
+      "kind": "challenge",
+      "xp": 100,
+      "rule": { "type": "weeklyRank", "max": 1 }
+    },
+    {
+      "code": "podium",
+      "name": "Podio",
+      "description": "Termina entre los tres primeros de un reto semanal.",
+      "icon": "🏅",
+      "kind": "challenge",
+      "xp": 50,
+      "rule": { "type": "weeklyRank", "max": 3 }
+    },
+    {
+      "code": "most-improved",
+      "name": "Most Improved",
+      "description": "Consigue la mayor mejora de la clase respecto a tus retos anteriores.",
+      "icon": "📈",
+      "kind": "challenge",
+      "xp": 80,
+      "rule": { "type": "mostImproved" }
+    },
+    {
+      "code": "comeback",
+      "name": "Comeback",
+      "description": "Sube 200 Challenge Points o más respecto a tu reto anterior.",
+      "icon": "↩️",
+      "kind": "challenge",
+      "xp": 60,
+      "rule": { "type": "challengeDelta", "min": 200 }
+    },
+    {
+      "code": "consistency",
+      "name": "Consistency",
+      "description": "Completa cuatro retos semanales consecutivos.",
+      "icon": "🧱",
+      "kind": "aggregate",
+      "xp": 90,
+      "rule": { "type": "consecutiveChallenges", "min": 4 }
+    },
+    {
+      "code": "statistical-detective",
+      "name": "Statistical Detective",
+      "description": "Encuentra todos los errores de un reto de tipo Reviewer 2.",
+      "icon": "🔍",
+      "kind": "challenge",
+      "xp": 110,
+      "rule": { "type": "challengeTypePerfect", "challengeType": "reviewer2" }
+    },
+    {
+      "code": "streak-7",
+      "name": "Constancia de siete días",
+      "description": "Practica siete días seguidos.",
+      "icon": "🔥",
+      "kind": "aggregate",
+      "xp": 70,
+      "rule": { "type": "streak", "min": 7 }
+    },
+    {
+      "code": "mastery-explorer",
+      "name": "Dominio amplio",
+      "description": "Alcanza mastery ≥ 80 en diez conceptos distintos.",
+      "icon": "🧠",
+      "kind": "aggregate",
+      "xp": 120,
+      "rule": { "type": "masteryCount", "min": 80, "count": 10 }
+    },
+    {
+      "code": "diagnostic-master",
+      "name": "Lectura diagnóstica",
+      "description": "Alcanza mastery ≥ 80 en sensibilidad, especificidad, VPP y VPN.",
+      "icon": "🩺",
+      "kind": "aggregate",
+      "xp": 100,
+      "rule": { "type": "masteryConcepts", "concepts": ["sensibilidad", "especificidad", "vpp", "vpn"], "min": 80 }
+    },
+    {
+      "code": "final-project",
+      "name": "Analista autónomo",
+      "description": "Completa el Proyecto final decidiendo el análisis por tu cuenta.",
+      "icon": "🏁",
+      "kind": "aggregate",
+      "xp": 200,
+      "rule": { "type": "worldCompleted", "world": "w15" }
+    }
+  ]
+}

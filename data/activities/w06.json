@@ -1,0 +1,117 @@
+{
+  "world": "w06",
+  "activities": [
+    {
+      "id": "w06-01",
+      "concept": "puntuacion-z",
+      "type": "numeric",
+      "difficulty": 2,
+      "xp": 20,
+      "stem": "La distancia caminada en 6 minutos por mujeres de 65-70 años sigue aproximadamente una normal de media 480 m y desviación típica 60 m. Una paciente camina 405 m.",
+      "prompt": "¿Cuál es su puntuación z? Dos decimales.",
+      "answer": -1.25,
+      "tolerance": 0.02,
+      "explanation": "z = (405 − 480)/60 = −75/60 = −1,25. Significa que está 1,25 desviaciones típicas POR DEBAJO de la media de su grupo de referencia. La puntuación z estandariza: convierte cualquier medida a una escala común, lo que permite comparar variables con unidades distintas (por ejemplo, si su z de fuerza de prensión fuera −0,4, su marcha está relativamente más afectada que su fuerza).",
+      "misconceptionFeedback": { "1.25": "El signo importa: la paciente está POR DEBAJO de la media, así que z es negativa." },
+      "hints": [
+        "z = (valor − media) / desviación típica.",
+        "El valor es menor que la media, así que el resultado será negativo.",
+        "75 dividido entre 60."
+      ]
+    },
+    {
+      "id": "w06-02",
+      "concept": "regla-68-95",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 15,
+      "stem": "El colesterol total en una población es aproximadamente normal con media 195 mg/dL y desviación típica 35 mg/dL.",
+      "prompt": "Aproximadamente, ¿qué porcentaje de la población tiene un colesterol entre 125 y 265 mg/dL?",
+      "options": [
+        { "id": "a", "text": "68 %", "why": "68 % corresponde a ±1 desviación típica (160–230)." },
+        { "id": "b", "text": "95 %", "why": "Correcto: 125 y 265 están a ±2 desviaciones típicas de la media." },
+        { "id": "c", "text": "99,7 %", "why": "Corresponde a ±3 desviaciones típicas (90–300)." },
+        { "id": "d", "text": "50 %", "why": "50 % corresponde a la mitad de la distribución, no a este intervalo." }
+      ],
+      "answer": "b",
+      "explanation": "195 − 2·35 = 125 y 195 + 2·35 = 265: el intervalo es exactamente μ ± 2σ, es decir el 95 % (con más precisión, 95,45 %). La regla 68–95–99,7 solo vale si la distribución es aproximadamente normal: aplicarla a una variable claramente asimétrica (tiempos de espera, estancias) da resultados absurdos.",
+      "hints": [
+        "Cuenta cuántas desviaciones típicas hay entre la media y cada extremo.",
+        "(265 − 195) / 35 = ?",
+        "±1σ ≈ 68 %, ±2σ ≈ 95 %, ±3σ ≈ 99,7 %."
+      ]
+    },
+    {
+      "id": "w06-03",
+      "concept": "binomial",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 20,
+      "prompt": "¿En cuál de estas situaciones NO es adecuado el modelo binomial?",
+      "options": [
+        { "id": "a", "text": "Número de pacientes que responden al tratamiento entre 20 tratados independientes, con probabilidad de respuesta constante", "why": "Cumple los cuatro requisitos: es binomial." },
+        { "id": "b", "text": "Número de caras en 10 lanzamientos de una moneda", "why": "Caso de libro: binomial." },
+        { "id": "c", "text": "Número de contagios en una familia de 5 convivientes durante un brote", "why": "Correcto: los contagios dentro de una familia NO son independientes. Que uno se infecte cambia la probabilidad de los demás." },
+        { "id": "d", "text": "Número de pruebas positivas entre 50 personas cribadas de una población grande", "why": "Con muestreo de una población grande, la independencia es una aproximación aceptable." }
+      ],
+      "answer": "c",
+      "explanation": "La binomial exige cuatro condiciones: (1) número fijo de ensayos n; (2) dos resultados posibles; (3) probabilidad p constante en cada ensayo; (4) ensayos INDEPENDIENTES. En un brote familiar se rompen la 3 y la 4: hay contagio entre los propios sujetos. Es un error muy frecuente en epidemiología aplicar modelos binomiales a datos con dependencia (mismo hogar, mismo centro, mismo paciente medido varias veces).",
+      "hints": [
+        "Repasa los cuatro requisitos de la binomial.",
+        "¿En qué caso el resultado de un sujeto influye en otro?",
+        "Piensa en la transmisión entre convivientes."
+      ]
+    },
+    {
+      "id": "w06-04",
+      "concept": "normal",
+      "type": "claim-audit",
+      "difficulty": 3,
+      "xp": 20,
+      "prompt": "Sobre la distribución normal, marca lo correcto.",
+      "claims": [
+        { "id": "c1", "text": "Cambiar la media desplaza la campana sin cambiar su anchura.", "correct": true, "why": "μ es un parámetro de posición; σ es el de dispersión." },
+        { "id": "c2", "text": "Aumentar la desviación típica hace la campana más ancha y más baja.", "correct": true, "why": "El área total siempre vale 1: si se ensancha, se aplana." },
+        { "id": "c3", "text": "Como muchas variables biológicas son aproximadamente normales, se puede suponer normalidad por defecto.", "correct": false, "why": "Muchas no lo son: tiempos, estancias, costes, recuentos y variables muy asimétricas. La normalidad se comprueba, no se supone." },
+        { "id": "c4", "text": "En una normal, media, mediana y moda coinciden.", "correct": true, "why": "Es simétrica y unimodal." },
+        { "id": "c5", "text": "Si una variable es normal, no puede tener valores atípicos.", "correct": false, "why": "Sí puede: en una normal, aproximadamente el 0,3 % de los valores está fuera de μ ± 3σ." }
+      ],
+      "explanation": "La normal es un MODELO, no una ley de la naturaleza. Es útil porque muchas variables continuas se le parecen y porque el Teorema Central del Límite la hace aparecer en la distribución de la media. Pero suponerla sin comprobarla es una de las causas más frecuentes de análisis mal elegidos.",
+      "hints": [
+        "μ mueve, σ ensancha.",
+        "El área bajo la curva siempre vale 1.",
+        "¿Qué variables sanitarias son claramente asimétricas?"
+      ]
+    },
+    {
+      "id": "w06-05",
+      "concept": "percentil-normal",
+      "type": "numeric",
+      "difficulty": 3,
+      "xp": 25,
+      "stem": "El IMC de una población es normal con media 26,0 kg/m² y desviación típica 4,0 kg/m².",
+      "prompt": "¿Qué porcentaje de la población tiene un IMC superior a 30 kg/m²? Porcentaje con un decimal.",
+      "answer": 15.9,
+      "tolerance": 0.8,
+      "unit": "%",
+      "explanation": "z = (30 − 26)/4 = 1,00. P(Z > 1) = 1 − 0,8413 = 0,1587 = 15,9 %. Encadenar los tres pasos (estandarizar → buscar la probabilidad acumulada → tomar el complemento si la pregunta es «mayor que») es el procedimiento completo. Nota conceptual: este resultado depende críticamente del supuesto de normalidad; el IMC real suele tener cola derecha, así que la proporción verdadera sería algo mayor.",
+      "misconceptionFeedback": { "84.1": "Ese es el porcentaje POR DEBAJO de 30. La pregunta pide el porcentaje por encima: resta de 100." },
+      "hints": [
+        "Primero calcula la puntuación z de 30.",
+        "P(Z < 1) ≈ 0,8413.",
+        "La pregunta es «superior a», así que necesitas el complemento."
+      ]
+    },
+    {
+      "id": "w06-06",
+      "concept": "normal",
+      "type": "sim",
+      "difficulty": 2,
+      "xp": 25,
+      "game": "build-the-normal",
+      "config": {},
+      "prompt": "Construye la normal: mueve la media y la desviación típica y observa cómo cambian las áreas.",
+      "explanation": "El objetivo es que dejes de necesitar la tabla: si ves la curva, ves la probabilidad."
+    }
+  ]
+}

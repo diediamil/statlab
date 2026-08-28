@@ -1,0 +1,183 @@
+{
+  "world": "w03",
+  "activities": [
+    {
+      "id": "w03-01",
+      "concept": "centro-eleccion",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 15,
+      "stem": "Días de estancia hospitalaria de 11 pacientes: 2, 2, 3, 3, 4, 4, 4, 5, 6, 7, 61.\nMedia = 9,2 días · Mediana = 4 días",
+      "prompt": "¿Qué medida describe mejor la estancia «típica» de este grupo?",
+      "options": [
+        { "id": "a", "text": "La media, 9,2 días, porque usa toda la información", "why": "Usa toda la información, sí, pero un solo valor extremo la arrastra: ningún paciente salvo uno se acerca a 9 días." },
+        { "id": "b", "text": "La mediana, 4 días, porque no la distorsiona el valor extremo", "why": "Correcto: 10 de los 11 pacientes están entre 2 y 7 días." },
+        { "id": "c", "text": "Las dos son igual de válidas", "why": "Ambas se pueden calcular, pero solo una describe bien a la mayoría." },
+        { "id": "d", "text": "Ninguna: hay que eliminar el 61 y recalcular", "why": "Eliminar datos sin justificación clínica es manipulación. El 61 puede ser el caso más importante del grupo." }
+      ],
+      "answer": "b",
+      "explanation": "Con distribuciones asimétricas o con valores atípicos, la mediana representa mejor el caso típico. Regla práctica en investigación sanitaria: si media y mediana difieren mucho, informa las dos y presenta también el gráfico. Y no elimines el 61: investígalo (¿complicación? ¿error de registro?). El dato raro suele ser el clínicamente interesante.",
+      "hints": [
+        "Compara los 11 valores con 9,2 días. ¿A cuántos describe bien?",
+        "¿Qué medida cambia si el 61 fuera 610?",
+        "La mediana solo depende de la posición central."
+      ]
+    },
+    {
+      "id": "w03-02",
+      "concept": "varianza-sd",
+      "type": "numeric",
+      "difficulty": 2,
+      "xp": 20,
+      "stem": "Glucemia en ayunas (mg/dL) de 6 pacientes: 92, 98, 105, 88, 110, 95.",
+      "prompt": "Calcula la desviación típica muestral (denominador n − 1). Redondea a un decimal.",
+      "answer": 8.3,
+      "tolerance": 0.25,
+      "unit": "mg/dL",
+      "explanation": "Media = 98,0. Desviaciones: −6, 0, 7, −10, 12, −3. Cuadrados: 36, 0, 49, 100, 144, 9 → suma 338. Cuasivarianza = 338/5 = 67,6. Desviación típica = √67,6 = 8,22 ≈ 8,2–8,3 mg/dL. Se usa n − 1 porque la media muestral ya ha consumido un grado de libertad: dividir por n subestimaría sistemáticamente la variabilidad de la población. Y ojo con las unidades: la varianza está en mg²/dL², la desviación típica en mg/dL. Solo la segunda es interpretable.",
+      "hints": [
+        "Empieza calculando la media de los seis valores.",
+        "Suma los cuadrados de las desviaciones respecto a la media.",
+        "Divide por n − 1 = 5 y haz la raíz cuadrada."
+      ]
+    },
+    {
+      "id": "w03-03",
+      "concept": "percentiles",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 15,
+      "stem": "Una niña de 4 años está en el percentil 90 de talla para su edad y sexo.",
+      "prompt": "¿Qué significa exactamente?",
+      "options": [
+        { "id": "a", "text": "Mide el 90 % de la talla máxima de su edad", "why": "El percentil no es una fracción del máximo." },
+        { "id": "b", "text": "El 90 % de las niñas de su edad miden igual o menos que ella", "why": "Correcto: el percentil es una posición relativa dentro de la distribución." },
+        { "id": "c", "text": "Tiene un 90 % de probabilidad de ser alta de adulta", "why": "El percentil actual no es una probabilidad futura." },
+        { "id": "d", "text": "Su talla es un 90 % de lo normal", "why": "Confunde percentil con porcentaje del valor de referencia." }
+      ],
+      "answer": "b",
+      "explanation": "Un percentil es una POSICIÓN: el percentil 90 separa el 90 % inferior del 10 % superior. Los percentiles son la herramienta estándar en pediatría precisamente porque no exigen suponer normalidad y se leen directamente sobre la distribución de referencia. El percentil 50 es la mediana.",
+      "hints": [
+        "El percentil habla de posición, no de cantidad.",
+        "¿Cuánta gente queda por debajo?",
+        "El percentil 50 tiene otro nombre que ya conoces."
+      ]
+    },
+    {
+      "id": "w03-04",
+      "concept": "outliers",
+      "type": "numeric",
+      "difficulty": 3,
+      "xp": 25,
+      "stem": "Puntuaciones de discapacidad (Oswestry) de 12 pacientes, ordenadas:\n18, 22, 24, 28, 30, 32, 35, 38, 40, 44, 48, 82.\nQ1 = 26,0 · Q3 = 43,0 · IQR = 17,0",
+      "prompt": "Según el criterio de Tukey, ¿cuál es el límite superior por encima del cual un valor se considera atípico?",
+      "answer": 68.5,
+      "tolerance": 0.6,
+      "explanation": "Límite superior = Q3 + 1,5 · IQR = 43,0 + 1,5 · 17,0 = 68,5. El valor 82 lo supera, así que es atípico según Tukey. «Atípico» significa «merece que lo mires», NO «hay que borrarlo»: podría ser un error de transcripción (y entonces se corrige) o el paciente con peor evolución del estudio (y entonces es el caso más informativo). El límite inferior sería Q1 − 1,5 · IQR = 26 − 25,5 = 0,5.",
+      "hints": [
+        "El criterio de Tukey usa Q3 y el IQR.",
+        "Multiplica el IQR por 1,5.",
+        "Suma ese producto a Q3."
+      ]
+    },
+    {
+      "id": "w03-05",
+      "concept": "iqr",
+      "type": "claim-audit",
+      "difficulty": 3,
+      "xp": 20,
+      "prompt": "Sobre medidas de dispersión, marca lo correcto.",
+      "claims": [
+        { "id": "c1", "text": "La desviación típica está en las mismas unidades que los datos; la varianza, no.", "correct": true, "why": "La varianza está en unidades al cuadrado; por eso se informa la desviación típica." },
+        { "id": "c2", "text": "El rango es la medida de dispersión más estable porque usa el valor mayor y el menor.", "correct": false, "why": "Es la MENOS estable: depende solo de dos valores, precisamente los más extremos." },
+        { "id": "c3", "text": "El IQR resiste bien los valores atípicos.", "correct": true, "why": "Solo depende del 50 % central de los datos." },
+        { "id": "c4", "text": "Si la desviación típica es 0, todos los valores son iguales.", "correct": true, "why": "Dispersión nula significa que no hay variabilidad alguna." },
+        { "id": "c5", "text": "La desviación típica puede ser negativa si la mayoría de los datos están por debajo de la media.", "correct": false, "why": "Es una raíz cuadrada de una suma de cuadrados: nunca es negativa." }
+      ],
+      "explanation": "Elegir la medida de dispersión es tan importante como elegir la de centro, y van emparejadas: media ↔ desviación típica, mediana ↔ IQR. Informar «mediana ± desviación típica» es una mezcla incoherente que aparece a menudo en artículos y conviene no imitar.",
+      "hints": [
+        "Fíjate en las unidades de cada medida.",
+        "¿Cuántos datos usa el rango?",
+        "¿Puede una raíz cuadrada dar un número negativo?"
+      ]
+    },
+    {
+      "id": "w03-06",
+      "concept": "media",
+      "type": "numeric",
+      "difficulty": 2,
+      "xp": 15,
+      "generator": "descriptiveBasics",
+      "prompt": "Calcula el estadístico que se te pide sobre la muestra mostrada.",
+      "explanation": "Practicar con datos distintos cada vez evita memorizar resultados y obliga a aplicar el procedimiento.",
+      "hints": [
+        "Ordena los datos si el estadístico depende de la posición.",
+        "Comprueba si el enunciado pide media, mediana o desviación típica.",
+        "Cuidado con el denominador: n − 1 para la muestra."
+      ]
+    },
+    {
+      "id": "w03-07",
+      "concept": "frecuencias",
+      "type": "numeric",
+      "difficulty": 1,
+      "xp": 10,
+      "stem": "Distribución del estadio de una enfermedad en 200 pacientes:\nI: 64 · II: 70 · III: 42 · IV: 24",
+      "prompt": "¿Cuál es la frecuencia relativa ACUMULADA hasta el estadio II, en porcentaje?",
+      "answer": 67,
+      "tolerance": 0.5,
+      "unit": "%",
+      "explanation": "Acumulada hasta II = (64 + 70)/200 = 134/200 = 0,67 = 67 %. La frecuencia acumulada solo tiene sentido si las categorías están ordenadas: con una variable nominal (grupo sanguíneo, servicio de ingreso) acumular no significa nada.",
+      "misconceptionFeedback": { "35": "Ese es el porcentaje del estadio II solo (70/200). La acumulada suma también los anteriores." },
+      "hints": [
+        "Acumular = sumar esta categoría y todas las anteriores.",
+        "Suma los estadios I y II.",
+        "Divide por el total y multiplica por 100."
+      ]
+    },
+    {
+      "id": "w03-08",
+      "concept": "moda",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 15,
+      "stem": "Sesiones de rehabilitación completadas por 10 pacientes: 4, 6, 6, 7, 8, 8, 9, 10, 11, 12.",
+      "prompt": "¿Cuál es la moda?",
+      "options": [
+        { "id": "a", "text": "8", "why": "El 8 aparece dos veces, pero el 6 también: hay empate." },
+        { "id": "b", "text": "6 y 8: la distribución es bimodal", "why": "Correcto: ambos valores aparecen dos veces, el máximo de repeticiones." },
+        { "id": "c", "text": "8,1 (la media)", "why": "La moda es el valor más frecuente, no la media." },
+        { "id": "d", "text": "No hay moda", "why": "Sí hay: dos valores empatan con la frecuencia máxima." }
+      ],
+      "answer": "b",
+      "explanation": "Una distribución puede ser amodal (sin repeticiones), unimodal, bimodal o multimodal. La bimodalidad es una señal clínica valiosa: suele indicar que hay DOS subgrupos mezclados en los datos (por ejemplo, pacientes que respondieron al tratamiento y pacientes que no). Antes de resumir con una media, mira el histograma.",
+      "hints": [
+        "Cuenta cuántas veces aparece cada valor.",
+        "¿Cuál es la frecuencia máxima? ¿La alcanza un solo valor?",
+        "Puede haber más de una moda."
+      ]
+    },
+    {
+      "id": "w03-09",
+      "concept": "varianza-sd",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 20,
+      "stem": "Dos servicios registran el tiempo de espera (minutos):\nServicio A: media 32, desviación típica 4\nServicio B: media 32, desviación típica 19",
+      "prompt": "¿Qué conclusión es correcta?",
+      "options": [
+        { "id": "a", "text": "Los dos servicios funcionan igual porque la media es la misma", "why": "La media igual esconde experiencias de paciente muy distintas." },
+        { "id": "b", "text": "En B la experiencia es mucho más impredecible: algunos esperan muy poco y otros muchísimo", "why": "Correcto: la dispersión es información clínica y de gestión de primer orden." },
+        { "id": "c", "text": "B es mejor porque su desviación típica es mayor", "why": "Mayor variabilidad no es mejor: significa menos previsibilidad." },
+        { "id": "d", "text": "A tiene menos pacientes", "why": "La desviación típica no informa del tamaño de la muestra." }
+      ],
+      "answer": "b",
+      "explanation": "Dos distribuciones con la misma media pueden ser radicalmente distintas. En gestión sanitaria, la variabilidad suele importar tanto como el promedio: un servicio con media 32 y desviación 19 genera muchas más quejas y muchos más riesgos que uno con desviación 4. Nunca informes una media sin su medida de dispersión.",
+      "hints": [
+        "La media dice dónde está el centro; la desviación típica, cuánto se separan los casos.",
+        "Piensa en qué servicio es más predecible para el paciente.",
+        "Mayor dispersión no equivale a mejor ni a peor: equivale a menos previsible."
+      ]
+    }
+  ]
+}

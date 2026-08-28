@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "meta": {
+    "note": "Casos longitudinales. El mismo escenario reaparece en varios mundos, de modo que el alumno lo describe, lo representa, formula hipótesis, elige la prueba, la interpreta y estima el tamaño del efecto. Los datos se generan proceduralmente a partir de `seed` para que sean reproducibles."
+  },
+  "cases": [
+    {
+      "id": "A",
+      "code": "REHAB-LUMBAR",
+      "title": "Programa de fisioterapia para lumbalgia crónica",
+      "short": "Rehabilitación",
+      "seed": "case-A-2026",
+      "design": "Ensayo clínico aleatorizado, dos grupos paralelos",
+      "population": "Personas adultas con lumbalgia crónica inespecífica de más de 3 meses atendidas en atención primaria",
+      "sampling": "Muestra consecutiva de pacientes derivados durante seis meses, aleatorizados 1:1",
+      "narrative": "Un servicio de fisioterapia compara su programa habitual de ejercicio supervisado con un programa nuevo que añade educación en neurociencia del dolor. Se mide la intensidad del dolor con una escala numérica de 0 a 10 antes y después de ocho semanas, y la discapacidad con el índice de Oswestry (0–100).",
+      "variables": [
+        { "name": "grupo", "label": "Grupo", "type": "nominal", "values": ["Ejercicio", "Ejercicio + educación"] },
+        { "name": "edad", "label": "Edad (años)", "type": "continua", "unit": "años" },
+        { "name": "sexo", "label": "Sexo", "type": "nominal", "values": ["Mujer", "Hombre"] },
+        { "name": "dolor_basal", "label": "Dolor basal (END 0–10)", "type": "discreta", "unit": "puntos" },
+        { "name": "dolor_final", "label": "Dolor a las 8 semanas (END 0–10)", "type": "discreta", "unit": "puntos" },
+        { "name": "oswestry", "label": "Oswestry (0–100)", "type": "continua", "unit": "puntos" },
+        { "name": "adherencia", "label": "Sesiones completadas", "type": "discreta", "unit": "sesiones" }
+      ],
+      "generator": { "n": 80, "groups": 2, "preMean": 6.4, "preSd": 1.4, "effect": -1.1, "withinSd": 1.6 },
+      "questions": {
+        "descriptive": "¿Cómo describirías el dolor basal en cada grupo?",
+        "graph": "¿Qué gráfico compara mejor el dolor final entre los dos grupos?",
+        "hypothesis": "¿Cuáles son H0 y H1 si quieres saber si el programa nuevo reduce más el dolor?",
+        "test": "¿Qué análisis corresponde a la comparación principal?",
+        "effect": "¿El efecto observado supera la diferencia mínima clínicamente importante (2 puntos en la END)?"
+      },
+      "mcid": { "variable": "dolor_final", "value": 2, "note": "En la escala numérica de dolor se considera clínicamente relevante una reducción de al menos 2 puntos." }
+    },
+    {
+      "id": "B",
+      "code": "ANTIHTA",
+      "title": "Nuevo antihipertensivo frente al tratamiento habitual",
+      "short": "Medicamento",
+      "seed": "case-B-2026",
+      "design": "Ensayo clínico aleatorizado, tres brazos (dosis baja, dosis alta, control)",
+      "population": "Personas de 45 a 75 años con hipertensión arterial grado 1 sin tratamiento previo",
+      "sampling": "Reclutamiento multicéntrico en 6 centros de salud",
+      "narrative": "Se comparan dos dosis de un antihipertensivo nuevo frente al tratamiento estándar. La variable principal es la presión arterial sistólica a las 12 semanas. Se registran también efectos adversos (sí/no).",
+      "variables": [
+        { "name": "brazo", "label": "Brazo de tratamiento", "type": "nominal", "values": ["Control", "Dosis baja", "Dosis alta"] },
+        { "name": "pas_basal", "label": "PAS basal (mmHg)", "type": "continua", "unit": "mmHg" },
+        { "name": "pas_12s", "label": "PAS a 12 semanas (mmHg)", "type": "continua", "unit": "mmHg" },
+        { "name": "imc", "label": "IMC (kg/m²)", "type": "continua", "unit": "kg/m²" },
+        { "name": "adverso", "label": "Efecto adverso", "type": "nominal", "values": ["No", "Sí"] }
+      ],
+      "generator": { "n": 150, "groups": 3, "preMean": 148, "preSd": 9, "effects": [0, -7.5, -11.5], "withinSd": 10 },
+      "questions": {
+        "test": "Tres grupos independientes y variable cuantitativa: ¿qué prueba corresponde?",
+        "posthoc": "El ANOVA sale significativo. ¿Puedes ya afirmar qué dosis es mejor?",
+        "categorical": "Para comparar la proporción de efectos adversos entre brazos, ¿qué prueba usas?"
+      },
+      "mcid": { "variable": "pas_12s", "value": 5, "note": "Una reducción de 5 mmHg en PAS se asocia a beneficio cardiovascular poblacional relevante." }
+    },
+    {
+      "id": "C",
+      "code": "SALUD-MENTAL",
+      "title": "Ansiedad y calidad del sueño en estudiantes de Ciencias de la Salud",
+      "short": "Salud mental",
+      "seed": "case-C-2026",
+      "design": "Estudio observacional transversal",
+      "population": "Estudiantado de primer curso de grados de Ciencias de la Salud de una universidad",
+      "sampling": "Encuesta voluntaria en línea (atención: posible sesgo de autoselección)",
+      "narrative": "Se aplican la escala GAD-7 de ansiedad (0–21) y el índice de calidad del sueño de Pittsburgh (0–21, más alto = peor sueño). Se recogen además horas de sueño, consumo de cafeína y horas de estudio semanales.",
+      "variables": [
+        { "name": "gad7", "label": "GAD-7 (0–21)", "type": "continua", "unit": "puntos" },
+        { "name": "psqi", "label": "PSQI (0–21)", "type": "continua", "unit": "puntos" },
+        { "name": "horas_sueno", "label": "Horas de sueño", "type": "continua", "unit": "horas" },
+        { "name": "cafeina", "label": "Cafés al día", "type": "discreta", "unit": "tazas" },
+        { "name": "curso", "label": "Grado", "type": "nominal", "values": ["Enfermería", "Fisioterapia", "Medicina", "Psicología"] },
+        { "name": "gad7_cat", "label": "Ansiedad categorizada", "type": "ordinal", "values": ["Mínima", "Leve", "Moderada", "Grave"] }
+      ],
+      "generator": { "n": 210, "r": 0.58, "muX": 8.2, "sdX": 4.1, "muY": 7.6, "sdY": 3.4 },
+      "questions": {
+        "correlation": "¿Qué relación hay entre ansiedad y calidad del sueño?",
+        "causal": "¿Puedes concluir que la ansiedad empeora el sueño?",
+        "ordinal": "Para comparar la ansiedad categorizada entre grados, ¿qué prueba corresponde?",
+        "bias": "¿Qué limitación introduce el muestreo voluntario en línea?"
+      }
+    },
+    {
+      "id": "D",
+      "code": "CRIBADO",
+      "title": "Prueba rápida de cribado para una infección",
+      "short": "Prueba diagnóstica",
+      "seed": "case-D-2026",
+      "design": "Estudio de validez diagnóstica frente a prueba de referencia",
+      "population": "Población general adulta asintomática (cribado) y consulta especializada (confirmación)",
+      "sampling": "Se aplican la prueba rápida y la de referencia a todos los participantes",
+      "narrative": "Una prueba rápida tiene sensibilidad del 92 % y especificidad del 94 %. Se usa en dos contextos con prevalencias muy distintas: cribado poblacional (prevalencia 0,8 %) y consulta de personas con síntomas compatibles (prevalencia 35 %). El mismo resultado positivo significa cosas muy diferentes en cada contexto.",
+      "variables": [
+        { "name": "resultado", "label": "Resultado de la prueba rápida", "type": "nominal", "values": ["Positivo", "Negativo"] },
+        { "name": "referencia", "label": "Prueba de referencia", "type": "nominal", "values": ["Enfermo", "Sano"] },
+        { "name": "carga", "label": "Valor cuantitativo de la prueba", "type": "continua", "unit": "unidades" }
+      ],
+      "generator": { "sensitivity": 0.92, "specificity": 0.94, "prevalences": [0.008, 0.35], "population": 10000 },
+      "questions": {
+        "ppv": "¿Cuál es el VPP en cribado poblacional? ¿Y en consulta?",
+        "screening": "¿Qué priorizarías en un programa de cribado: sensibilidad o especificidad?",
+        "roc": "¿Qué punto de corte elegirías y por qué?"
+      }
+    },
+    {
+      "id": "E",
+      "code": "PREVENCION",
+      "title": "Programa preventivo de caídas en personas mayores",
+      "short": "Prevención",
+      "seed": "case-E-2026",
+      "design": "Estudio cuasiexperimental antes-después con grupo de comparación",
+      "population": "Personas de 70 años o más residentes en la comunidad con riesgo de caídas",
+      "sampling": "Dos centros de salud: uno implanta el programa y otro mantiene la práctica habitual",
+      "narrative": "Un programa de ejercicio multicomponente busca reducir el número de caídas en un año y mejorar el equilibrio medido con la escala de Berg (0–56). Se registran caídas (recuento), fracturas (sí/no) y adherencia.",
+      "variables": [
+        { "name": "centro", "label": "Centro", "type": "nominal", "values": ["Programa", "Práctica habitual"] },
+        { "name": "caidas_ano", "label": "Caídas en el año", "type": "discreta", "unit": "caídas" },
+        { "name": "berg_pre", "label": "Berg antes (0–56)", "type": "continua", "unit": "puntos" },
+        { "name": "berg_post", "label": "Berg después (0–56)", "type": "continua", "unit": "puntos" },
+        { "name": "fractura", "label": "Fractura", "type": "nominal", "values": ["No", "Sí"] },
+        { "name": "edad", "label": "Edad", "type": "continua", "unit": "años" }
+      ],
+      "generator": { "n": 120, "lambdaControl": 1.8, "lambdaProgram": 1.1, "bergGain": 4.2, "bergSd": 5.1 },
+      "questions": {
+        "paired": "Para comparar Berg antes y después en el grupo del programa, ¿qué prueba corresponde?",
+        "counts": "Las caídas son un recuento muy asimétrico. ¿Qué implica para la elección de la prueba?",
+        "design": "¿Qué amenaza la validez de un diseño cuasiexperimental por centros?"
+      }
+    }
+  ]
+}

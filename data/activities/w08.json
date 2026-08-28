@@ -1,0 +1,117 @@
+{
+  "world": "w08",
+  "activities": [
+    {
+      "id": "w08-01",
+      "concept": "ic",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 25,
+      "stem": "Un estudio informa: «Reducción media del dolor: 1,8 puntos (IC 95 %: 0,9 a 2,7)».",
+      "prompt": "¿Cuál es la interpretación CORRECTA de ese intervalo?",
+      "options": [
+        { "id": "a", "text": "Hay un 95 % de probabilidad de que la reducción verdadera esté entre 0,9 y 2,7", "why": "Es la interpretación más común y es incorrecta en el marco frecuentista: el parámetro es fijo, no aleatorio. La probabilidad se refiere al procedimiento, no a este intervalo concreto." },
+        { "id": "b", "text": "Si repitiéramos el estudio muchas veces, el 95 % de los intervalos construidos así contendrían la reducción verdadera", "why": "Correcto: la confianza es una propiedad del método a largo plazo." },
+        { "id": "c", "text": "El 95 % de los pacientes mejoró entre 0,9 y 2,7 puntos", "why": "El IC habla del parámetro (la media), no de los pacientes individuales. Para eso haría falta un intervalo de predicción, mucho más ancho." },
+        { "id": "d", "text": "El estudio es significativo al 95 %", "why": "La significación se expresa con α y el p-valor, no como «significativo al 95 %»." }
+      ],
+      "answer": "b",
+      "explanation": "La interpretación estricta es sobre el PROCEDIMIENTO: el 95 % de los intervalos construidos así capturan el parámetro. En la práctica clínica se usa una lectura pragmática defendible: «los valores compatibles con nuestros datos van de 0,9 a 2,7». Lo que nunca es defendible es la opción c: confundir la variabilidad de la MEDIA con la de los PACIENTES. Y una lectura clínica añadida: si la MCID de la escala es 2 puntos, este intervalo incluye valores irrelevantes (0,9) y relevantes (2,7), así que el estudio no es concluyente en términos clínicos aunque sea «significativo».",
+      "hints": [
+        "¿La probabilidad se refiere al parámetro o al método?",
+        "¿El IC describe a los pacientes o a la estimación de la media?",
+        "Piensa en qué pasaría si repitieras el estudio 100 veces."
+      ]
+    },
+    {
+      "id": "w08-02",
+      "concept": "margen-error",
+      "type": "numeric",
+      "difficulty": 2,
+      "xp": 20,
+      "stem": "Muestra de n = 64 pacientes. Media de hemoglobina glicosilada 7,4 %, desviación típica 1,2 %. Para el IC 95 % se usa t con 63 grados de libertad ≈ 2,00.",
+      "prompt": "¿Cuál es el margen de error del IC 95 % para la media? Dos decimales.",
+      "answer": 0.3,
+      "tolerance": 0.02,
+      "unit": "%",
+      "explanation": "SE = 1,2/√64 = 1,2/8 = 0,15. Margen = t · SE = 2,00 · 0,15 = 0,30. El intervalo es 7,4 ± 0,30 → (7,10; 7,70). El margen depende de tres cosas y de nada más: la variabilidad de los datos (s), el tamaño de la muestra (n) y el nivel de confianza (t). Es la fórmula que explica todas las decisiones de diseño: si quieres un intervalo más estrecho, o mides con menos ruido, o recoges más datos, o aceptas menos confianza.",
+      "hints": [
+        "Primero calcula el error estándar.",
+        "√64 = 8.",
+        "Margen = valor crítico × error estándar."
+      ]
+    },
+    {
+      "id": "w08-03",
+      "concept": "nivel-confianza",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 15,
+      "prompt": "Con los MISMOS datos, ¿qué le pasa al intervalo si pasas del 95 % al 99 % de confianza?",
+      "options": [
+        { "id": "a", "text": "Se hace más estrecho: hay más confianza", "why": "Al contrario: más confianza exige abarcar más valores." },
+        { "id": "b", "text": "Se hace más ancho: para estar más seguro hay que abarcar más valores posibles", "why": "Correcto. El valor crítico pasa de ≈1,96 a ≈2,58." },
+        { "id": "c", "text": "No cambia: depende solo de n", "why": "Depende también del nivel de confianza a través del valor crítico." },
+        { "id": "d", "text": "Se desplaza hacia la derecha", "why": "El centro (la estimación puntual) no cambia; solo cambia la anchura." }
+      ],
+      "answer": "b",
+      "explanation": "Hay un compromiso inevitable entre confianza y precisión: con los mismos datos, más confianza significa un intervalo más ancho, es decir menos informativo. Un intervalo del 100 % sería (−∞, +∞): absolutamente seguro y absolutamente inútil. La única forma de ganar confianza SIN perder precisión es aumentar n.",
+      "hints": [
+        "Compara los valores críticos de 95 % y 99 %.",
+        "¿Qué tiene que pasar con el intervalo para que capture el parámetro más a menudo?",
+        "El centro del intervalo no se mueve."
+      ]
+    },
+    {
+      "id": "w08-04",
+      "concept": "ic-interpretacion",
+      "type": "claim-audit",
+      "difficulty": 3,
+      "xp": 25,
+      "stem": "Dos ensayos sobre la misma intervención informan la diferencia media de dolor (escala 0–10). La MCID de la escala es 1,0 punto.\nEnsayo 1: 0,4 puntos (IC 95 %: 0,1 a 0,7)\nEnsayo 2: 1,3 puntos (IC 95 %: −0,2 a 2,8)",
+      "prompt": "Marca las conclusiones defendibles.",
+      "claims": [
+        { "id": "c1", "text": "El ensayo 1 es estadísticamente significativo (su IC no incluye el 0).", "correct": true, "why": "El intervalo está enteramente por encima de 0." },
+        { "id": "c2", "text": "El ensayo 1 demuestra un efecto clínicamente relevante.", "correct": false, "why": "Todo su intervalo está por debajo de la MCID de 1,0: es un efecto real pero irrelevante clínicamente." },
+        { "id": "c3", "text": "El ensayo 2 no es estadísticamente significativo, pero sus datos son compatibles con un efecto clínicamente importante.", "correct": true, "why": "Su intervalo incluye valores hasta 2,8: no concluyente, no negativo." },
+        { "id": "c4", "text": "El ensayo 2 demuestra que la intervención no funciona.", "correct": false, "why": "Ausencia de significación no es prueba de ausencia de efecto: el intervalo es ancho, el estudio es poco potente." },
+        { "id": "c5", "text": "Comparando ambos, el ensayo 1 aporta una estimación más precisa.", "correct": true, "why": "Su intervalo es mucho más estrecho, señal de mayor precisión (mayor n o menor variabilidad)." }
+      ],
+      "explanation": "Este par de ensayos ilustra por qué el intervalo de confianza es más informativo que el p-valor: el ensayo 1 es significativo pero clínicamente trivial, y el 2 no es significativo pero podría esconder un efecto importante. La lectura correcta compara siempre el intervalo con la MCID, no con el cero.",
+      "hints": [
+        "¿Incluye cada intervalo el valor 0? Eso decide la significación.",
+        "¿Dónde queda cada intervalo respecto a la MCID de 1,0?",
+        "Un intervalo ancho indica falta de precisión, no ausencia de efecto."
+      ]
+    },
+    {
+      "id": "w08-05",
+      "concept": "estimacion-puntual",
+      "type": "numeric",
+      "difficulty": 2,
+      "xp": 20,
+      "stem": "De 240 pacientes cribados, 36 dan positivo.",
+      "prompt": "¿Cuál es la estimación puntual de la proporción de positivos, en porcentaje? Un decimal.",
+      "answer": 15.0,
+      "tolerance": 0.15,
+      "unit": "%",
+      "explanation": "p̂ = 36/240 = 0,15 = 15,0 %. Es la estimación puntual, y por sí sola es incompleta: siempre hay que acompañarla de una medida de precisión. Aquí el IC 95 % (método de Wilson) sería aproximadamente 11,0 % a 20,2 %. Publicar «15 %» sin intervalo oculta que, con estos datos, la proporción real podría estar razonablemente entre el 11 % y el 20 %.",
+      "hints": [
+        "Divide los positivos entre el total.",
+        "Multiplica por 100 para expresarlo en porcentaje.",
+        "36/240."
+      ]
+    },
+    {
+      "id": "w08-06",
+      "concept": "ic",
+      "type": "sim",
+      "difficulty": 3,
+      "xp": 30,
+      "game": "sampling-simulator",
+      "config": { "mode": "coverage", "conf": 0.95, "n": 25 },
+      "prompt": "Simula 100 intervalos de confianza del 95 % y cuenta cuántos capturan la media verdadera.",
+      "explanation": "Ver que aproximadamente 5 de cada 100 intervalos NO contienen el parámetro es la mejor definición operativa de «95 % de confianza»: la confianza es una propiedad del procedimiento repetido, no de un intervalo concreto."
+    }
+  ]
+}

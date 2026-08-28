@@ -1,0 +1,194 @@
+{
+  "id": "ch-demo-01",
+  "code": "RETO 1",
+  "type": "detective",
+  "title": "Detective de variables",
+  "description": "Llega una base de datos sin documentar. Antes de analizar nada, hay que saber exactamente qué hay dentro: quién es la población, cuál es la muestra, qué variables existen, de qué tipo son y qué papel juega cada una. Ningún análisis correcto empieza de otra manera.",
+  "world": "w02",
+  "concepts": ["poblacion", "muestra", "individuo", "cualitativa", "cuantitativa", "nominal-ordinal", "discreta-continua", "tipo-variable-analisis"],
+  "difficulty": 1,
+  "recommendedMinutes": 10,
+  "maxAttempts": 3,
+  "competitivePolicy": "first",
+  "allowHints": true,
+  "solutionPolicy": "on_close",
+  "showRanking": true,
+  "countsForSeason": true,
+  "briefing": "Una compañera de prácticas te pasa este archivo: «Son los datos del estudio de rehabilitación, échale un ojo». No hay libro de códigos. Empieza por lo básico.",
+  "context": {
+    "title": "Extracto del archivo recibido",
+    "note": "Cada fila es una medición. El estudio incluyó 90 pacientes, cada uno medido dos veces (antes y a las 10 semanas).",
+    "columns": ["id_paciente", "momento", "centro", "sexo", "edad", "imc", "dolor_eva", "grado_satisfaccion", "sesiones"],
+    "rows": [
+      ["P001", "basal", "Norte", "M", "58", "27.4", "7", "—", "0"],
+      ["P001", "10sem", "Norte", "M", "58", "27.1", "4", "Bastante", "18"],
+      ["P002", "basal", "Sur", "H", "44", "31.2", "8", "—", "0"],
+      ["P002", "10sem", "Sur", "H", "44", "30.8", "6", "Poco", "12"],
+      ["P003", "basal", "Norte", "M", "67", "24.9", "6", "—", "0"],
+      ["P003", "10sem", "Norte", "M", "67", "24.9", "2", "Mucho", "20"],
+      ["P004", "basal", "Este", "H", "52", "28.7", "9", "—", "0"],
+      ["P004", "10sem", "Este", "H", "52", "28.1", "7", "Nada", "6"]
+    ]
+  },
+  "steps": [
+    {
+      "id": "s1",
+      "concept": "individuo",
+      "weight": 1,
+      "type": "numeric",
+      "prompt": "¿Cuántos INDIVIDUOS incluye el estudio?",
+      "answer": 90,
+      "tolerance": 0,
+      "explanation": "90 pacientes y 180 filas (90 × 2 momentos). Confundir filas con individuos duplicaría artificialmente el tamaño de la muestra y produciría p-valores falsamente pequeños, porque las dos medidas del mismo paciente no son independientes.",
+      "hints": ["El enunciado dice cuántos pacientes hubo.", "Cada paciente aparece en dos filas.", "Individuos ≠ filas."]
+    },
+    {
+      "id": "s2",
+      "concept": "poblacion",
+      "weight": 1,
+      "type": "mcq",
+      "prompt": "Con la información disponible, ¿cuál es la población objetivo más plausible?",
+      "options": [
+        { "id": "a", "text": "Los 90 pacientes del estudio", "why": "Son la muestra." },
+        { "id": "b", "text": "Las personas con dolor que reciben rehabilitación en centros como los tres incluidos", "why": "Correcto: es el conjunto al que se pretende generalizar." },
+        { "id": "c", "text": "Toda la población adulta", "why": "Demasiado amplia: los pacientes proceden de centros de rehabilitación." },
+        { "id": "d", "text": "No se puede determinar sin conocer el país", "why": "El país no define la población de un estudio clínico." }
+      ],
+      "answer": "b",
+      "explanation": "La población objetivo la define la pregunta y el marco del que salió la muestra. Los 90 pacientes son la muestra; los tres centros limitan la generalización.",
+      "hints": ["¿Sobre quién se quiere concluir?", "Los 90 pacientes tienen otro nombre.", "Fíjate de dónde salen los pacientes."]
+    },
+    {
+      "id": "s3",
+      "concept": "cualitativa",
+      "weight": 1.5,
+      "type": "classify",
+      "prompt": "Clasifica cada columna según el tipo de variable.",
+      "bins": [
+        { "id": "nominal", "title": "Cualitativa nominal", "desc": "Categorías sin orden" },
+        { "id": "ordinal", "title": "Cualitativa ordinal", "desc": "Categorías con orden" },
+        { "id": "discreta", "title": "Cuantitativa discreta", "desc": "Recuento" },
+        { "id": "continua", "title": "Cuantitativa continua", "desc": "Medición" }
+      ],
+      "items": [
+        { "id": "i1", "text": "centro (Norte / Sur / Este)", "bin": "nominal" },
+        { "id": "i2", "text": "sexo (M / H)", "bin": "nominal" },
+        { "id": "i3", "text": "edad (años)", "bin": "continua" },
+        { "id": "i4", "text": "imc (kg/m²)", "bin": "continua" },
+        { "id": "i5", "text": "grado_satisfaccion (Nada / Poco / Bastante / Mucho)", "bin": "ordinal" },
+        { "id": "i6", "text": "sesiones (número completadas)", "bin": "discreta" }
+      ],
+      "explanation": "«dolor_eva» se ha dejado fuera a propósito: es el caso discutible (escala 0–10 ordinal que en la práctica se trata como cuantitativa discreta). Las demás son inequívocas. Nótese que «sexo» codificado como M/H sigue siendo nominal, y que satisfacción tiene orden pero sus distancias no son comparables.",
+      "hints": [
+        "Primero: ¿categoría o cantidad?",
+        "Si es categoría, busca un orden natural.",
+        "«Número de…» indica recuento."
+      ]
+    },
+    {
+      "id": "s4",
+      "concept": "tipo-variable-analisis",
+      "weight": 1.2,
+      "type": "multi",
+      "prompt": "La columna «grado_satisfaccion» está vacía en las filas basales (marcada con «—»). ¿Qué es correcto hacer?",
+      "options": [
+        { "id": "a", "text": "Documentar que la satisfacción solo se mide a las 10 semanas (no es un dato perdido, es un dato no aplicable)", "correct": true, "why": "Distinguir «no aplicable» de «perdido» es esencial." },
+        { "id": "b", "text": "Sustituir los «—» por 0", "correct": false, "why": "Introduciría un valor falso: 0 significaría «Nada satisfecho», que es otra cosa." },
+        { "id": "c", "text": "Codificar los «—» como valor perdido explícito (NA) en el software", "correct": true, "why": "Correcto: NA, nunca un número." },
+        { "id": "d", "text": "Eliminar del análisis a todos los pacientes con algún «—»", "correct": false, "why": "Eliminaría a todos los pacientes, ya que todos tienen la fila basal vacía." },
+        { "id": "e", "text": "Comprobar con quien recogió los datos si la ausencia es estructural o un fallo de registro", "correct": true, "why": "Es el primer paso ante cualquier hueco en los datos." }
+      ],
+      "answer": ["a", "c", "e"],
+      "explanation": "Rellenar huecos con ceros es uno de los errores más destructivos y más frecuentes: convierte una ausencia en un valor con significado. Hay tres categorías distintas que nunca deben mezclarse: dato no aplicable, dato perdido y valor cero.",
+      "hints": ["¿Es lo mismo «no se preguntó» que «respondió Nada»?", "¿Qué pasa si eliminas las filas con huecos?", "Piensa qué haría el software con un 0."]
+    },
+    {
+      "id": "s5",
+      "concept": "muestra",
+      "weight": 1.2,
+      "type": "claim-audit",
+      "prompt": "Marca si cada afirmación sobre estos datos es correcta.",
+      "claims": [
+        { "id": "c1", "text": "Las dos medidas de cada paciente son observaciones independientes.", "correct": false, "why": "Proceden del mismo individuo: están correlacionadas. El análisis debe tenerlo en cuenta (t pareada, Wilcoxon o modelo mixto)." },
+        { "id": "c2", "text": "La variable «momento» convierte el archivo en formato largo (una fila por medición).", "correct": true, "why": "Es el formato largo, habitual en R y necesario para modelos mixtos." },
+        { "id": "c3", "text": "Con esta estructura se pueden analizar los cambios dentro de cada paciente.", "correct": true, "why": "Al identificar al paciente, se puede calcular su diferencia individual." },
+        { "id": "c4", "text": "Como hay 180 filas, el tamaño de la muestra para la comparación antes-después es n = 180.", "correct": false, "why": "n = 90 pares. Usar 180 duplicaría falsamente la información." }
+      ],
+      "explanation": "El formato largo es correcto y útil, pero exige recordar en todo momento cuál es la unidad de análisis. Aquí la unidad es el PACIENTE, no la medición.",
+      "hints": ["¿Las dos medidas vienen de personas distintas?", "¿Cuál es la unidad de análisis?", "Cuenta pares, no filas."]
+    },
+    {
+      "id": "s6",
+      "concept": "cuantitativa",
+      "weight": 1,
+      "type": "mcq",
+      "prompt": "Fíjate en la columna «edad»: es idéntica en las dos filas de cada paciente. ¿Qué implica?",
+      "options": [
+        { "id": "a", "text": "Es un error: la edad debería cambiar entre medidas", "why": "Con 10 semanas de diferencia la edad no cambia; la constancia es esperable." },
+        { "id": "b", "text": "Es una variable de nivel PACIENTE, no de nivel MEDICIÓN: se repite en todas las filas del mismo individuo", "why": "Correcto: hay variables que describen al individuo y otras que describen la medición." },
+        { "id": "c", "text": "Hay que eliminarla porque está duplicada", "why": "No es una duplicación errónea: es la estructura normal del formato largo." },
+        { "id": "d", "text": "Indica que los datos están mal ordenados", "why": "El orden es correcto." }
+      ],
+      "answer": "b",
+      "explanation": "En datos con estructura jerárquica hay variables de nivel individuo (edad, sexo, centro) y de nivel medición (momento, dolor, sesiones). Distinguirlas evita errores clásicos como calcular la edad media sobre 180 filas en lugar de sobre 90 pacientes.",
+      "hints": ["¿Cambia la edad en 10 semanas?", "¿Qué variables describen a la persona y cuáles a la medición?", "Piensa en niveles de datos."]
+    },
+    {
+      "id": "s7",
+      "concept": "tipo-variable-analisis",
+      "weight": 1.3,
+      "type": "classify",
+      "prompt": "Asigna a cada variable su papel más plausible en el estudio.",
+      "bins": [
+        { "id": "resultado", "title": "Variable resultado", "desc": "Lo que el estudio quiere mejorar" },
+        { "id": "explicativa", "title": "Explicativa / de agrupación", "desc": "Define grupos o momentos a comparar" },
+        { "id": "control", "title": "Variable de control", "desc": "Se mide para describir o ajustar" },
+        { "id": "identificador", "title": "Identificador", "desc": "No se analiza como variable" }
+      ],
+      "items": [
+        { "id": "i1", "text": "dolor_eva", "bin": "resultado" },
+        { "id": "i2", "text": "momento (basal / 10sem)", "bin": "explicativa" },
+        { "id": "i3", "text": "id_paciente", "bin": "identificador" },
+        { "id": "i4", "text": "edad", "bin": "control" },
+        { "id": "i5", "text": "imc", "bin": "control" },
+        { "id": "i6", "text": "grado_satisfaccion", "bin": "resultado" }
+      ],
+      "explanation": "El identificador no es una variable analizable: si se incluye por descuido en un análisis automático, produce resultados sin sentido. La satisfacción también es un resultado (secundario). Identificar los papeles antes de analizar es lo que permite elegir la prueba en el paso siguiente.",
+      "hints": ["¿Qué quiere mejorar el estudio?", "¿Qué variable define los grupos a comparar?", "El id no se analiza."]
+    },
+    {
+      "id": "s8",
+      "concept": "tipo-variable-analisis",
+      "weight": 1.5,
+      "type": "decision",
+      "prompt": "Con toda la información recogida: para comparar el dolor basal con el dolor a las 10 semanas, ¿qué análisis corresponde? (Las diferencias individuales resultan aproximadamente simétricas.)",
+      "options": [
+        { "id": "t-paired", "text": "t de Student para muestras relacionadas", "why": "Correcto: mismas personas, dos momentos, diferencias simétricas." },
+        { "id": "t-independent", "text": "t de Student para muestras independientes", "why": "Perdería el emparejamiento y trataría 180 filas como independientes." },
+        { "id": "anova", "text": "ANOVA de un factor", "why": "Se usa con tres o más grupos independientes." },
+        { "id": "chi2", "text": "Chi-cuadrado", "why": "La variable resultado no es categórica." },
+        { "id": "mann-whitney", "text": "U de Mann–Whitney", "why": "Es para grupos independientes." }
+      ],
+      "answer": "t-paired",
+      "justify": {
+        "prompt": "Marca las razones que sostienen tu elección.",
+        "min": 3,
+        "options": [
+          { "id": "j1", "text": "Las dos medidas provienen del mismo paciente", "correct": true },
+          { "id": "j2", "text": "La variable resultado se trata como cuantitativa", "correct": true },
+          { "id": "j3", "text": "Se comparan dos momentos", "correct": true },
+          { "id": "j4", "text": "Las diferencias son aproximadamente simétricas", "correct": true },
+          { "id": "j5", "text": "Los grupos son independientes", "correct": false },
+          { "id": "j6", "text": "n = 180", "correct": false }
+        ]
+      },
+      "explanation": "Y aquí se ve por qué los siete pasos anteriores no eran burocracia: sin saber que las medidas están emparejadas y que n = 90, la elección de la prueba habría sido incorrecta. El análisis correcto se decide en la fase de conocer los datos, no en la de calcular.",
+      "hints": [
+        "Recupera lo que has determinado en los pasos 1 y 5.",
+        "¿Mismas personas o personas distintas?",
+        "Dos momentos, variable cuantitativa, datos emparejados."
+      ]
+    }
+  ],
+  "wrapUp": "Conocer los datos NO es el paso previo al análisis: es la mitad del análisis. Los ocho pasos de este reto son exactamente los que hay que recorrer cada vez que llega una base de datos nueva."
+}

@@ -1,0 +1,141 @@
+{
+  "world": "w11",
+  "activities": [
+    {
+      "id": "w11-01",
+      "concept": "intensidad",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 20,
+      "stem": "En el caso SALUD-MENTAL se obtiene r = 0,58 entre la puntuación de ansiedad (GAD-7) y la mala calidad del sueño (PSQI), con n = 210 y p < 0,001.",
+      "prompt": "¿Cuál es la lectura correcta de ese r = 0,58?",
+      "options": [
+        { "id": "a", "text": "El 58 % de los casos de mal sueño se explican por la ansiedad", "why": "Confunde r con proporción de varianza explicada, y además atribuye causalidad." },
+        { "id": "b", "text": "Asociación positiva de intensidad moderada: a más ansiedad, peor sueño; y r² = 0,34 indica que comparten un 34 % de la variabilidad", "why": "Correcto: dirección, intensidad y varianza compartida bien expresadas." },
+        { "id": "c", "text": "La ansiedad causa mal sueño en el 58 % de los estudiantes", "why": "Es un estudio transversal: no permite afirmar causalidad ni asignar porcentajes de personas." },
+        { "id": "d", "text": "Por cada punto de GAD-7, el PSQI sube 0,58 puntos", "why": "Eso sería la PENDIENTE de una regresión, no el coeficiente de correlación. r no tiene unidades." }
+      ],
+      "answer": "b",
+      "explanation": "r informa de dos cosas y solo dos: la DIRECCIÓN (signo) y la INTENSIDAD de la asociación LINEAL, en una escala sin unidades de −1 a +1. Para hablar de varianza compartida se usa r² (aquí 0,34). La opción d es especialmente instructiva: confundir r con la pendiente es el error que separa el Mundo 11 del Mundo 12. r es simétrico y adimensional; la pendiente no lo es.",
+      "hints": [
+        "¿Qué información contiene el signo y qué el valor absoluto?",
+        "Para hablar de varianza explicada hace falta elevar r al cuadrado.",
+        "¿Tiene unidades r? ¿Y una pendiente?"
+      ]
+    },
+    {
+      "id": "w11-02",
+      "concept": "causalidad",
+      "type": "claim-audit",
+      "difficulty": 3,
+      "xp": 25,
+      "stem": "Estudio transversal en 3.000 adultos: quienes consumen más café tienen mejor función cognitiva (r = 0,21; p < 0,001).",
+      "prompt": "Marca las explicaciones alternativas que la correlación NO permite descartar.",
+      "claims": [
+        { "id": "c1", "text": "Causalidad inversa: quien tiene mejor función cognitiva trabaja en empleos donde se bebe más café.", "correct": true, "why": "La dirección causal no está determinada por una asociación transversal." },
+        { "id": "c2", "text": "Confusión: la edad se asocia a la vez con el consumo de café y con la función cognitiva.", "correct": true, "why": "Una tercera variable puede generar la asociación completa." },
+        { "id": "c3", "text": "Sesgo de selección: quienes participan voluntariamente pueden diferir de la población.", "correct": true, "why": "Afecta a la validez externa y puede crear asociaciones espurias." },
+        { "id": "c4", "text": "El café mejora la cognición y esta es la única explicación posible.", "correct": false, "why": "Justo lo que la correlación no permite afirmar." },
+        { "id": "c5", "text": "Como p < 0,001, la asociación es causal.", "correct": false, "why": "El p-valor mide compatibilidad con el azar, no causalidad." }
+      ],
+      "explanation": "Ante cualquier asociación observacional hay cinco explicaciones posibles y solo una es la causal: (1) azar; (2) sesgo; (3) confusión; (4) causalidad inversa; (5) causalidad. Descartar las cuatro primeras exige diseño (aleatorización, temporalidad, ajuste, gradiente dosis-respuesta, plausibilidad), no un p-valor más pequeño. Añadido: r = 0,21 con n = 3.000 es significativo pero explica un 4 % de la variabilidad, es decir, casi nada en términos prácticos.",
+      "hints": [
+        "Enumera las explicaciones alternativas a la causal.",
+        "Piensa en una tercera variable que afecte a las dos.",
+        "¿Puede el efecto ser la causa?"
+      ]
+    },
+    {
+      "id": "w11-03",
+      "concept": "pearson",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 25,
+      "chart": {
+        "kind": "scatter",
+        "points": [{ "x": 1, "y": 3.0 }, { "x": 2, "y": 5.4 }, { "x": 3, "y": 7.1 }, { "x": 4, "y": 8.0 }, { "x": 5, "y": 8.4 }, { "x": 6, "y": 8.3 }, { "x": 7, "y": 7.6 }, { "x": 8, "y": 6.2 }, { "x": 9, "y": 4.3 }, { "x": 10, "y": 2.1 }],
+        "opts": { "xLabel": "Dosis (mg)", "yLabel": "Respuesta", "title": "Relación dosis-respuesta" }
+      },
+      "prompt": "El coeficiente de Pearson de estos datos es r ≈ −0,05. ¿Qué conclusión es correcta?",
+      "options": [
+        { "id": "a", "text": "No hay ninguna relación entre dosis y respuesta", "why": "El gráfico muestra una relación clarísima: es curva, no lineal." },
+        { "id": "b", "text": "Hay una relación fuerte pero NO lineal: r de Pearson no la detecta", "why": "Correcto. La relación es en forma de U invertida." },
+        { "id": "c", "text": "El cálculo de r está mal hecho", "why": "El cálculo es correcto: r mide solo la componente lineal." },
+        { "id": "d", "text": "Hay una relación negativa débil", "why": "Leer r sin mirar el gráfico es exactamente la trampa de este ejercicio." }
+      ],
+      "answer": "b",
+      "explanation": "r ≈ 0 significa «sin relación LINEAL», no «sin relación». En una curva en U o en U invertida las contribuciones positivas y negativas se cancelan. Este patrón es muy real en farmacología (ventana terapéutica: dosis baja ineficaz, dosis alta tóxica) y en fisiología. Moral operativa: MIRA SIEMPRE EL DIAGRAMA DE DISPERSIÓN antes de calcular o interpretar un r.",
+      "hints": [
+        "Fíjate en la forma de la nube de puntos.",
+        "¿Qué tipo de relación mide r de Pearson?",
+        "Piensa en la ventana terapéutica de un fármaco."
+      ]
+    },
+    {
+      "id": "w11-04",
+      "concept": "outliers-r",
+      "type": "sim",
+      "difficulty": 3,
+      "xp": 35,
+      "game": "correlation-lab",
+      "config": { "n": 20, "targetR": 0.7 },
+      "prompt": "Laboratorio de correlación: mueve un solo punto y observa cuánto puede cambiar r.",
+      "explanation": "Con muestras pequeñas, un único punto influyente puede llevar r de 0,8 a 0,1 o al contrario. Por eso ningún r debe informarse sin su diagrama de dispersión."
+    },
+    {
+      "id": "w11-05",
+      "concept": "spearman",
+      "type": "decision",
+      "difficulty": 3,
+      "xp": 30,
+      "stem": "Se quiere estudiar la asociación entre el ESTADIO de una enfermedad (I, II, III, IV: ordinal) y la puntuación de calidad de vida (0–100, cuantitativa con un par de valores extremos). n = 45.",
+      "prompt": "¿Qué coeficiente de correlación es el adecuado?",
+      "options": [
+        { "id": "pearson", "text": "r de Pearson", "why": "Exige dos variables cuantitativas y es sensible a los atípicos; el estadio es ordinal." },
+        { "id": "spearman", "text": "rho de Spearman", "why": "Correcto: sirve con variables ordinales, detecta relaciones monótonas y resiste los atípicos." },
+        { "id": "chi2", "text": "Chi-cuadrado", "why": "Trataría el estadio y la calidad de vida como categóricas y perdería el orden y la magnitud." },
+        { "id": "regression", "text": "Regresión lineal simple", "why": "Se usa para predecir, no para cuantificar una asociación ordinal; además arrastra los mismos problemas de escala." }
+      ],
+      "answer": "spearman",
+      "justify": {
+        "prompt": "Marca las razones válidas.",
+        "min": 2,
+        "options": [
+          { "id": "j1", "text": "Una de las variables es ordinal", "correct": true },
+          { "id": "j2", "text": "Spearman trabaja con rangos, así que no exige normalidad", "correct": true },
+          { "id": "j3", "text": "Es más robusta ante valores extremos que Pearson", "correct": true },
+          { "id": "j4", "text": "Detecta relaciones monótonas aunque no sean lineales", "correct": true },
+          { "id": "j5", "text": "Las dos variables son cuantitativas continuas", "correct": false },
+          { "id": "j6", "text": "Spearman mide relaciones causales", "correct": false }
+        ]
+      },
+      "explanation": "Spearman es simplemente Pearson calculado sobre los RANGOS. Eso le da tres ventajas: admite variables ordinales, no exige normalidad y resiste los atípicos (un valor extremo solo aporta el rango siguiente, no un valor desmesurado). Su precio: informa de la relación monótona, no de la lineal, y pierde algo de potencia si los supuestos de Pearson se cumplen realmente.",
+      "hints": [
+        "¿De qué tipo es cada variable?",
+        "¿Qué coeficiente admite escalas ordinales?",
+        "Piensa en el efecto de los valores extremos."
+      ]
+    },
+    {
+      "id": "w11-06",
+      "concept": "significacion-r",
+      "type": "claim-audit",
+      "difficulty": 3,
+      "xp": 25,
+      "prompt": "Dos estudios informan correlaciones. Marca lo correcto.\nEstudio X: r = 0,08 · n = 12.000 · p < 0,001\nEstudio Y: r = 0,61 · n = 14 · p = 0,021",
+      "claims": [
+        { "id": "c1", "text": "El estudio X tiene una asociación estadísticamente significativa pero de magnitud despreciable.", "correct": true, "why": "r² = 0,0064: comparten un 0,6 % de la variabilidad." },
+        { "id": "c2", "text": "El estudio X tiene una asociación más fuerte porque su p es más pequeño.", "correct": false, "why": "El p-valor no mide la intensidad de la asociación." },
+        { "id": "c3", "text": "La estimación del estudio Y es muy imprecisa: con n = 14 el intervalo de confianza de r será enorme.", "correct": true, "why": "Su IC 95 % va aproximadamente de 0,11 a 0,86." },
+        { "id": "c4", "text": "Con n grande, casi cualquier r no nulo sale significativo.", "correct": true, "why": "La significación de r depende de r y de n conjuntamente." },
+        { "id": "c5", "text": "Un r de 0,61 siempre es clínicamente relevante.", "correct": false, "why": "La relevancia depende del contexto y, con n = 14, la estimación es demasiado inestable para afirmarlo." }
+      ],
+      "explanation": "«Significativo» y «grande» son cosas distintas también en correlación. Informa siempre tres cifras juntas: r, su intervalo de confianza y n. Con n = 12.000 un r = 0,08 es real y prácticamente inútil; con n = 14 un r = 0,61 es sugerente pero poco fiable.",
+      "hints": [
+        "Calcula r² en cada caso.",
+        "¿De qué depende el p-valor de una correlación?",
+        "¿Qué precisión tiene una estimación con n = 14?"
+      ]
+    }
+  ]
+}

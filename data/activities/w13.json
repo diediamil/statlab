@@ -1,0 +1,137 @@
+{
+  "world": "w13",
+  "activities": [
+    {
+      "id": "w13-01",
+      "concept": "vp-vn-fp-fn",
+      "type": "table2x2",
+      "difficulty": 2,
+      "xp": 25,
+      "stem": "Se ha aplicado una prueba rápida y la prueba de referencia a 400 personas. Resultados:\n· 72 personas enfermas dieron positivo\n· 8 personas enfermas dieron negativo\n· 32 personas sanas dieron positivo\n· 288 personas sanas dieron negativo",
+      "prompt": "Coloca cada cifra en su casilla de la tabla diagnóstica.",
+      "answer": { "tp": 72, "fp": 32, "fn": 8, "tn": 288 },
+      "ask": ["sensitivity", "specificity", "ppv", "npv"],
+      "explanation": "Sensibilidad = 72/(72+8) = 90 %. Especificidad = 288/(288+32) = 90 %. VPP = 72/(72+32) = 69,2 %. VPN = 288/(288+8) = 97,3 %. Prevalencia en esta muestra = 80/400 = 20 %. Regla nemotécnica de los denominadores: sensibilidad y especificidad se calculan por COLUMNAS (dividiendo entre los enfermos y entre los sanos: propiedades de la prueba); VPP y VPN se calculan por FILAS (dividiendo entre los positivos y entre los negativos: lo que le interesa al paciente).",
+      "hints": [
+        "Verdadero positivo = la prueba dice sí y la persona está enferma.",
+        "Sensibilidad y especificidad se calculan por columnas (enfermos y sanos).",
+        "VPP y VPN se calculan por filas (positivos y negativos)."
+      ]
+    },
+    {
+      "id": "w13-02",
+      "concept": "vpp",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 25,
+      "case": "D",
+      "stem": "La MISMA prueba (sensibilidad 92 %, especificidad 94 %) se usa en dos contextos:\n· Cribado poblacional: prevalencia 0,8 % → VPP ≈ 11 %\n· Consulta con síntomas compatibles: prevalencia 35 % → VPP ≈ 89 %",
+      "prompt": "¿Qué explica esa diferencia tan enorme en el VPP?",
+      "options": [
+        { "id": "a", "text": "La prueba funciona peor en población general", "why": "La prueba es idéntica: sensibilidad y especificidad no han cambiado." },
+        { "id": "b", "text": "El VPP depende de la prevalencia: con pocos enfermos, los falsos positivos superan con facilidad a los verdaderos positivos", "why": "Correcto: es el efecto de la probabilidad a priori." },
+        { "id": "c", "text": "El tamaño de la muestra es distinto", "why": "El VPP no depende del tamaño, sino de la proporción de enfermos." },
+        { "id": "d", "text": "En consulta la prueba se aplica mejor", "why": "El enunciado no plantea diferencias de ejecución." }
+      ],
+      "answer": "b",
+      "explanation": "Sensibilidad y especificidad son propiedades de la PRUEBA; VPP y VPN son propiedades de la prueba EN UN CONTEXTO. Con prevalencia 0,8 % en 10.000 personas: 80 enfermos (74 detectados) y 9.920 sanos (595 falsos positivos) → VPP = 74/669 ≈ 11 %. Con prevalencia 35 %: 3.500 enfermos (3.220 detectados) y 6.500 sanos (390 falsos positivos) → VPP = 3.220/3.610 ≈ 89 %. Esta es la razón clínica de que no se criben poblaciones de bajo riesgo y de que la anamnesis (que sube la probabilidad a priori) siga siendo insustituible.",
+      "hints": [
+        "Construye la población hipotética en los dos escenarios.",
+        "Cuenta cuántos falsos positivos hay en cada caso.",
+        "El VPP depende de cuántos enfermos hay antes de hacer la prueba."
+      ]
+    },
+    {
+      "id": "w13-03",
+      "concept": "cribado-confirmacion",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 20,
+      "prompt": "En un programa de cribado poblacional de una enfermedad grave y tratable, ¿qué propiedad conviene priorizar?",
+      "options": [
+        { "id": "a", "text": "Especificidad, para no alarmar a personas sanas", "why": "En la fase de cribado el coste de un falso positivo (una prueba de confirmación) es mucho menor que el de un falso negativo (una enfermedad no detectada)." },
+        { "id": "b", "text": "Sensibilidad, para no dejar escapar casos, aceptando falsos positivos que se confirmarán después", "why": "Correcto: es la lógica estándar de los programas de cribado." },
+        { "id": "c", "text": "VPP, porque es lo que le interesa al paciente", "why": "El VPP importa al comunicar el resultado, pero no es una propiedad que se pueda elegir: depende de la prevalencia." },
+        { "id": "d", "text": "Las dos por igual: la prueba ideal existe", "why": "Hay un compromiso: al mover el punto de corte, subir una baja la otra." }
+      ],
+      "answer": "b",
+      "explanation": "En cribado priorizas SENSIBILIDAD (SnNOut: una prueba muy sensible con resultado negativo permite descartar); en confirmación priorizas ESPECIFICIDAD (SpPIn: una prueba muy específica con resultado positivo permite confirmar). El programa completo combina ambas: primero una prueba sensible para no perder casos, después una específica para no etiquetar a nadie sano. Y hay que valorar los costes de cada error: un falso negativo en un cáncer tratable puede costar una vida; un falso positivo cuesta ansiedad y una prueba adicional.",
+      "hints": [
+        "¿Qué error es más grave en la primera fase de un cribado?",
+        "Recuerda SnNOut y SpPIn.",
+        "Un cribado suele ir seguido de una prueba de confirmación."
+      ]
+    },
+    {
+      "id": "w13-04",
+      "concept": "auc",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 25,
+      "prompt": "Una prueba cuantitativa tiene AUC = 0,86. ¿Qué significa exactamente?",
+      "options": [
+        { "id": "a", "text": "La prueba acierta en el 86 % de los diagnósticos", "why": "La AUC no es una tasa de acierto: la exactitud depende del punto de corte y de la prevalencia." },
+        { "id": "b", "text": "Si tomamos al azar una persona enferma y una sana, hay un 86 % de probabilidad de que la prueba dé un valor más alto a la enferma", "why": "Correcto: es la interpretación probabilística de la AUC." },
+        { "id": "c", "text": "El 86 % de los positivos son verdaderos", "why": "Eso sería el VPP, que además depende de la prevalencia." },
+        { "id": "d", "text": "La sensibilidad es del 86 %", "why": "La sensibilidad corresponde a un punto de corte concreto; la AUC resume todos los cortes posibles." }
+      ],
+      "answer": "b",
+      "explanation": "La AUC resume la capacidad de DISCRIMINACIÓN de la prueba a lo largo de todos los puntos de corte posibles, con dos propiedades notables: es independiente de la prevalencia y equivale al estadístico U de Mann–Whitney normalizado. AUC = 0,5 es lanzar una moneda. Pero la AUC no basta para decidir: hay que elegir el punto de corte según el uso clínico (Youden si los dos errores pesan igual; un corte más sensible en cribado) y comprobar la CALIBRACIÓN, que la AUC no evalúa.",
+      "hints": [
+        "La AUC compara pares enfermo-sano.",
+        "¿Depende la AUC del punto de corte elegido?",
+        "AUC = 0,5 equivale al azar."
+      ]
+    },
+    {
+      "id": "w13-05",
+      "concept": "sensibilidad",
+      "type": "claim-audit",
+      "difficulty": 3,
+      "xp": 25,
+      "prompt": "Marca las afirmaciones correctas.",
+      "claims": [
+        { "id": "c1", "text": "Sensibilidad = P(prueba positiva | persona enferma).", "correct": true, "why": "Se calcula sobre la columna de enfermos." },
+        { "id": "c2", "text": "VPP = P(persona enferma | prueba positiva).", "correct": true, "why": "Se calcula sobre la fila de positivos." },
+        { "id": "c3", "text": "Sensibilidad y VPP son la misma cosa expresada de dos maneras.", "correct": false, "why": "Son probabilidades condicionadas inversas: confundirlas es el error central de este mundo." },
+        { "id": "c4", "text": "Si la prevalencia baja, el VPN sube.", "correct": true, "why": "Con menos enfermos, un negativo es más creíble." },
+        { "id": "c5", "text": "La especificidad cambia si cambia la prevalencia.", "correct": false, "why": "Es una propiedad de la prueba: se calcula solo entre los sanos." },
+        { "id": "c6", "text": "Al bajar el punto de corte de una prueba cuantitativa, sube la sensibilidad y baja la especificidad.", "correct": true, "why": "Es el compromiso que dibuja precisamente la curva ROC." }
+      ],
+      "explanation": "Cuatro ideas que hay que tener automatizadas: (1) sensibilidad y especificidad se calculan por columnas y no dependen de la prevalencia; (2) VPP y VPN se calculan por filas y sí dependen de ella; (3) el paciente pregunta por el VPP, el laboratorio informa de la sensibilidad; (4) mover el punto de corte intercambia sensibilidad por especificidad, nunca mejora las dos a la vez.",
+      "hints": [
+        "Dibuja la tabla 2×2 y fíjate en los denominadores.",
+        "¿Qué se calcula por columnas y qué por filas?",
+        "¿Qué medidas dependen de la prevalencia?"
+      ]
+    },
+    {
+      "id": "w13-06",
+      "concept": "vp-vn-fp-fn",
+      "type": "sim",
+      "difficulty": 3,
+      "xp": 35,
+      "game": "diagnostic-table",
+      "config": { "rounds": 5 },
+      "prompt": "Tabla diagnóstica: construye la tabla 2×2 a partir de los datos y calcula las cuatro métricas.",
+      "explanation": "Cuando puedas construir la tabla sin pensar, todas las preguntas de este mundo se vuelven mecánicas."
+    },
+    {
+      "id": "w13-07",
+      "concept": "youden",
+      "type": "numeric",
+      "difficulty": 2,
+      "xp": 20,
+      "stem": "Una prueba tiene sensibilidad 0,88 y especificidad 0,79 en el punto de corte propuesto.",
+      "prompt": "¿Cuál es el índice de Youden (J)? Dos decimales.",
+      "answer": 0.67,
+      "tolerance": 0.01,
+      "explanation": "J = sensibilidad + especificidad − 1 = 0,88 + 0,79 − 1 = 0,67. J vale 0 cuando la prueba no discrimina mejor que el azar y 1 cuando es perfecta. Su utilidad práctica: el punto de la curva ROC que maximiza J es el que está más lejos de la diagonal, y es un punto de corte razonable CUANDO los dos tipos de error tienen consecuencias comparables. Si un falso negativo es mucho más grave que un falso positivo (cribado de una enfermedad grave), el corte óptimo no es el de Youden, sino uno más sensible.",
+      "hints": [
+        "J = S + E − 1.",
+        "Suma las dos proporciones y resta 1.",
+        "0,88 + 0,79 = 1,67."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,196 @@
+{
+  "world": "w01",
+  "activities": [
+    {
+      "id": "w01-01",
+      "concept": "poblacion",
+      "type": "mcq",
+      "difficulty": 1,
+      "xp": 10,
+      "case": "A",
+      "stem": "Un servicio de fisioterapia quiere saber si su nuevo programa reduce el dolor en personas adultas con lumbalgia crónica atendidas en atención primaria. Recluta a 80 pacientes derivados durante seis meses.",
+      "prompt": "¿Cuál es la población de este estudio?",
+      "options": [
+        { "id": "a", "text": "Los 80 pacientes reclutados", "why": "Esos 80 son la muestra: el subconjunto que realmente se ha medido." },
+        { "id": "b", "text": "Las personas adultas con lumbalgia crónica atendidas en atención primaria", "why": "Es el conjunto completo sobre el que se quiere concluir." },
+        { "id": "c", "text": "Toda la población española", "why": "La población de un estudio la define la pregunta de investigación, no el país." },
+        { "id": "d", "text": "Los fisioterapeutas del servicio", "why": "Los profesionales aplican el tratamiento; no son las unidades de estudio." }
+      ],
+      "answer": "b",
+      "explanation": "La población es el conjunto completo de individuos sobre los que se quiere sacar conclusiones, y lo define la pregunta de investigación: aquí, personas adultas con lumbalgia crónica en atención primaria. Los 80 pacientes son la muestra. Nota importante: la conclusión solo podrá extenderse legítimamente a poblaciones parecidas a la que generó la muestra.",
+      "hints": [
+        "Pregúntate: ¿sobre quién quiere concluir el equipo investigador?",
+        "La población no tiene que ser «todo el mundo»: la delimita la pregunta.",
+        "Los 80 pacientes son los que se han medido. Eso tiene otro nombre."
+      ]
+    },
+    {
+      "id": "w01-02",
+      "concept": "parametro-estadistico",
+      "type": "classify",
+      "difficulty": 2,
+      "xp": 15,
+      "prompt": "Clasifica cada cantidad según se refiera a toda la población o a la muestra que se ha medido.",
+      "bins": [
+        { "id": "parametro", "title": "Parámetro", "desc": "Valor de la población. Normalmente desconocido." },
+        { "id": "estadistico", "title": "Estadístico", "desc": "Valor calculado en la muestra. Se conoce y estima al parámetro." }
+      ],
+      "items": [
+        { "id": "i1", "text": "μ = presión sistólica media de todas las personas hipertensas de España", "bin": "parametro" },
+        { "id": "i2", "text": "x̄ = 141,2 mmHg en los 150 pacientes del ensayo", "bin": "estadistico" },
+        { "id": "i3", "text": "σ = desviación típica del peso en la población de referencia", "bin": "parametro" },
+        { "id": "i4", "text": "s = 8,4 kg en la muestra encuestada", "bin": "estadistico" },
+        { "id": "i5", "text": "p = proporción real de fumadores en la comunidad", "bin": "parametro" },
+        { "id": "i6", "text": "p̂ = 0,23 de fumadores entre los 300 encuestados", "bin": "estadistico" }
+      ],
+      "explanation": "Los parámetros describen la población y se denotan con letras griegas (μ, σ, p). Los estadísticos se calculan en la muestra y se denotan con letras latinas o con acento circunflejo (x̄, s, p̂). Toda la inferencia estadística consiste en usar estadísticos para decir algo defendible sobre parámetros que no podemos observar.",
+      "hints": [
+        "Fíjate en el símbolo: las letras griegas suelen indicar población.",
+        "Si el valor viene con un número concreto medido en un grupo, se ha calculado en una muestra.",
+        "μ, σ y p son parámetros; x̄, s y p̂ son sus estimadores."
+      ]
+    },
+    {
+      "id": "w01-03",
+      "concept": "individuo",
+      "type": "numeric",
+      "difficulty": 2,
+      "xp": 15,
+      "stem": "En un estudio de rehabilitación se mide el rango de movilidad de la rodilla a 40 pacientes en tres momentos: antes, a las 4 semanas y a las 12 semanas. Cada medición se anota en una fila de la hoja de cálculo.",
+      "prompt": "¿Cuántos individuos hay en el estudio?",
+      "answer": 40,
+      "tolerance": 0,
+      "unit": "individuos",
+      "explanation": "Hay 40 individuos y 120 datos (40 × 3). Confundirlos infla artificialmente el tamaño de la muestra y es uno de los errores más graves en análisis de datos sanitarios: las tres medidas del mismo paciente NO son independientes, así que tratarlas como 120 observaciones independientes daría p-valores falsamente pequeños.",
+      "misconceptionFeedback": { "120": "Eso es el número de DATOS (filas), no de individuos. Cada paciente aporta tres mediciones, pero sigue siendo una sola persona." },
+      "hints": [
+        "Cuenta personas, no filas de la hoja de cálculo.",
+        "Cada paciente aparece tres veces en la tabla.",
+        "Individuos = pacientes distintos."
+      ]
+    },
+    {
+      "id": "w01-04",
+      "concept": "variable",
+      "type": "multi",
+      "difficulty": 2,
+      "xp": 15,
+      "stem": "Ficha de un paciente del estudio: «Mujer, 54 años, grupo Ejercicio + educación, dolor basal 7, Oswestry 42».",
+      "prompt": "¿Cuáles de estos son VARIABLES del estudio (no valores concretos)?",
+      "options": [
+        { "id": "a", "text": "Sexo", "correct": true, "why": "Es una característica que varía entre individuos." },
+        { "id": "b", "text": "Mujer", "correct": false, "why": "Es un valor (una modalidad) de la variable sexo." },
+        { "id": "c", "text": "Edad", "correct": true, "why": "Varía entre individuos: es una variable." },
+        { "id": "d", "text": "54", "correct": false, "why": "Es el dato concreto de esa paciente." },
+        { "id": "e", "text": "Intensidad del dolor", "correct": true, "why": "Es la característica medida, no el valor." },
+        { "id": "f", "text": "Índice de Oswestry", "correct": true, "why": "Es la variable de discapacidad medida." }
+      ],
+      "answer": ["a", "c", "e", "f"],
+      "explanation": "Una variable es la característica que se mide y que puede tomar valores distintos en distintos individuos. Los valores concretos («Mujer», «54», «7») son datos u observaciones. Esta distinción parece trivial y sin embargo está detrás de la mitad de los errores al montar una base de datos.",
+      "hints": [
+        "Una variable puede tomar varios valores; un dato es uno de esos valores.",
+        "«Mujer» es un valor posible de una variable. ¿De cuál?",
+        "Piensa en qué pondrías como encabezado de columna en una hoja de cálculo."
+      ]
+    },
+    {
+      "id": "w01-05",
+      "concept": "representatividad",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 20,
+      "case": "C",
+      "stem": "Para estudiar la ansiedad del estudiantado de primer curso se envía una encuesta en línea voluntaria. Responden 210 personas de las 1.400 matriculadas.",
+      "prompt": "¿Cuál es el problema principal de esta muestra?",
+      "options": [
+        { "id": "a", "text": "La muestra es demasiado pequeña; con 210 personas no se puede concluir nada", "why": "210 de 1.400 es un tamaño razonable. El problema no es el tamaño." },
+        { "id": "b", "text": "Quien responde voluntariamente puede diferir sistemáticamente de quien no responde", "why": "Es sesgo de autoselección: si responden más quienes tienen síntomas, la prevalencia se sobreestima." },
+        { "id": "c", "text": "No se puede calcular la media porque hay datos faltantes", "why": "Se puede calcular perfectamente; el problema es a quién representa esa media." },
+        { "id": "d", "text": "No hay problema: 210 respuestas garantizan representatividad", "why": "El tamaño no corrige el sesgo de selección." }
+      ],
+      "answer": "b",
+      "explanation": "El sesgo de selección NO se corrige aumentando el tamaño de la muestra: una muestra sesgada de 10.000 personas sigue estando sesgada, solo que con intervalos de confianza más estrechos alrededor del valor equivocado. Aumentar n reduce el error aleatorio, no el error sistemático. Ante una encuesta voluntaria hay que preguntarse siempre quién tiene más motivos para responder.",
+      "hints": [
+        "¿Quién tiene más probabilidad de responder una encuesta sobre ansiedad?",
+        "Distingue error aleatorio (se reduce con n) de error sistemático (no se reduce con n).",
+        "El nombre técnico empieza por «sesgo de…»."
+      ]
+    },
+    {
+      "id": "w01-06",
+      "concept": "muestra",
+      "type": "claim-audit",
+      "difficulty": 3,
+      "xp": 20,
+      "prompt": "Marca si cada afirmación es correcta o incorrecta.",
+      "claims": [
+        {
+          "id": "c1",
+          "text": "Una muestra grande es siempre representativa de la población.",
+          "correct": false,
+          "why": "El tamaño no garantiza representatividad: lo que la garantiza es el procedimiento de selección (aleatorización, marco muestral adecuado)."
+        },
+        {
+          "id": "c2",
+          "text": "Dos muestras aleatorias distintas de la misma población pueden dar medias diferentes.",
+          "correct": true,
+          "why": "Es la variabilidad muestral, y es normal e inevitable. Cuantificarla es justo el objeto de la inferencia."
+        },
+        {
+          "id": "c3",
+          "text": "Si estudiamos a toda la población, la media obtenida es un parámetro, no un estadístico.",
+          "correct": true,
+          "why": "Al medir a todos ya no estimamos: conocemos el parámetro. Eso es un censo, no una muestra."
+        },
+        {
+          "id": "c4",
+          "text": "La muestra se elige después de decidir qué prueba estadística se va a aplicar.",
+          "correct": false,
+          "why": "El orden es el contrario: la pregunta y el diseño determinan la muestra, y el diseño y el tipo de variables determinan la prueba."
+        }
+      ],
+      "explanation": "Estas cuatro afirmaciones concentran los malentendidos habituales sobre muestreo. La clave: representatividad es una propiedad del PROCEDIMIENTO de selección, no del tamaño.",
+      "hints": [
+        "Pregúntate en cada caso: ¿esto depende del tamaño o del procedimiento?",
+        "La variabilidad entre muestras no es un error: es un hecho.",
+        "Cuando se mide a toda la población, ya no hay estimación."
+      ]
+    },
+    {
+      "id": "w01-07",
+      "concept": "poblacion",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 15,
+      "generator": "populationSample",
+      "prompt": "Identifica la población objetivo del estudio descrito.",
+      "explanation": "La población objetivo es el conjunto al que se quiere generalizar. La población accesible (de la que realmente se extrae la muestra) suele ser más estrecha, y la diferencia entre ambas limita la validez externa del estudio.",
+      "hints": [
+        "Busca la frase que describe a quién se quiere aplicar la conclusión.",
+        "Distingue población objetivo de población accesible.",
+        "La muestra son las personas efectivamente medidas."
+      ]
+    },
+    {
+      "id": "w01-08",
+      "concept": "parametro-estadistico",
+      "type": "order",
+      "difficulty": 2,
+      "xp": 15,
+      "prompt": "Ordena los pasos del razonamiento estadístico, del primero al último.",
+      "items": [
+        { "id": "s1", "text": "Definir la pregunta de investigación y la población", "pos": 1 },
+        { "id": "s2", "text": "Diseñar el estudio y seleccionar la muestra", "pos": 2 },
+        { "id": "s3", "text": "Medir las variables y describir los datos obtenidos", "pos": 3 },
+        { "id": "s4", "text": "Calcular estadísticos en la muestra", "pos": 4 },
+        { "id": "s5", "text": "Inferir conclusiones sobre los parámetros de la población", "pos": 5 }
+      ],
+      "explanation": "Este es el esqueleto de toda la asignatura: pregunta → diseño → medición → descripción → inferencia. Cuando un análisis sale mal, casi siempre es porque se ha saltado o invertido uno de estos pasos (por ejemplo, elegir la prueba antes de saber qué variables hay).",
+      "hints": [
+        "Todo empieza por una pregunta, no por unos datos.",
+        "No puedes describir lo que aún no has medido.",
+        "La inferencia es el último paso, no el primero."
+      ]
+    }
+  ]
+}

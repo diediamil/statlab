@@ -1,0 +1,15 @@
+# Despliegue en Netlify: no hay build, solo archivos estáticos.
+[build]
+  publish = "."
+  command = ""
+
+# STATLAB usa router por hash (#/ruta), así que NO hace falta ninguna regla
+# de reescritura: todas las URL apuntan a index.html de forma natural.
+# Se añaden únicamente cabeceras de seguridad.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"

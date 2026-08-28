@@ -1,0 +1,214 @@
+{
+  "world": "w10",
+  "activities": [
+    {
+      "id": "w10-01",
+      "concept": "t-pareada",
+      "type": "decision",
+      "difficulty": 2,
+      "xp": 25,
+      "case": "E",
+      "stem": "Programa preventivo de caídas. Se mide la escala de equilibrio de Berg (0–56, cuantitativa) a los MISMOS 60 participantes antes y después de 12 semanas de programa. Las diferencias individuales tienen una distribución razonablemente simétrica sin atípicos.",
+      "prompt": "¿Qué análisis corresponde a la comparación principal?",
+      "options": [
+        { "id": "t-independent", "text": "t de Student para muestras independientes", "why": "Trataría las dos medidas como si vinieran de personas distintas y perdería el emparejamiento." },
+        { "id": "t-paired", "text": "t de Student para muestras relacionadas", "why": "Correcto: misma persona medida dos veces y diferencias aproximadamente simétricas." },
+        { "id": "anova", "text": "ANOVA de un factor", "why": "Se usa con tres o más grupos independientes." },
+        { "id": "chi2", "text": "Chi-cuadrado", "why": "Es para variables cualitativas." },
+        { "id": "mann-whitney", "text": "U de Mann–Whitney", "why": "Es la alternativa no paramétrica para grupos INDEPENDIENTES." }
+      ],
+      "answer": "t-paired",
+      "justify": {
+        "prompt": "Marca todas las razones que sostienen tu elección.",
+        "min": 3,
+        "options": [
+          { "id": "j1", "text": "La variable resultado es cuantitativa", "correct": true },
+          { "id": "j2", "text": "Las dos medidas provienen del mismo sujeto (datos emparejados)", "correct": true },
+          { "id": "j3", "text": "Se comparan dos momentos, no más de dos", "correct": true },
+          { "id": "j4", "text": "Las diferencias son aproximadamente simétricas, así que la prueba paramétrica es razonable", "correct": true },
+          { "id": "j5", "text": "Los dos grupos son independientes", "correct": false },
+          { "id": "j6", "text": "La variable resultado es categórica", "correct": false },
+          { "id": "j7", "text": "Hay tres o más grupos que comparar", "correct": false }
+        ]
+      },
+      "explanation": "El emparejamiento es información valiosísima: al analizar las DIFERENCIAS individuales se elimina la variabilidad entre personas, lo que aumenta mucho la potencia. Ignorarlo y aplicar una t independiente desperdicia esa ventaja y da un resultado más conservador (y conceptualmente incorrecto). La t pareada contrasta H0: μ_diferencias = 0, y su supuesto es la normalidad aproximada de las DIFERENCIAS, no de las medidas originales.",
+      "hints": [
+        "Fíjate en si son las mismas personas o personas distintas.",
+        "¿Cuántos grupos o momentos se comparan?",
+        "¿De qué tipo es la variable resultado?",
+        "Con las mismas personas medidas dos veces, los datos están emparejados."
+      ]
+    },
+    {
+      "id": "w10-02",
+      "concept": "anova",
+      "type": "decision",
+      "difficulty": 3,
+      "xp": 30,
+      "case": "B",
+      "stem": "Ensayo con TRES brazos independientes (control, dosis baja, dosis alta) y n = 50 por brazo. Variable resultado: presión sistólica a 12 semanas (cuantitativa). Los histogramas por grupo son aproximadamente simétricos y la prueba de Levene no es significativa (p = 0,42).",
+      "prompt": "¿Qué análisis corresponde?",
+      "options": [
+        { "id": "t-independent", "text": "Tres t de Student, comparando los brazos de dos en dos", "why": "Inflaría el error de tipo I: tres comparaciones al 5 % dan una probabilidad global de falso positivo cercana al 14 %." },
+        { "id": "anova", "text": "ANOVA de un factor", "why": "Correcto: tres grupos independientes, variable cuantitativa, supuestos razonables." },
+        { "id": "kruskal", "text": "H de Kruskal–Wallis", "why": "Sería la alternativa si se incumpliera la normalidad o hubiera atípicos importantes. Aquí no es necesaria." },
+        { "id": "chi2", "text": "Chi-cuadrado", "why": "La variable resultado es cuantitativa, no categórica." },
+        { "id": "t-paired", "text": "t para muestras relacionadas", "why": "Los brazos son independientes: no hay emparejamiento." }
+      ],
+      "answer": "anova",
+      "justify": {
+        "prompt": "Marca todas las razones válidas.",
+        "min": 3,
+        "options": [
+          { "id": "j1", "text": "Hay tres grupos independientes", "correct": true },
+          { "id": "j2", "text": "La variable resultado es cuantitativa", "correct": true },
+          { "id": "j3", "text": "Se cumplen razonablemente normalidad y homogeneidad de varianzas", "correct": true },
+          { "id": "j4", "text": "Un único contraste global evita inflar el error de tipo I", "correct": true },
+          { "id": "j5", "text": "Los datos están emparejados", "correct": false },
+          { "id": "j6", "text": "El ANOVA me dirá directamente qué dosis es mejor", "correct": false }
+        ]
+      },
+      "explanation": "El ANOVA contrasta una única H0: todas las medias poblacionales son iguales. Si sale significativo, dice que ALGUNA difiere, pero NO cuál: para eso hacen falta comparaciones post hoc (Tukey si interesan todos los pares, Dunnett si solo interesa comparar cada dosis con el control) que controlan el error global. Marcar la opción j6 es el error clásico de interpretación del ANOVA.",
+      "hints": [
+        "Cuenta los grupos.",
+        "¿Qué pasa con el error de tipo I si haces varias t seguidas?",
+        "Comprueba si los supuestos paramétricos son razonables.",
+        "Con tres grupos independientes y variable cuantitativa, la prueba global es una sola."
+      ]
+    },
+    {
+      "id": "w10-03",
+      "concept": "mann-whitney",
+      "type": "decision",
+      "difficulty": 3,
+      "xp": 30,
+      "case": "E",
+      "stem": "Se comparan las CAÍDAS EN UN AÑO (recuento: 0, 1, 2, 3…) entre dos centros independientes, n = 60 cada uno. La distribución está muy sesgada a la derecha: la mayoría tiene 0 o 1 caída y unos pocos tienen 7 u 8. Mediana = 1 en ambos grupos, medias 1,1 y 1,8.",
+      "prompt": "¿Qué análisis es el más defendible para la comparación principal?",
+      "options": [
+        { "id": "t-independent", "text": "t de Student para muestras independientes", "why": "Con una distribución tan asimétrica y n moderado, la media es un resumen pobre y el supuesto de normalidad es dudoso." },
+        { "id": "mann-whitney", "text": "U de Mann–Whitney", "why": "Correcto: dos grupos independientes, variable al menos ordinal, distribución muy asimétrica." },
+        { "id": "wilcoxon", "text": "Wilcoxon de rangos con signo", "why": "Es para datos emparejados, y aquí los centros son independientes." },
+        { "id": "chi2", "text": "Chi-cuadrado", "why": "Sería posible tras categorizar (por ejemplo 0 caídas / ≥1), pero perdería información." },
+        { "id": "kruskal", "text": "H de Kruskal–Wallis", "why": "Es la extensión a tres o más grupos; con dos grupos equivale a Mann–Whitney, pero la prueba nombrada para dos grupos es la U." }
+      ],
+      "answer": "mann-whitney",
+      "justify": {
+        "prompt": "Marca las razones válidas.",
+        "min": 3,
+        "options": [
+          { "id": "j1", "text": "Los dos grupos son independientes", "correct": true },
+          { "id": "j2", "text": "La distribución es muy asimétrica y hay valores extremos", "correct": true },
+          { "id": "j3", "text": "La variable es al menos ordinal, así que se pueden usar rangos", "correct": true },
+          { "id": "j4", "text": "No exige normalidad", "correct": true },
+          { "id": "j5", "text": "Los datos están emparejados", "correct": false },
+          { "id": "j6", "text": "Las pruebas no paramétricas no tienen ningún supuesto", "correct": false }
+        ]
+      },
+      "explanation": "Advertencias importantes: (1) las pruebas no paramétricas SÍ tienen supuestos (independencia y, para interpretar Mann–Whitney como desplazamiento, formas de distribución similares); (2) sus resultados se describen con MEDIANAS y rangos, no con medias; (3) una alternativa moderna y a menudo mejor para recuentos es un modelo de regresión de Poisson o binomial negativa, que además permite ajustar por covariables y modelar el tiempo de exposición.",
+      "hints": [
+        "¿Los grupos son independientes o emparejados?",
+        "Mira la forma de la distribución antes de decidir.",
+        "Con distribuciones muy asimétricas, ¿la media es un buen resumen?",
+        "Las pruebas basadas en rangos no exigen normalidad."
+      ]
+    },
+    {
+      "id": "w10-04",
+      "concept": "chi2",
+      "type": "decision",
+      "difficulty": 2,
+      "xp": 25,
+      "case": "B",
+      "stem": "Se compara la proporción de EFECTOS ADVERSOS (sí/no) entre los tres brazos del ensayo. Tabla de contingencia 3×2. Todas las frecuencias esperadas son mayores que 5.",
+      "prompt": "¿Qué análisis corresponde?",
+      "options": [
+        { "id": "chi2", "text": "Chi-cuadrado de independencia", "why": "Correcto: dos variables cualitativas, frecuencias esperadas suficientes." },
+        { "id": "fisher", "text": "Prueba exacta de Fisher", "why": "Se reserva para tablas con frecuencias esperadas pequeñas (o para 2×2 con n reducido)." },
+        { "id": "anova", "text": "ANOVA de un factor", "why": "Exige variable resultado cuantitativa." },
+        { "id": "t-independent", "text": "t de Student", "why": "Exige variable resultado cuantitativa." },
+        { "id": "kruskal", "text": "H de Kruskal–Wallis", "why": "Exige variable resultado al menos ordinal." }
+      ],
+      "answer": "chi2",
+      "justify": {
+        "prompt": "Marca las razones válidas.",
+        "min": 2,
+        "options": [
+          { "id": "j1", "text": "Las dos variables son cualitativas", "correct": true },
+          { "id": "j2", "text": "Las frecuencias esperadas son ≥ 5 en todas las casillas", "correct": true },
+          { "id": "j3", "text": "Cada paciente aparece en una sola casilla (observaciones independientes)", "correct": true },
+          { "id": "j4", "text": "La variable resultado es cuantitativa", "correct": false },
+          { "id": "j5", "text": "Los datos están emparejados y hay que usar McNemar", "correct": false }
+        ]
+      },
+      "explanation": "Chi-cuadrado compara la tabla observada con la esperada bajo independencia. Requisitos: observaciones independientes (cada persona una sola vez), y frecuencias ESPERADAS (no observadas) suficientemente grandes. Si las esperadas son pequeñas → Fisher. Si los datos fueran emparejados (misma persona antes y después, sí/no) → prueba de McNemar. Y complementa siempre el p-valor con una medida de magnitud: diferencia de riesgos, riesgo relativo, odds ratio o V de Cramér.",
+      "hints": [
+        "¿De qué tipo son las dos variables?",
+        "Comprueba las frecuencias esperadas.",
+        "¿Cada paciente cuenta una sola vez?"
+      ]
+    },
+    {
+      "id": "w10-05",
+      "concept": "parametrica-no",
+      "type": "classify",
+      "difficulty": 3,
+      "xp": 30,
+      "prompt": "Empareja cada diseño con su prueba habitual.",
+      "bins": [
+        { "id": "dos-indep", "title": "2 grupos independientes", "desc": "Variable cuantitativa" },
+        { "id": "dos-rel", "title": "2 medidas relacionadas", "desc": "Variable cuantitativa" },
+        { "id": "tres-indep", "title": "3+ grupos independientes", "desc": "Variable cuantitativa" },
+        { "id": "categoricas", "title": "2 variables cualitativas", "desc": "Tabla de contingencia" }
+      ],
+      "items": [
+        { "id": "i1", "text": "t de Student para muestras independientes (o Welch)", "bin": "dos-indep" },
+        { "id": "i2", "text": "U de Mann–Whitney", "bin": "dos-indep" },
+        { "id": "i3", "text": "t para muestras relacionadas", "bin": "dos-rel" },
+        { "id": "i4", "text": "Wilcoxon de rangos con signo", "bin": "dos-rel" },
+        { "id": "i5", "text": "ANOVA de un factor", "bin": "tres-indep" },
+        { "id": "i6", "text": "H de Kruskal–Wallis", "bin": "tres-indep" },
+        { "id": "i7", "text": "Chi-cuadrado de independencia", "bin": "categoricas" },
+        { "id": "i8", "text": "Prueba exacta de Fisher", "bin": "categoricas" }
+      ],
+      "explanation": "El mapa mental completo tiene dos ejes: el DISEÑO (cuántos grupos, independientes o relacionados) elige la fila; los SUPUESTOS (normalidad, atípicos, tamaño) eligen entre la versión paramétrica y la basada en rangos. Dominar esta tabla es el objetivo central del Mundo 10.",
+      "hints": [
+        "Cada casilla tiene dos pruebas: una paramétrica y una basada en rangos.",
+        "El diseño decide la fila; los supuestos deciden cuál de las dos.",
+        "Wilcoxon con signo ↔ datos emparejados; Mann–Whitney ↔ independientes."
+      ]
+    },
+    {
+      "id": "w10-06",
+      "concept": "normalidad-supuesto",
+      "type": "claim-audit",
+      "difficulty": 3,
+      "xp": 25,
+      "prompt": "Sobre la comprobación de la normalidad, marca lo correcto.",
+      "claims": [
+        { "id": "c1", "text": "En una t pareada, el supuesto de normalidad se refiere a las DIFERENCIAS, no a las medidas originales.", "correct": true, "why": "Lo que se contrasta es la media de las diferencias." },
+        { "id": "c2", "text": "Con n grande, un contraste de normalidad detecta desviaciones irrelevantes y sale significativo casi siempre.", "correct": true, "why": "Por eso el gráfico manda sobre el p-valor de normalidad." },
+        { "id": "c3", "text": "Si el contraste de normalidad da p > 0,05, queda DEMOSTRADO que los datos son normales.", "correct": false, "why": "No rechazar H0 no la demuestra: con n pequeño casi nunca se rechaza." },
+        { "id": "c4", "text": "La t de Student es bastante robusta frente a desviaciones moderadas de la normalidad si n es razonable y no hay atípicos extremos.", "correct": true, "why": "Gracias al Teorema Central del Límite aplicado a la distribución de la media." },
+        { "id": "c5", "text": "Ante la duda, lo más seguro es usar siempre pruebas no paramétricas.", "correct": false, "why": "Pierden potencia cuando los supuestos paramétricos se cumplen, y responden a una pregunta ligeramente distinta." }
+      ],
+      "explanation": "Procedimiento defendible: mirar el histograma y el gráfico Q-Q, valorar el tamaño de la muestra, comprobar si hay atípicos influyentes y solo entonces decidir. El contraste de normalidad es un dato más, no un semáforo. Y recuerda: lo que debe ser aproximadamente normal es la distribución del ESTADÍSTICO (o de los residuos, o de las diferencias), no necesariamente los datos brutos.",
+      "hints": [
+        "¿De qué variable se comprueba la normalidad en una t pareada?",
+        "¿Qué le pasa a un contraste de normalidad cuando n es enorme?",
+        "No rechazar H0 nunca demuestra H0."
+      ]
+    },
+    {
+      "id": "w10-07",
+      "concept": "parametrica-no",
+      "type": "sim",
+      "difficulty": 3,
+      "xp": 35,
+      "game": "choose-your-test",
+      "config": { "rounds": 8 },
+      "prompt": "Elige tu prueba: ocho escenarios sanitarios. Selecciona la prueba y justifica por qué.",
+      "explanation": "En este minijuego no basta con acertar: hay que justificar. Elegir bien por casualidad y elegir bien por criterio se distinguen justamente en la justificación."
+    }
+  ]
+}

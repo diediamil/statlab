@@ -1,0 +1,143 @@
+{
+  "world": "w12",
+  "activities": [
+    {
+      "id": "w12-01",
+      "concept": "pendiente",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 20,
+      "stem": "Regresión de la distancia caminada en 6 minutos (metros) sobre la edad (años) en 90 personas mayores:\n\ndistancia = 742 − 3,8 · edad\nR² = 0,31 · p (pendiente) < 0,001",
+      "prompt": "¿Cómo se interpreta la pendiente −3,8?",
+      "options": [
+        { "id": "a", "text": "Por cada año más de edad, la distancia caminada disminuye en promedio 3,8 metros", "why": "Correcto: la pendiente es el cambio medio en y por unidad de x, con sus unidades." },
+        { "id": "b", "text": "La correlación entre edad y distancia es −3,8", "why": "Imposible: la correlación está entre −1 y 1. La pendiente tiene unidades; r no." },
+        { "id": "c", "text": "El 3,8 % de la distancia se explica por la edad", "why": "La varianza explicada la da R² (31 %), no la pendiente." },
+        { "id": "d", "text": "Envejecer un año CAUSA una pérdida de 3,8 metros", "why": "Es un estudio observacional: describe asociación, no efecto causal establecido." }
+      ],
+      "answer": "a",
+      "explanation": "La pendiente se interpreta SIEMPRE con unidades: «metros por año». Y siempre con la cautela adecuada: en un estudio observacional describe cómo cambia el valor medio de y al comparar personas que difieren en una unidad de x, no lo que le ocurriría a una persona concreta al envejecer. Esta distinción (comparación entre sujetos frente a cambio dentro del sujeto) es una de las diferencias clave entre correlación/regresión y estudios longitudinales.",
+      "hints": [
+        "La pendiente tiene unidades: las de y divididas por las de x.",
+        "¿Puede una correlación valer −3,8?",
+        "La varianza explicada la da otro coeficiente."
+      ]
+    },
+    {
+      "id": "w12-02",
+      "concept": "extrapolacion",
+      "type": "numeric",
+      "difficulty": 3,
+      "xp": 25,
+      "stem": "Con la misma ecuación (distancia = 742 − 3,8 · edad), ajustada con personas de 65 a 88 años.",
+      "prompt": "¿Qué distancia predice el modelo para una persona de 30 años? (metros, sin decimales)",
+      "answer": 628,
+      "tolerance": 1,
+      "unit": "metros",
+      "explanation": "742 − 3,8 · 30 = 742 − 114 = 628 metros. El cálculo es trivial; el problema es OTRO: 30 años está muy por debajo del rango de ajuste (65–88), así que la predicción es una EXTRAPOLACIÓN sin ninguna garantía. De hecho es absurda: una persona de 30 años sana camina bastante más de 628 m en 6 minutos. Un modelo lineal solo es válido dentro del rango observado; fuera de él la relación puede cambiar de forma o incluso de signo. Y el intercepto (742 m «a los 0 años») es el ejemplo extremo del mismo problema.",
+      "hints": [
+        "Sustituye edad = 30 en la ecuación.",
+        "742 − 3,8 × 30.",
+        "Después piensa si esa predicción es defendible."
+      ]
+    },
+    {
+      "id": "w12-03",
+      "concept": "r2",
+      "type": "claim-audit",
+      "difficulty": 3,
+      "xp": 25,
+      "stem": "Modelo: PSQI = 3,1 + 0,48 · GAD7 · R² = 0,34 · n = 210",
+      "prompt": "Marca las afirmaciones correctas.",
+      "claims": [
+        { "id": "c1", "text": "El modelo explica el 34 % de la variabilidad del PSQI.", "correct": true, "why": "Es la definición de R²: proporción de varianza de y explicada por el modelo." },
+        { "id": "c2", "text": "El 66 % restante se debe a otros factores y a variabilidad no modelada.", "correct": true, "why": "Lectura correcta del complemento." },
+        { "id": "c3", "text": "R² = 0,34 demuestra que la ansiedad causa mal sueño.", "correct": false, "why": "R² no informa nada sobre causalidad, sea grande o pequeño." },
+        { "id": "c4", "text": "R² = 0,34 significa que el modelo acierta en el 34 % de las predicciones.", "correct": false, "why": "R² no es una tasa de acierto: es varianza explicada." },
+        { "id": "c5", "text": "Con R² = 0,34 las predicciones individuales tendrán bastante incertidumbre.", "correct": true, "why": "Cuanto menor es R², más anchos son los intervalos de predicción." },
+        { "id": "c6", "text": "R² es el cuadrado del coeficiente de correlación en la regresión lineal simple.", "correct": true, "why": "En regresión simple, R² = r². Aquí r ≈ 0,58." }
+      ],
+      "explanation": "R² responde a «¿cuánta variabilidad de y capta mi modelo?» y a nada más. No dice si el modelo es correcto (un modelo lineal mal especificado puede tener buen R²), ni si hay causalidad, ni si las predicciones individuales son útiles. Complementos imprescindibles: el error típico de la estimación, el gráfico de residuos y los intervalos de predicción.",
+      "hints": [
+        "R² es una proporción de varianza.",
+        "¿Puede R² decir algo sobre causalidad?",
+        "En regresión simple, ¿qué relación hay entre R² y r?"
+      ]
+    },
+    {
+      "id": "w12-04",
+      "concept": "residuos",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 25,
+      "prompt": "Al representar los residuos frente a los valores predichos aparece una forma de embudo: la dispersión aumenta claramente a medida que crecen los predichos. ¿Qué supuesto se está incumpliendo?",
+      "options": [
+        { "id": "a", "text": "Linealidad", "why": "La linealidad se ve como una curva sistemática en los residuos, no como un embudo." },
+        { "id": "b", "text": "Homocedasticidad (varianza constante de los residuos)", "why": "Correcto: el embudo es la señal característica de heterocedasticidad." },
+        { "id": "c", "text": "Independencia", "why": "Se detecta con patrones temporales o por conglomerados, no con un embudo." },
+        { "id": "d", "text": "Normalidad de las variables", "why": "El supuesto es la normalidad de los RESIDUOS, y se comprueba con un Q-Q, no con este gráfico." }
+      ],
+      "answer": "b",
+      "explanation": "Diagnóstico de residuos, resumido: embudo → heterocedasticidad; curva sistemática (U o ∪ invertida) → falta de linealidad; puntos muy alejados con alto apalancamiento → observaciones influyentes; patrón en el orden de recogida → falta de independencia. Ante heterocedasticidad: transformar y (log), usar errores estándar robustos o un modelo con varianza explícita. Nota conceptual importante: el supuesto de normalidad se refiere a los residuos, NUNCA a las variables originales.",
+      "hints": [
+        "Un embudo significa que la dispersión cambia con el nivel de predicción.",
+        "¿Qué supuesto habla de varianza constante?",
+        "La linealidad se detectaría como una curva, no como un abanico."
+      ]
+    },
+    {
+      "id": "w12-05",
+      "concept": "minimos-cuadrados",
+      "type": "sim",
+      "difficulty": 3,
+      "xp": 40,
+      "game": "regression-lab",
+      "config": { "n": 14, "showResiduals": true },
+      "prompt": "Laboratorio de regresión: ajusta la recta a mano, mira la suma de cuadrados de los residuos y compárala con la recta de mínimos cuadrados.",
+      "explanation": "Mínimos cuadrados no minimiza las distancias perpendiculares a la recta: minimiza la suma de los residuos VERTICALES al cuadrado. Comprobarlo moviendo la recta hace que se entienda de una vez."
+    },
+    {
+      "id": "w12-06",
+      "concept": "dependiente-independiente",
+      "type": "claim-audit",
+      "difficulty": 2,
+      "xp": 20,
+      "prompt": "Sobre la asimetría de la regresión, marca lo correcto.",
+      "claims": [
+        { "id": "c1", "text": "La correlación entre x e y es la misma que entre y y x.", "correct": true, "why": "r es simétrico por construcción." },
+        { "id": "c2", "text": "La recta de regresión de y sobre x es la misma que la de x sobre y.", "correct": false, "why": "Son distintas: minimizan residuos en direcciones diferentes. Solo coinciden si |r| = 1." },
+        { "id": "c3", "text": "Cambiar qué variable es la dependiente cambia el valor de la pendiente.", "correct": true, "why": "Y también sus unidades." },
+        { "id": "c4", "text": "R² es el mismo en los dos sentidos en regresión lineal simple.", "correct": true, "why": "R² = r² y r es simétrico." },
+        { "id": "c5", "text": "La elección de la variable dependiente es puramente matemática.", "correct": false, "why": "Es una decisión sustantiva: la dependiente es lo que se quiere explicar o predecir." }
+      ],
+      "explanation": "Aquí está la diferencia esencial entre los Mundos 11 y 12: la CORRELACIÓN es simétrica y adimensional (mide asociación); la REGRESIÓN es asimétrica y con unidades (construye un modelo predictivo). Cuál es la variable dependiente lo decide la pregunta clínica, no el software.",
+      "hints": [
+        "¿Es r simétrico?",
+        "¿Qué minimiza cada una de las dos rectas posibles?",
+        "¿Quién decide cuál es la variable dependiente?"
+      ]
+    },
+    {
+      "id": "w12-07",
+      "concept": "prediccion",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 25,
+      "stem": "Modelo: PAS = 92 + 0,55 · IMC (R² = 0,22, error típico de la estimación 12 mmHg). Para un IMC de 30, la predicción es 108,5 mmHg. El IC 95 % de la media es (105,9; 111,1) y el intervalo de predicción para un paciente nuevo es (84,3; 132,7).",
+      "prompt": "¿Por qué es tan distinto el intervalo de predicción del intervalo de confianza de la media?",
+      "options": [
+        { "id": "a", "text": "Es un error de cálculo: deberían coincidir", "why": "No coinciden nunca: responden a preguntas distintas." },
+        { "id": "b", "text": "El IC de la media estima el promedio de todos los pacientes con IMC 30; el intervalo de predicción tiene que incluir además la variabilidad individual", "why": "Correcto: el de predicción suma la incertidumbre del modelo y la dispersión de las personas." },
+        { "id": "c", "text": "El intervalo de predicción usa un nivel de confianza mayor", "why": "Ambos son al 95 %." },
+        { "id": "d", "text": "El intervalo de predicción está mal porque incluye valores imposibles", "why": "84 y 133 mmHg son valores perfectamente posibles de presión sistólica." }
+      ],
+      "answer": "b",
+      "explanation": "Son dos preguntas diferentes: «¿cuál es la PAS media de las personas con IMC 30?» (IC de la media, estrecho) frente a «¿qué PAS tendrá ESTE paciente con IMC 30?» (intervalo de predicción, mucho más ancho). En la práctica clínica interesa casi siempre la segunda, y es la que suele omitirse. Con R² = 0,22, el modelo sirve para describir una tendencia poblacional pero es casi inútil para predecir a un individuo: informar solo la predicción puntual sería engañoso.",
+      "hints": [
+        "Distingue predecir una media de predecir un individuo.",
+        "¿Qué fuente extra de variabilidad tiene un paciente concreto?",
+        "Fíjate en el error típico de la estimación: 12 mmHg."
+      ]
+    }
+  ]
+}

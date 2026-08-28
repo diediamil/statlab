@@ -1,0 +1,205 @@
+/* ==========================================================================
+   STATLAB — tokens de diseño
+   Un único lugar para color, tipografía, espacio, radios y sombras.
+   Tema claro por defecto; oscuro por `prefers-color-scheme` y por
+   `[data-theme]` (la preferencia explícita del usuario siempre gana).
+   ========================================================================== */
+
+:root {
+  /* --- Marca ----------------------------------------------------------- */
+  --brand-1: #4c6ef5;          /* indigo — acción primaria */
+  --brand-1-dark: #3b5bdb;
+  --brand-1-soft: #dbe4ff;
+  --brand-2: #0ca678;          /* teal — acierto / progreso */
+  --brand-2-soft: #c3fae8;
+  --brand-3: #f59f00;          /* ámbar — aviso / pistas */
+  --brand-3-soft: #fff3bf;
+  --brand-4: #e03131;          /* rojo — error */
+  --brand-4-soft: #ffe3e3;
+  --brand-5: #7048e8;          /* violeta — retos */
+  --brand-5-soft: #e5dbff;
+
+  /* --- Superficies (claro) --------------------------------------------- */
+  --bg: #f6f7fb;
+  --bg-elev: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f1f3f9;
+  --surface-3: #e7eaf3;
+  --ink: #14171f;
+  --ink-2: #3f4655;
+  --ink-3: #6b7280;
+  --line: #dfe3ee;
+  --line-strong: #c3c9dc;
+  --focus: #1c7ed6;
+  --shadow-1: 0 1px 2px rgba(16, 24, 40, .06), 0 1px 3px rgba(16, 24, 40, .08);
+  --shadow-2: 0 4px 12px rgba(16, 24, 40, .08), 0 2px 4px rgba(16, 24, 40, .05);
+  --shadow-3: 0 12px 32px rgba(16, 24, 40, .14);
+
+  /* --- Semántica ------------------------------------------------------- */
+  --ok: var(--brand-2);
+  --ok-bg: var(--brand-2-soft);
+  --warn: #b26a00;
+  --warn-bg: var(--brand-3-soft);
+  --bad: #c92a2a;
+  --bad-bg: var(--brand-4-soft);
+  --info: #1971c2;
+  --info-bg: #d0ebff;
+
+  /* --- Estados del mapa de progresión ---------------------------------- */
+  --state-locked: #9aa1b1;
+  --state-available: var(--brand-1);
+  --state-started: var(--brand-3);
+  --state-completed: var(--brand-2);
+
+  /* --- Paleta de datos (accesible, ordenada por contraste) -------------
+     Usada por js/viz.js. No codificar información solo con color: cada
+     serie recibe además etiqueta y/o patrón. */
+  --data-1: #4c6ef5;
+  --data-2: #0ca678;
+  --data-3: #f59f00;
+  --data-4: #ae3ec9;
+  --data-5: #1098ad;
+  --data-6: #e8590c;
+  --data-7: #5c7cfa;
+  --data-8: #495057;
+  --grid: #dfe3ee;
+  --axis: #6b7280;
+
+  /* --- Tipografía ------------------------------------------------------ */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.8125rem;
+  --fs-base: 0.9375rem;
+  --fs-md: 1rem;
+  --fs-lg: 1.125rem;
+  --fs-xl: 1.375rem;
+  --fs-2xl: 1.75rem;
+  --fs-3xl: 2.25rem;
+  --lh-tight: 1.2;
+  --lh: 1.55;
+
+  /* --- Espacio --------------------------------------------------------- */
+  --s-1: 0.25rem;
+  --s-2: 0.5rem;
+  --s-3: 0.75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+
+  /* --- Forma ----------------------------------------------------------- */
+  --r-1: 6px;
+  --r-2: 10px;
+  --r-3: 14px;
+  --r-4: 20px;
+  --r-pill: 999px;
+
+  /* --- Otros ----------------------------------------------------------- */
+  --tap: 44px;                  /* objetivo táctil mínimo (WCAG 2.5.5) */
+  --maxw: 1180px;
+  --dur-1: 120ms;
+  --dur-2: 220ms;
+  --ease: cubic-bezier(.22,.61,.36,1);
+}
+
+/* --- Tema oscuro: automático, salvo que el usuario haya elegido claro --- */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1219;
+    --bg-elev: #161a24;
+    --surface: #161a24;
+    --surface-2: #1d2230;
+    --surface-3: #262c3c;
+    --ink: #eef1f7;
+    --ink-2: #c2c8d6;
+    --ink-3: #8d95a8;
+    --line: #2a3040;
+    --line-strong: #3c4459;
+    --focus: #74c0fc;
+    --brand-1: #748ffc;
+    --brand-1-dark: #5c7cfa;
+    --brand-1-soft: #26305a;
+    --brand-2: #38d9a9;
+    --brand-2-soft: #12463b;
+    --brand-3: #ffc078;
+    --brand-3-soft: #4a3413;
+    --brand-4: #ff8787;
+    --brand-4-soft: #4d1f1f;
+    --brand-5: #b197fc;
+    --brand-5-soft: #2f2554;
+    --ok: #38d9a9;
+    --ok-bg: #12463b;
+    --warn: #ffc078;
+    --warn-bg: #4a3413;
+    --bad: #ff8787;
+    --bad-bg: #4d1f1f;
+    --info: #74c0fc;
+    --info-bg: #1b3a5c;
+    --data-1: #748ffc;
+    --data-2: #38d9a9;
+    --data-3: #ffc078;
+    --data-4: #e599f7;
+    --data-5: #66d9e8;
+    --data-6: #ffa8a8;
+    --data-7: #a5b4fc;
+    --data-8: #adb5bd;
+    --grid: #2a3040;
+    --axis: #8d95a8;
+    --state-locked: #5b6377;
+    --shadow-1: 0 1px 2px rgba(0, 0, 0, .4);
+    --shadow-2: 0 4px 12px rgba(0, 0, 0, .45);
+    --shadow-3: 0 12px 32px rgba(0, 0, 0, .55);
+  }
+}
+
+/* --- Tema oscuro forzado por el usuario -------------------------------- */
+:root[data-theme="dark"] {
+  --bg: #0f1219;
+  --bg-elev: #161a24;
+  --surface: #161a24;
+  --surface-2: #1d2230;
+  --surface-3: #262c3c;
+  --ink: #eef1f7;
+  --ink-2: #c2c8d6;
+  --ink-3: #8d95a8;
+  --line: #2a3040;
+  --line-strong: #3c4459;
+  --focus: #74c0fc;
+  --brand-1: #748ffc;
+  --brand-1-dark: #5c7cfa;
+  --brand-1-soft: #26305a;
+  --brand-2: #38d9a9;
+  --brand-2-soft: #12463b;
+  --brand-3: #ffc078;
+  --brand-3-soft: #4a3413;
+  --brand-4: #ff8787;
+  --brand-4-soft: #4d1f1f;
+  --brand-5: #b197fc;
+  --brand-5-soft: #2f2554;
+  --ok: #38d9a9;
+  --ok-bg: #12463b;
+  --warn: #ffc078;
+  --warn-bg: #4a3413;
+  --bad: #ff8787;
+  --bad-bg: #4d1f1f;
+  --info: #74c0fc;
+  --info-bg: #1b3a5c;
+  --data-1: #748ffc;
+  --data-2: #38d9a9;
+  --data-3: #ffc078;
+  --data-4: #e599f7;
+  --data-5: #66d9e8;
+  --data-6: #ffa8a8;
+  --data-7: #a5b4fc;
+  --data-8: #adb5bd;
+  --grid: #2a3040;
+  --axis: #8d95a8;
+  --state-locked: #5b6377;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, .4);
+  --shadow-2: 0 4px 12px rgba(0, 0, 0, .45);
+  --shadow-3: 0 12px 32px rgba(0, 0, 0, .55);
+}

@@ -1,0 +1,129 @@
+{
+  "world": "w14",
+  "activities": [
+    {
+      "id": "w14-01",
+      "concept": "cohen-d",
+      "type": "numeric",
+      "difficulty": 2,
+      "xp": 20,
+      "stem": "Dos grupos independientes con desviación típica agrupada 1,6 puntos.\nGrupo A: media 4,1 · Grupo B: media 5,9",
+      "prompt": "¿Cuál es la d de Cohen (en valor absoluto)? Dos decimales.",
+      "answer": 1.13,
+      "tolerance": 0.03,
+      "explanation": "d = |4,1 − 5,9| / 1,6 = 1,8/1,6 = 1,13. La d expresa la diferencia en unidades de desviación típica, lo que permite comparar efectos medidos en escalas distintas. Según la orientación de Cohen sería un efecto «grande», pero la etiqueta importa menos que la traducción clínica: 1,8 puntos en una escala de dolor de 0–10, con una MCID de 2 puntos, es un efecto real que se queda justo por debajo del umbral de relevancia clínica. Los umbrales de Cohen son convenciones, no criterios clínicos.",
+      "hints": [
+        "d = diferencia de medias / desviación típica agrupada.",
+        "La diferencia es 1,8 puntos.",
+        "1,8 dividido entre 1,6."
+      ]
+    },
+    {
+      "id": "w14-02",
+      "concept": "significacion-vs-importancia",
+      "type": "classify",
+      "difficulty": 3,
+      "xp": 30,
+      "prompt": "Clasifica cada resultado según su significación estadística y su relevancia clínica (MCID de la escala: 2 puntos).",
+      "bins": [
+        { "id": "sig-rel", "title": "Significativo y relevante", "desc": "Efecto real y clínicamente útil" },
+        { "id": "sig-irrel", "title": "Significativo pero irrelevante", "desc": "Típico de muestras enormes" },
+        { "id": "nosig-posible", "title": "No significativo, no concluyente", "desc": "Podría esconder un efecto importante" },
+        { "id": "nosig-irrel", "title": "No significativo y probablemente irrelevante", "desc": "El estudio descarta efectos grandes" }
+      ],
+      "items": [
+        { "id": "i1", "text": "Diferencia 2,6 puntos; IC 95 % (2,1 a 3,1); p < 0,001; n = 240", "bin": "sig-rel" },
+        { "id": "i2", "text": "Diferencia 0,3 puntos; IC 95 % (0,1 a 0,5); p = 0,004; n = 8.500", "bin": "sig-irrel" },
+        { "id": "i3", "text": "Diferencia 2,4 puntos; IC 95 % (−0,4 a 5,2); p = 0,09; n = 22", "bin": "nosig-posible" },
+        { "id": "i4", "text": "Diferencia 0,1 puntos; IC 95 % (−0,4 a 0,6); p = 0,71; n = 1.900", "bin": "nosig-irrel" }
+      ],
+      "explanation": "La clave para clasificar está en el INTERVALO DE CONFIANZA, no en el p-valor: (i1) todo el intervalo por encima de la MCID → efecto real y relevante; (i2) todo el intervalo muy por debajo → real pero trivial; (i3) intervalo ancho que incluye valores relevantes → no concluyente, hace falta más n; (i4) intervalo estrecho alrededor de cero → el estudio sí permite descartar efectos importantes. Solo el caso i4 autoriza a decir «no hay un efecto clínicamente relevante».",
+      "hints": [
+        "Mira si el IC incluye el cero (significación) y dónde queda respecto a la MCID (relevancia).",
+        "Un IC ancho indica falta de precisión, no ausencia de efecto.",
+        "Un IC estrecho alrededor de 0 sí permite descartar efectos grandes."
+      ]
+    },
+    {
+      "id": "w14-03",
+      "concept": "cramer-v",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 25,
+      "stem": "Tabla 3×2 con n = 500. Chi-cuadrado = 24,8 con 2 gl, p < 0,001. V de Cramér = 0,22.",
+      "prompt": "¿Cómo se interpreta ese conjunto de resultados?",
+      "options": [
+        { "id": "a", "text": "Asociación estadísticamente significativa y de magnitud pequeña a moderada", "why": "Correcto: p pequeño indica que no es azar; V = 0,22 indica que la asociación es débil-moderada." },
+        { "id": "b", "text": "Asociación muy fuerte, porque el p-valor es diminuto", "why": "El p-valor no mide la magnitud de la asociación." },
+        { "id": "c", "text": "El 22 % de los casos se explican por la variable de agrupación", "why": "La V de Cramér no es una proporción de varianza explicada." },
+        { "id": "d", "text": "V = 0,22 indica un efecto grande según los umbrales de Cohen para la d", "why": "No se pueden mezclar escalas: los umbrales de la d no valen para la V." }
+      ],
+      "answer": "a",
+      "explanation": "Cada tamaño del efecto tiene SU propia escala de referencia: d (0,2/0,5/0,8), r (0,1/0,3/0,5), η² y ε² (0,01/0,06/0,14), V de Cramér (0,1/0,3/0,5 con df pequeño). Aplicar la escala de la d a una V es un error frecuente. En tablas 2×2 la V coincide con el coeficiente φ, y en epidemiología suelen ser más informativos el riesgo relativo, la diferencia de riesgos y el NNT, porque se traducen directamente a decisiones.",
+      "hints": [
+        "El p-valor y la magnitud son dimensiones distintas.",
+        "Cada tamaño del efecto tiene su propia escala de referencia.",
+        "¿Es la V una proporción de varianza?"
+      ]
+    },
+    {
+      "id": "w14-04",
+      "concept": "eta2",
+      "type": "numeric",
+      "difficulty": 3,
+      "xp": 25,
+      "stem": "ANOVA de un factor con tres grupos:\nSS entre grupos = 420 · SS dentro de grupos = 1.680",
+      "prompt": "¿Cuál es η² (eta cuadrado)? Dos decimales.",
+      "answer": 0.2,
+      "tolerance": 0.01,
+      "explanation": "SS total = 420 + 1.680 = 2.100. η² = 420/2.100 = 0,20: el factor explica el 20 % de la variabilidad total. Con la orientación habitual (0,01 / 0,06 / 0,14) sería un efecto grande. Precaución: η² está sesgado al alza, sobre todo con muchos grupos y n pequeño; ω² (omega cuadrado) corrige ese sesgo y es preferible cuando se informa en una publicación. Tras una prueba de Kruskal–Wallis, el análogo adecuado es ε² = H/(n−1).",
+      "hints": [
+        "η² = SS entre / SS total.",
+        "SS total = SS entre + SS dentro.",
+        "420 / 2100."
+      ]
+    },
+    {
+      "id": "w14-05",
+      "concept": "mcid",
+      "type": "claim-audit",
+      "difficulty": 3,
+      "xp": 25,
+      "prompt": "Sobre tamaños del efecto y relevancia clínica, marca lo correcto.",
+      "claims": [
+        { "id": "c1", "text": "El tamaño del efecto no depende del tamaño de la muestra, a diferencia del p-valor.", "correct": true, "why": "Es su ventaja principal: estima magnitud, no compatibilidad con el azar." },
+        { "id": "c2", "text": "Un efecto grande en la escala de Cohen es siempre clínicamente relevante.", "correct": false, "why": "La relevancia depende de la escala, del contexto, del coste y del riesgo de la intervención." },
+        { "id": "c3", "text": "La MCID debe definirse antes de analizar los datos, con criterio clínico o a partir de la literatura.", "correct": true, "why": "Definirla después permite ajustarla al resultado obtenido." },
+        { "id": "c4", "text": "Informar el tamaño del efecto con su intervalo de confianza es mejor que informarlo solo.", "correct": true, "why": "Un efecto estimado sin precisión no es evaluable." },
+        { "id": "c5", "text": "Si el p-valor no es significativo, no hace falta informar el tamaño del efecto.", "correct": false, "why": "Al contrario: es cuando más importa, para saber si el estudio descarta o simplemente no detecta el efecto." }
+      ],
+      "explanation": "El estándar actual de publicación en ciencias de la salud es informar TRES cosas juntas: la estimación del efecto, su intervalo de confianza y el p-valor, y compararlas con un umbral de relevancia definido a priori. El tamaño del efecto es lo que permite traducir un resultado estadístico en una decisión clínica.",
+      "hints": [
+        "¿Qué medida depende del tamaño de la muestra y cuál no?",
+        "¿Cuándo hay que definir la MCID?",
+        "¿Cuándo es más importante informar el tamaño del efecto?"
+      ]
+    },
+    {
+      "id": "w14-06",
+      "concept": "r-efecto",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 20,
+      "prompt": "Una prueba de Mann–Whitney resulta significativa (p = 0,008). ¿Qué tamaño del efecto es el adecuado para acompañarla?",
+      "options": [
+        { "id": "a", "text": "d de Cohen calculada con las medias de los grupos", "why": "Incoherente: se ha usado una prueba de rangos precisamente porque las medias no son un buen resumen." },
+        { "id": "b", "text": "r calculada a partir de z (r = |z|/√N), acompañada de las medianas de cada grupo", "why": "Correcto: es el tamaño del efecto habitual para pruebas basadas en rangos." },
+        { "id": "c", "text": "η² del ANOVA", "why": "Corresponde a un ANOVA, no a una comparación de dos grupos por rangos." },
+        { "id": "d", "text": "Ninguno: las pruebas no paramétricas no admiten tamaño del efecto", "why": "Sí lo admiten: r a partir de z, o el «common language effect size»." }
+      ],
+      "answer": "b",
+      "explanation": "Cada prueba tiene su tamaño del efecto coherente: t independiente → d de Cohen (o g de Hedges si n es pequeño); t pareada → d de las diferencias; ANOVA → η² o ω²; Kruskal–Wallis → ε²; Mann–Whitney y Wilcoxon → r a partir de z (o la probabilidad de superioridad, muy intuitiva: «la probabilidad de que un paciente tomado al azar del grupo A tenga un valor mayor que uno del grupo B»); chi-cuadrado → V de Cramér, o mejor RR/OR/NNT.",
+      "hints": [
+        "El tamaño del efecto debe ser coherente con la prueba usada.",
+        "Si la prueba usa rangos, el resumen descriptivo también debería.",
+        "Existe una r calculada a partir del estadístico z."
+      ]
+    }
+  ]
+}

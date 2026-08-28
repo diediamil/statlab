@@ -1,0 +1,22 @@
+# Configuración local con las claves de Supabase.
+# La anon key NO es un secreto (es pública por diseño y la protege RLS),
+# así que puedes versionarla si te resulta más cómodo: basta con borrar
+# esta línea. Lo que NUNCA debe versionarse es la service_role key, que
+# no aparece en ningún archivo de este proyecto.
+config.js
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# Node (solo se usa para ejecutar las pruebas; el proyecto no necesita build)
+node_modules/
+npm-debug.log*
+
+# Exportaciones descargadas durante las pruebas
+*.zip
+statlab-*-identificada-*.csv
+statlab-*-pseudonimizada-*.csv

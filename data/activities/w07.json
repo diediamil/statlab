@@ -1,0 +1,113 @@
+{
+  "world": "w07",
+  "activities": [
+    {
+      "id": "w07-01",
+      "concept": "error-estandar",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 20,
+      "stem": "En una muestra de 100 pacientes, la presión sistólica tiene media 138 mmHg y desviación típica 16 mmHg. El error estándar de la media es 1,6 mmHg.",
+      "prompt": "¿Qué describe cada una de esas dos cantidades?",
+      "options": [
+        { "id": "a", "text": "16 mmHg describe cuánto varían los PACIENTES; 1,6 mmHg cuánto variaría la MEDIA si repitiéramos el estudio", "why": "Correcto: son dos variabilidades distintas." },
+        { "id": "b", "text": "Las dos describen lo mismo, pero el error estándar está corregido", "why": "No: describen objetos distintos (individuos frente a medias)." },
+        { "id": "c", "text": "16 mmHg es el error de medición del esfigmomanómetro", "why": "La desviación típica no mide error instrumental, sino variabilidad biológica entre personas." },
+        { "id": "d", "text": "1,6 mmHg indica que la media puede estar equivocada en 1,6 mmHg como máximo", "why": "El error estándar no es un límite máximo de error, es una desviación típica de la distribución muestral." }
+      ],
+      "answer": "a",
+      "explanation": "Confundir SD y SE es probablemente el error más frecuente en las tablas de artículos sanitarios. La desviación típica (16) describe la POBLACIÓN de pacientes: si quieres decir cómo son tus pacientes, informa SD. El error estándar (1,6) describe la PRECISIÓN de tu estimación: si quieres decir cuán fiable es tu media, informa SE o, mejor, el intervalo de confianza. Como SE = SD/√n, con n grande el SE se hace diminuto aunque los pacientes sigan siendo muy heterogéneos: informar SE cuando querías describir la variabilidad clínica hace parecer los datos mucho más homogéneos de lo que son.",
+      "hints": [
+        "Una de las dos cantidades depende de n; la otra no.",
+        "¿Cuál describe a los pacientes y cuál a la estimación?",
+        "SE = SD / √n."
+      ]
+    },
+    {
+      "id": "w07-02",
+      "concept": "tamano-muestra",
+      "type": "numeric",
+      "difficulty": 2,
+      "xp": 20,
+      "stem": "Con n = 25 y desviación típica 20, el error estándar es 4,0.",
+      "prompt": "Si el estudio se ampliara a n = 100 manteniendo la misma desviación típica, ¿cuál sería el nuevo error estándar? Un decimal.",
+      "answer": 2.0,
+      "tolerance": 0.05,
+      "explanation": "SE = 20/√100 = 20/10 = 2,0. Cuadruplicar la muestra HA REDUCIDO A LA MITAD el error estándar, no a la cuarta parte: la relación es con √n. Consecuencia práctica de gran importancia al planificar estudios: para duplicar la precisión hay que cuadruplicar el tamaño (y el presupuesto). Ese rendimiento decreciente es la razón de que exista el cálculo del tamaño de muestra.",
+      "misconceptionFeedback": { "1": "Has dividido por 4. El error estándar depende de la RAÍZ de n: al cuadruplicar n, el SE se divide por 2." },
+      "hints": [
+        "SE = SD / √n.",
+        "√100 = 10.",
+        "Compara con el SE anterior: ¿se ha dividido por 4 o por 2?"
+      ]
+    },
+    {
+      "id": "w07-03",
+      "concept": "tcl",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 25,
+      "stem": "La estancia hospitalaria de una población es muy asimétrica a la derecha. Se toman muchísimas muestras de 50 pacientes cada una y se calcula la media de cada muestra.",
+      "prompt": "¿Qué dice el Teorema Central del Límite sobre esas medias?",
+      "options": [
+        { "id": "a", "text": "Que las estancias individuales se volverán normales", "why": "El TCL no cambia la distribución de los DATOS: la población sigue siendo asimétrica." },
+        { "id": "b", "text": "Que la distribución de las MEDIAS será aproximadamente normal, centrada en la media poblacional, con desviación típica σ/√50", "why": "Correcto: es exactamente el enunciado del TCL." },
+        { "id": "c", "text": "Que todas las medias serán iguales entre sí", "why": "Las medias varían: eso es la variabilidad muestral." },
+        { "id": "d", "text": "Que hace falta n ≥ 30 para poder calcular una media", "why": "La media se calcula con cualquier n. El requisito de n se refiere a la aproximación normal." }
+      ],
+      "answer": "b",
+      "explanation": "El TCL es la pieza que hace posible toda la inferencia clásica: aunque la población sea claramente no normal, la distribución de la MEDIA MUESTRAL tiende a la normalidad al crecer n. Tres precisiones importantes: (1) habla de la media, no de los datos; (2) el centro es μ (la media muestral es un estimador no sesgado); (3) «n ≥ 30» es una regla práctica, no un teorema: cuanto más asimétrica sea la población, mayor n hace falta.",
+      "hints": [
+        "El TCL habla de un estadístico, no de los datos originales.",
+        "¿Cambia la población porque tomemos muestras?",
+        "Fíjate en el papel de σ/√n."
+      ]
+    },
+    {
+      "id": "w07-04",
+      "concept": "distribucion-muestral",
+      "type": "sim",
+      "difficulty": 3,
+      "xp": 35,
+      "game": "sampling-simulator",
+      "config": { "population": "skewed", "n": 5 },
+      "prompt": "Simulador de muestreo: empieza con una población muy asimétrica y n = 5. Aumenta n y observa cuándo la distribución de las medias se vuelve simétrica.",
+      "explanation": "El objetivo es que veas tres cosas a la vez: la distribución de las medias se estrecha al aumentar n, se hace más simétrica, y su centro sigue siendo la media de la población."
+    },
+    {
+      "id": "w07-05",
+      "concept": "variabilidad-muestral",
+      "type": "claim-audit",
+      "difficulty": 2,
+      "xp": 20,
+      "prompt": "Marca lo correcto sobre la variabilidad muestral.",
+      "claims": [
+        { "id": "c1", "text": "Dos muestras aleatorias de la misma población pueden dar medias distintas sin que nadie se haya equivocado.", "correct": true, "why": "Es la variabilidad muestral: inevitable y cuantificable." },
+        { "id": "c2", "text": "Cuanto mayor es la muestra, menos varían las medias entre muestras.", "correct": true, "why": "El error estándar decrece con √n." },
+        { "id": "c3", "text": "La variabilidad muestral se elimina eligiendo bien la muestra.", "correct": false, "why": "Un buen muestreo elimina el SESGO, no la variabilidad aleatoria." },
+        { "id": "c4", "text": "Si mi media muestral difiere de la de otro grupo, uno de los dos ha medido mal.", "correct": false, "why": "Pueden diferir solo por azar; para juzgarlo se usa la inferencia." }
+      ],
+      "explanation": "Distinguir error aleatorio (variabilidad muestral: se reduce con n, se cuantifica con el SE) de error sistemático (sesgo: no se reduce con n, se evita con el diseño) es la base de toda lectura crítica de estudios.",
+      "hints": [
+        "Diferencia error aleatorio de error sistemático.",
+        "¿Qué reduce el tamaño de la muestra y qué no?",
+        "El buen muestreo ataca el sesgo, no el azar."
+      ]
+    },
+    {
+      "id": "w07-06",
+      "concept": "error-estandar",
+      "type": "numeric",
+      "difficulty": 3,
+      "xp": 25,
+      "generator": "seFromSample",
+      "prompt": "Calcula el error estándar de la media para la muestra descrita.",
+      "explanation": "SE = s/√n. Con datos distintos cada vez, lo que se practica es el procedimiento, no un resultado memorizado.",
+      "hints": [
+        "Primero necesitas la desviación típica muestral.",
+        "Divide entre la raíz cuadrada del tamaño de la muestra.",
+        "Comprueba que el SE es menor que la desviación típica."
+      ]
+    }
+  ]
+}

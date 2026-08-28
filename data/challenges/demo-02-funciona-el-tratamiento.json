@@ -1,0 +1,202 @@
+{
+  "id": "ch-demo-02",
+  "code": "RETO 2",
+  "type": "clinical_case",
+  "title": "¿Funciona realmente el nuevo tratamiento?",
+  "description": "Un ensayo clínico con 80 pacientes. Tienes los datos y una pregunta. Nadie te va a decir qué prueba usar: eso es exactamente lo que se evalúa.",
+  "world": "w10",
+  "concepts": ["variable", "centro-eleccion", "grafico-adecuado", "h0-h1", "t-independiente", "p-valor", "cohen-d", "conclusiones"],
+  "difficulty": 3,
+  "recommendedMinutes": 15,
+  "maxAttempts": 3,
+  "competitivePolicy": "first",
+  "allowHints": true,
+  "solutionPolicy": "on_close",
+  "showRanking": true,
+  "countsForSeason": true,
+  "briefing": "Ensayo clínico aleatorizado en pacientes con lumbalgia crónica. 80 participantes asignados al azar a dos programas de 8 semanas: ejercicio supervisado (control) o ejercicio + educación en dolor (intervención). Variable principal: intensidad del dolor a las 8 semanas (escala numérica 0–10). La diferencia mínima clínicamente importante en esta escala es de 2 puntos.",
+  "dataset": {
+    "generator": "clinicalTrial2Groups",
+    "seed": "statlab-reto-2-lumbalgia",
+    "params": {
+      "n": 80,
+      "groupNames": ["Ejercicio", "Ejercicio + educación"],
+      "outcome": { "name": "dolor_final", "label": "Dolor a las 8 semanas (0–10)", "mean": 5.9, "sd": 1.7, "effect": -1.6, "min": 0, "max": 10, "round": 0 },
+      "baseline": { "name": "dolor_basal", "label": "Dolor basal (0–10)", "mean": 6.5, "sd": 1.4, "min": 0, "max": 10, "round": 0 },
+      "covariates": [
+        { "name": "edad", "label": "Edad (años)", "mean": 51, "sd": 11, "min": 22, "max": 79, "round": 0 },
+        { "name": "calidad_vida", "label": "Calidad de vida (0–100)", "mean": 62, "sd": 13, "min": 10, "max": 100, "round": 0 }
+      ],
+      "categorical": [
+        { "name": "sexo", "label": "Sexo", "levels": ["Mujer", "Hombre"], "probs": [0.58, 0.42] }
+      ]
+    },
+    "show": { "preview": 10, "summary": true, "boxplot": true }
+  },
+  "steps": [
+    {
+      "id": "s1",
+      "concept": "variable",
+      "weight": 1,
+      "type": "classify",
+      "prompt": "Paso 1 — Identifica el papel de cada variable en la comparación principal.",
+      "bins": [
+        { "id": "resultado", "title": "Variable resultado", "desc": "La que responde a la pregunta principal" },
+        { "id": "explicativa", "title": "Variable explicativa", "desc": "La que define los grupos" },
+        { "id": "otras", "title": "Covariables / secundarias", "desc": "Se describen o se usan para ajustar" }
+      ],
+      "items": [
+        { "id": "i1", "text": "dolor_final", "bin": "resultado" },
+        { "id": "i2", "text": "grupo (Ejercicio / Ejercicio + educación)", "bin": "explicativa" },
+        { "id": "i3", "text": "dolor_basal", "bin": "otras" },
+        { "id": "i4", "text": "edad", "bin": "otras" },
+        { "id": "i5", "text": "sexo", "bin": "otras" },
+        { "id": "i6", "text": "calidad_vida", "bin": "otras" }
+      ],
+      "explanation": "La variable resultado y la explicativa determinan la familia de análisis. El dolor basal es especialmente valioso: se puede usar para ajustar (ANCOVA) y ganar potencia, pero NO es la variable resultado.",
+      "hints": ["¿Qué mide la pregunta principal?", "¿Qué variable separa a los pacientes en dos grupos?", "El dolor basal se midió antes de la intervención."]
+    },
+    {
+      "id": "s2",
+      "concept": "centro-eleccion",
+      "weight": 1,
+      "type": "multi",
+      "prompt": "Paso 2 — ¿Qué estadísticos descriptivos informarías del dolor final en cada grupo?",
+      "options": [
+        { "id": "a", "text": "Media de cada grupo", "correct": true, "why": "Es el resumen central de la comparación principal." },
+        { "id": "b", "text": "Desviación típica de cada grupo", "correct": true, "why": "Una media sin dispersión es incompleta." },
+        { "id": "c", "text": "n de cada grupo", "correct": true, "why": "Imprescindible para interpretar cualquier estimación." },
+        { "id": "d", "text": "Mediana e IQR como complemento", "correct": true, "why": "Útil con escalas de 0–10 y valores discretos: permite comprobar si la media es representativa." },
+        { "id": "e", "text": "Moda del dolor final", "correct": false, "why": "Aporta poco en la comparación de dos grupos con escala numérica." },
+        { "id": "f", "text": "Error estándar en lugar de la desviación típica, para describir a los pacientes", "correct": false, "why": "El SE describe la precisión de la media, no la variabilidad de los pacientes. Confundirlos hace parecer los datos más homogéneos de lo que son." }
+      ],
+      "answer": ["a", "b", "c", "d"],
+      "explanation": "La tabla 1 de cualquier ensayo informa n, media y desviación típica por grupo (y mediana/IQR cuando la distribución lo pide). El error estándar se reserva para hablar de precisión, no de variabilidad clínica.",
+      "hints": ["Una medida de centro y una de dispersión.", "¿Qué falta para poder interpretar los números?", "Cuidado con SD y SE."]
+    },
+    {
+      "id": "s3",
+      "concept": "grafico-adecuado",
+      "weight": 1,
+      "type": "mcq",
+      "prompt": "Paso 3 — ¿Qué gráfico representa mejor la comparación del dolor final entre los dos grupos?",
+      "options": [
+        { "id": "a", "text": "Dos diagramas de caja, uno por grupo", "why": "Correcto: variable cuantitativa comparada entre dos grupos. Muestra centro, dispersión y atípicos." },
+        { "id": "b", "text": "Un diagrama de sectores con el porcentaje de cada grupo", "why": "Los sectores mostrarían el tamaño de los grupos, no el dolor." },
+        { "id": "c", "text": "Un diagrama de dispersión de dolor final frente a grupo", "why": "La dispersión requiere dos variables cuantitativas." },
+        { "id": "d", "text": "Dos barras con la media de cada grupo, sin ninguna medida de dispersión", "why": "Es el «dynamite plot»: oculta la distribución y la variabilidad. Muy criticado en la literatura metodológica." }
+      ],
+      "answer": "a",
+      "explanation": "Diagramas de caja (mejor aún, boxplot con los puntos individuales superpuestos si n es moderado). Las barras de medias sin dispersión ocultan justamente lo que hay que ver: si las distribuciones se solapan.",
+      "hints": ["Una cuantitativa y una categórica de dos niveles.", "¿Qué gráfico muestra la distribución completa?", "Desconfía de las barras de medias."]
+    },
+    {
+      "id": "s4",
+      "concept": "h0-h1",
+      "weight": 1.2,
+      "type": "mcq",
+      "prompt": "Paso 4 — ¿Cuál es la formulación correcta de las hipótesis para la comparación principal?",
+      "options": [
+        { "id": "a", "text": "H0: x̄₁ = x̄₂ · H1: x̄₁ ≠ x̄₂", "why": "Las hipótesis se formulan sobre PARÁMETROS, no sobre medias muestrales observadas." },
+        { "id": "b", "text": "H0: μ₁ = μ₂ · H1: μ₁ ≠ μ₂", "why": "Correcto: parámetros poblacionales y contraste bilateral." },
+        { "id": "c", "text": "H0: el tratamiento funciona · H1: el tratamiento no funciona", "why": "H0 debe expresar ausencia de efecto, no la hipótesis de interés." },
+        { "id": "d", "text": "H0: μ₁ > μ₂ · H1: μ₁ < μ₂", "why": "Contraste unilateral no preespecificado; además H0 debe incluir la igualdad." }
+      ],
+      "answer": "b",
+      "explanation": "H0 siempre expresa ausencia de efecto y se formula sobre parámetros poblacionales (μ). El contraste bilateral es el estándar en ensayos clínicos porque el tratamiento nuevo podría ser peor, y eso también hay que poder detectarlo.",
+      "hints": ["¿Sobre qué se formulan las hipótesis: datos o parámetros?", "¿Qué expresa siempre H0?", "En clínica, ¿una o dos colas?"]
+    },
+    {
+      "id": "s5",
+      "concept": "t-independiente",
+      "weight": 2,
+      "type": "decision",
+      "prompt": "Paso 5 — Elige el análisis principal. Los histogramas del dolor final en cada grupo son razonablemente simétricos, sin atípicos extremos, con n = 40 por grupo.",
+      "options": [
+        { "id": "t-independent", "text": "t de Student para muestras independientes (o de Welch)", "why": "Correcto: dos grupos independientes, variable tratada como cuantitativa, n razonable y distribuciones simétricas." },
+        { "id": "t-paired", "text": "t para muestras relacionadas", "why": "No hay emparejamiento: los pacientes de cada grupo son personas distintas." },
+        { "id": "anova", "text": "ANOVA de un factor", "why": "Con dos grupos es equivalente a la t, pero la prueba que se nombra para dos grupos es la t." },
+        { "id": "chi2", "text": "Chi-cuadrado", "why": "La variable resultado no es categórica." },
+        { "id": "mann-whitney", "text": "U de Mann–Whitney", "why": "Es la alternativa razonable si las distribuciones fueran muy asimétricas o hubiera atípicos importantes; aquí no es necesaria." },
+        { "id": "wilcoxon", "text": "Wilcoxon de rangos con signo", "why": "Requiere datos emparejados." }
+      ],
+      "answer": "t-independent",
+      "acceptable": ["mann-whitney"],
+      "acceptableNote": "Mann–Whitney no es un error grave: con una escala 0–10 discreta es una elección defensible y se puntúa parcialmente. La t es preferible aquí porque las distribuciones son simétricas y tiene más potencia.",
+      "justify": {
+        "prompt": "Marca las razones que sostienen tu elección.",
+        "min": 3,
+        "options": [
+          { "id": "j1", "text": "Los dos grupos son independientes", "correct": true },
+          { "id": "j2", "text": "La variable resultado se trata como cuantitativa", "correct": true },
+          { "id": "j3", "text": "Se comparan exactamente dos grupos", "correct": true },
+          { "id": "j4", "text": "Las distribuciones son razonablemente simétricas y n = 40 por grupo", "correct": true },
+          { "id": "j5", "text": "Los datos están emparejados", "correct": false },
+          { "id": "j6", "text": "Hay más de dos grupos", "correct": false },
+          { "id": "j7", "text": "La variable resultado es categórica", "correct": false }
+        ]
+      },
+      "explanation": "Dos grupos independientes + variable cuantitativa + supuestos razonables = t de Student (Welch por defecto, que no exige varianzas iguales y apenas pierde potencia si lo son). Una mejora del análisis: ANCOVA ajustando por el dolor basal, que aumenta la potencia sin sesgar la estimación.",
+      "hints": [
+        "¿Los pacientes de los dos grupos son las mismas personas?",
+        "¿Cuántos grupos se comparan?",
+        "¿De qué tipo es la variable resultado?",
+        "Comprueba si los supuestos paramétricos son razonables."
+      ]
+    },
+    {
+      "id": "s6",
+      "concept": "p-valor",
+      "weight": 1.5,
+      "type": "mcq",
+      "prompt": "Paso 6 — El análisis devuelve p = {{p}} para la diferencia entre grupos (diferencia observada: {{diff}} puntos). ¿Cómo se interpreta?",
+      "options": [
+        { "id": "a", "text": "Hay esa probabilidad de que H0 sea cierta", "why": "El p-valor no es la probabilidad de H0." },
+        { "id": "b", "text": "Si no existiera diferencia real entre los programas, obtener una diferencia tan o más extrema que la observada tendría esa probabilidad", "why": "Correcto: es la definición del p-valor." },
+        { "id": "c", "text": "El efecto observado es de esa magnitud", "why": "El p-valor no mide magnitud." },
+        { "id": "d", "text": "El tratamiento funciona con esa probabilidad de error", "why": "Mezcla p-valor con α y con la probabilidad de la hipótesis." }
+      ],
+      "answer": "b",
+      "explanation": "El p-valor se calcula SUPONIENDO H0 cierta: es P(datos tan o más extremos | H0), nunca P(H0 | datos). Y no dice nada sobre la magnitud del efecto: para eso está el paso siguiente.",
+      "hints": ["¿Qué se supone cierto al calcular el p-valor?", "Escríbelo como probabilidad condicionada.", "El condicionante es H0."]
+    },
+    {
+      "id": "s7",
+      "concept": "cohen-d",
+      "weight": 1.5,
+      "type": "mcq",
+      "prompt": "Paso 7 — La d de Cohen es {{d}} y la diferencia de medias {{diff}} puntos (IC 95 %: {{ciLo}} a {{ciHi}}). La MCID de la escala es 2 puntos. ¿Cómo valoras la magnitud?",
+      "options": [
+        { "id": "a", "text": "Efecto moderado-grande en términos estandarizados, y hay que comparar el intervalo con la MCID de 2 puntos para juzgar la relevancia clínica", "why": "Correcto: magnitud estandarizada + comparación con el umbral clínico." },
+        { "id": "b", "text": "El efecto es grande porque el p-valor es pequeño", "why": "El p-valor no mide magnitud." },
+        { "id": "c", "text": "La d de Cohen indica el porcentaje de pacientes que mejoran", "why": "La d se expresa en desviaciones típicas, no en porcentaje de pacientes." },
+        { "id": "d", "text": "Con la d ya no hace falta el intervalo de confianza", "why": "Toda estimación necesita su precisión." }
+      ],
+      "answer": "a",
+      "explanation": "La d expresa la diferencia en desviaciones típicas y permite comparar con otros estudios; la diferencia en puntos de la escala permite compararla con la MCID. Ambas son necesarias, y ambas con intervalo de confianza. Si el intervalo cruza la MCID, la conclusión clínica no está establecida aunque el resultado sea significativo.",
+      "hints": ["La d se mide en desviaciones típicas.", "¿Con qué hay que comparar la diferencia en puntos?", "No olvides la precisión de la estimación."]
+    },
+    {
+      "id": "s8",
+      "concept": "conclusiones",
+      "weight": 2,
+      "type": "claim-audit",
+      "prompt": "Paso 8 — Marca las conclusiones defendibles con estos datos y este diseño.",
+      "claims": [
+        { "id": "c1", "text": "En este ensayo aleatorizado, el grupo que añadió educación en dolor presentó menor dolor medio a las 8 semanas que el grupo de ejercicio solo.", "correct": true, "why": "Descripción exacta del resultado, con el diseño explicitado." },
+        { "id": "c2", "text": "Al ser un ensayo aleatorizado, la interpretación causal está mucho mejor sostenida que en un estudio observacional.", "correct": true, "why": "La aleatorización reparte las variables de confusión conocidas y desconocidas." },
+        { "id": "c3", "text": "El resultado demuestra que la educación en dolor funciona en todos los pacientes con lumbalgia.", "correct": false, "why": "Un efecto medio no implica que funcione en todos, y la generalización está limitada por la población reclutada." },
+        { "id": "c4", "text": "Hay que informar la diferencia con su intervalo de confianza y compararla con la MCID, no solo el p-valor.", "correct": true, "why": "Es el estándar de publicación." },
+        { "id": "c5", "text": "Como p < 0,05, el efecto es clínicamente importante.", "correct": false, "why": "Significación y relevancia son dimensiones distintas." },
+        { "id": "c6", "text": "Conviene declarar limitaciones: duración de solo 8 semanas, una sola medida de resultado autoinformada y ausencia de ciego en los participantes.", "correct": true, "why": "Limitaciones concretas y pertinentes a ESTE estudio." }
+      ],
+      "explanation": "Una buena conclusión hace cuatro cosas: describe lo observado sin exagerar, ajusta el lenguaje causal al diseño, compara la magnitud con un umbral clínico y declara limitaciones específicas. En un ensayo aleatorizado el lenguaje causal está permitido, pero la generalización sigue estando limitada por quién entró en el estudio.",
+      "hints": [
+        "¿Qué permite el diseño aleatorizado y qué no?",
+        "Un efecto medio no es un efecto universal.",
+        "Las limitaciones deben ser específicas de este estudio."
+      ]
+    }
+  ],
+  "wrapUp": "El recorrido completo: identificar variables → describir → representar → formular hipótesis → elegir el análisis → interpretar el p-valor → cuantificar el efecto → concluir con prudencia. Nadie te dijo «usa una t»: lo dedujiste del diseño y del tipo de variables. Eso es hacer estadística."
+}

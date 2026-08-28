@@ -1,0 +1,215 @@
+{
+  "world": "w04",
+  "activities": [
+    {
+      "id": "w04-01",
+      "concept": "grafico-adecuado",
+      "type": "chart-pick",
+      "difficulty": 1,
+      "xp": 15,
+      "stem": "Quieres mostrar cómo se distribuye la GLUCEMIA EN AYUNAS (mg/dL) de 120 pacientes: si es simétrica, si hay valores extremos, dónde se concentra.",
+      "prompt": "¿Qué gráfico eliges?",
+      "options": [
+        {
+          "id": "a", "label": "Histograma", "correct": true,
+          "why": "Es el gráfico propio de una variable cuantitativa continua: muestra la forma de la distribución.",
+          "chart": { "kind": "histogram", "values": [78,82,84,85,86,87,88,88,89,90,90,91,92,92,93,94,94,95,95,96,96,97,98,98,99,100,101,102,103,105,107,110,112,118,126,134], "opts": { "xLabel": "Glucemia (mg/dL)" } }
+        },
+        {
+          "id": "b", "label": "Diagrama de sectores", "correct": false,
+          "why": "Los sectores solo sirven para partes de un total categórico. Con una variable continua no significan nada.",
+          "chart": { "kind": "pie", "data": [{ "label": "80–95", "value": 18 }, { "label": "95–110", "value": 12 }, { "label": ">110", "value": 6 }] }
+        },
+        {
+          "id": "c", "label": "Diagrama de dispersión", "correct": false,
+          "why": "Necesita DOS variables cuantitativas. Aquí solo hay una.",
+          "chart": { "kind": "scatter", "points": [{ "x": 1, "y": 90 }, { "x": 2, "y": 95 }, { "x": 3, "y": 101 }, { "x": 4, "y": 88 }], "opts": { "xLabel": "Nº de paciente", "yLabel": "Glucemia" } }
+        },
+        {
+          "id": "d", "label": "Diagrama de barras", "correct": false,
+          "why": "Las barras separadas son para categorías. Con una variable continua las clases deben ser contiguas (histograma).",
+          "chart": { "kind": "bar", "data": [{ "label": "Bajo", "value": 8 }, { "label": "Normal", "value": 22 }, { "label": "Alto", "value": 6 }] }
+        }
+      ],
+      "answer": "a",
+      "explanation": "Una variable cuantitativa continua y una sola variable → histograma (o diagrama de caja si te interesa comparar grupos o localizar atípicos). La diferencia entre histograma y diagrama de barras no es estética: en el histograma el EJE X es una escala numérica continua y las barras se tocan porque las clases son contiguas.",
+      "hints": [
+        "¿Cuántas variables tienes y de qué tipo?",
+        "Con una variable cuantitativa, lo que quieres ver es la forma de la distribución.",
+        "Las barras separadas indican categorías; las contiguas, intervalos numéricos."
+      ]
+    },
+    {
+      "id": "w04-02",
+      "concept": "grafico-enganoso",
+      "type": "chart-fix",
+      "difficulty": 2,
+      "xp": 20,
+      "stem": "Un laboratorio publica este gráfico en un folleto promocional para comparar la eficacia de su fármaco frente al competidor.",
+      "chart": {
+        "kind": "bar",
+        "data": [{ "label": "Nuestro fármaco", "value": 68.4 }, { "label": "Competidor", "value": 66.9 }],
+        "opts": { "baselineZero": false, "yMin": 66, "yMax": 69, "yLabel": "% de respuesta", "title": "Eficacia comparada" }
+      },
+      "prompt": "¿Qué problemas tiene este gráfico? Marca todos los que apliques.",
+      "options": [
+        { "id": "a", "text": "El eje Y no empieza en cero, así que exagera visualmente una diferencia mínima", "correct": true, "why": "68,4 % frente a 66,9 % es 1,5 puntos de diferencia, pero la barra parece el doble." },
+        { "id": "b", "text": "No hay ninguna medida de precisión (intervalo de confianza o error estándar)", "correct": true, "why": "Sin IC no se sabe si la diferencia es distinguible del azar." },
+        { "id": "c", "text": "El tipo de gráfico es incorrecto para comparar dos porcentajes", "correct": false, "why": "El diagrama de barras es adecuado para comparar dos proporciones: el problema es la escala, no el tipo." },
+        { "id": "d", "text": "Faltan el tamaño de muestra de cada grupo y la definición de «respuesta»", "correct": true, "why": "Sin n ni definición del criterio, la comparación no es evaluable." },
+        { "id": "e", "text": "Los colores están mal elegidos y eso invalida el gráfico", "correct": false, "why": "El color puede mejorarse, pero no es el problema estadístico." }
+      ],
+      "answer": ["a", "b", "d"],
+      "explanation": "El truco visual más común y más eficaz es truncar el eje Y. Con el eje desde 0, las dos barras serían casi idénticas. Regla: en un diagrama de BARRAS el eje debe empezar en cero, porque el mensaje visual es la longitud de la barra. (En un gráfico de líneas de una serie temporal sí puede justificarse no partir de cero, siempre que se indique con claridad.)",
+      "hints": [
+        "Mira con atención dónde empieza el eje vertical.",
+        "Calcula la diferencia real entre los dos valores.",
+        "¿Qué información necesitarías para juzgar si esa diferencia es fiable?"
+      ]
+    },
+    {
+      "id": "w04-03",
+      "concept": "boxplot",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 15,
+      "chart": {
+        "kind": "boxplot",
+        "groups": [
+          { "name": "Ejercicio", "values": [7,6,5,6,7,8,5,6,7,6,5,7,8,6,7,5,6,7,6,8] },
+          { "name": "Ejercicio + educación", "values": [4,3,5,4,2,4,3,5,4,3,4,5,3,4,2,4,3,5,4,9] }
+        ],
+        "opts": { "yLabel": "Dolor a las 8 semanas (END)", "showMean": true }
+      },
+      "prompt": "¿Qué representa la línea gruesa dentro de cada caja?",
+      "options": [
+        { "id": "a", "text": "La media", "why": "La media se marca aquí con un rombo, no con la línea. En un boxplot estándar la media no aparece." },
+        { "id": "b", "text": "La mediana", "why": "Correcto: la línea central de la caja es siempre la mediana (Q2)." },
+        { "id": "c", "text": "La moda", "why": "El diagrama de caja no representa la moda." },
+        { "id": "d", "text": "El valor más frecuente del grupo", "why": "Eso sería la moda, y no se representa." }
+      ],
+      "answer": "b",
+      "explanation": "Anatomía del diagrama de caja: la caja va de Q1 a Q3 (contiene el 50 % central), la línea gruesa es la MEDIANA, los bigotes llegan al dato más extremo dentro de Q1 − 1,5·IQR y Q3 + 1,5·IQR, y los puntos sueltos son atípicos según Tukey. La media NO forma parte del boxplot estándar (aquí se ha añadido como rombo). El boxplot es la mejor herramienta para comparar la distribución de una variable cuantitativa entre grupos.",
+      "hints": [
+        "La caja se construye con cuartiles.",
+        "¿Qué cuartil está en el centro de la caja?",
+        "El rombo es un añadido; la línea es parte del diagrama estándar."
+      ]
+    },
+    {
+      "id": "w04-04",
+      "concept": "grafico-adecuado",
+      "type": "classify",
+      "difficulty": 3,
+      "xp": 25,
+      "prompt": "Empareja cada situación con el gráfico adecuado.",
+      "bins": [
+        { "id": "barras", "title": "Diagrama de barras", "desc": "Una variable cualitativa" },
+        { "id": "histograma", "title": "Histograma", "desc": "Una variable cuantitativa" },
+        { "id": "boxplot", "title": "Diagrama de caja", "desc": "Cuantitativa comparada entre grupos" },
+        { "id": "dispersion", "title": "Diagrama de dispersión", "desc": "Dos variables cuantitativas" }
+      ],
+      "items": [
+        { "id": "i1", "text": "Distribución del grupo sanguíneo en 400 donantes", "bin": "barras" },
+        { "id": "i2", "text": "Forma de la distribución del IMC en 250 personas", "bin": "histograma" },
+        { "id": "i3", "text": "Relación entre horas de sueño y puntuación de ansiedad", "bin": "dispersion" },
+        { "id": "i4", "text": "Comparar la presión sistólica final en tres brazos de tratamiento", "bin": "boxplot" },
+        { "id": "i5", "text": "Porcentaje de pacientes por servicio de ingreso", "bin": "barras" },
+        { "id": "i6", "text": "Relación entre edad y distancia caminada en 6 minutos", "bin": "dispersion" },
+        { "id": "i7", "text": "Comparar la escala de Berg antes y después entre dos centros", "bin": "boxplot" },
+        { "id": "i8", "text": "Distribución del tiempo de espera en urgencias", "bin": "histograma" }
+      ],
+      "explanation": "El gráfico se deduce del NÚMERO y del TIPO de variables, no del gusto: 1 cualitativa → barras (o sectores si son partes de un total); 1 cuantitativa → histograma; 1 cuantitativa por grupos → diagrama de caja (o violín); 2 cuantitativas → dispersión; 2 cualitativas → barras agrupadas o apiladas.",
+      "hints": [
+        "Cuenta primero cuántas variables intervienen.",
+        "Después clasifica cada una en cualitativa o cuantitativa.",
+        "«Comparar entre grupos» combina una cualitativa con una cuantitativa."
+      ]
+    },
+    {
+      "id": "w04-05",
+      "concept": "grafico-enganoso",
+      "type": "chart-fix",
+      "difficulty": 3,
+      "xp": 25,
+      "stem": "Este gráfico acompaña a un titular: «Los casos se han disparado un 300 %».",
+      "chart": {
+        "kind": "bar",
+        "data": [{ "label": "2024", "value": 4 }, { "label": "2025", "value": 12 }, { "label": "2026", "value": 16 }],
+        "opts": { "yLabel": "Casos detectados", "title": "Evolución de los casos detectados" }
+      },
+      "prompt": "El gráfico en sí está bien construido. ¿Qué falta para poder interpretar los datos? Marca todo lo que aplique.",
+      "options": [
+        { "id": "a", "text": "La población de referencia: 16 casos sobre 1.000 personas no es lo mismo que sobre 1.000.000", "correct": true, "why": "Sin denominador, un recuento no es interpretable epidemiológicamente." },
+        { "id": "b", "text": "Si ha cambiado el esfuerzo diagnóstico (más pruebas realizadas), parte del aumento puede ser artefacto de detección", "correct": true, "why": "Más casos detectados no equivale a más casos existentes." },
+        { "id": "c", "text": "El eje Y está truncado", "correct": false, "why": "En este gráfico el eje sí empieza en cero." },
+        { "id": "d", "text": "Con cifras tan pequeñas, la variación aleatoria entre años puede explicar buena parte del cambio", "correct": true, "why": "Con 4, 12 y 16 casos, el ruido es enorme en términos relativos." },
+        { "id": "e", "text": "Habría que usar un diagrama de sectores", "correct": false, "why": "Los sectores no sirven para una evolución temporal." }
+      ],
+      "answer": ["a", "b", "d"],
+      "explanation": "Un gráfico puede estar impecablemente dibujado y ser igualmente engañoso si le falta el contexto. Las tres preguntas críticas ante cualquier recuento: ¿sobre qué población?, ¿ha cambiado la forma de medir?, ¿son las cifras lo bastante grandes para que el patrón no sea ruido? Además, «+300 %» sobre 4 casos son 12 casos: los porcentajes sobre bases pequeñas son la técnica de titular más eficaz que existe.",
+      "hints": [
+        "Un recuento sin denominador no es una tasa.",
+        "¿Han aumentado los casos o el número de pruebas realizadas?",
+        "Piensa en la magnitud del ruido con números tan pequeños."
+      ]
+    },
+    {
+      "id": "w04-06",
+      "concept": "histograma",
+      "type": "mcq",
+      "difficulty": 2,
+      "xp": 15,
+      "chart": {
+        "kind": "histogram",
+        "values": [1,1,1,1,1,1,2,2,2,2,2,2,2,2,3,3,3,3,3,4,4,4,5,5,6,7,8,9,11,14,17,22,29,38],
+        "opts": { "xLabel": "Días de estancia", "nBins": 8 }
+      },
+      "prompt": "¿Cómo describirías la forma de esta distribución y qué medida de centro informarías?",
+      "options": [
+        { "id": "a", "text": "Simétrica; informaría la media", "why": "No es simétrica: la cola se extiende claramente hacia la derecha." },
+        { "id": "b", "text": "Asimétrica a la derecha; informaría la mediana y el IQR", "why": "Correcto: con esta forma la media queda por encima de la mayoría de los casos." },
+        { "id": "c", "text": "Asimétrica a la izquierda; informaría la media", "why": "La cola larga está a la derecha, no a la izquierda." },
+        { "id": "d", "text": "Bimodal; informaría las dos modas", "why": "Hay una sola concentración de valores, con una cola larga." }
+      ],
+      "answer": "b",
+      "explanation": "En una distribución asimétrica a la derecha (típica de tiempos, estancias, costes y recuentos) se cumple media > mediana. Informar solo la media sobreestima el caso típico. La regla operativa: mira el histograma ANTES de elegir el resumen numérico; la asimetría se ve, no se adivina.",
+      "hints": [
+        "¿Hacia qué lado se extiende la cola larga?",
+        "En una distribución con cola derecha, ¿dónde queda la media respecto a la mediana?",
+        "Media ↔ desviación típica; mediana ↔ IQR."
+      ]
+    },
+    {
+      "id": "w04-07",
+      "concept": "grafico-enganoso",
+      "type": "sim",
+      "difficulty": 3,
+      "xp": 30,
+      "game": "chart-hospital",
+      "config": { "rounds": 6 },
+      "prompt": "Hospital de gráficos: diagnostica qué le pasa a cada gráfico ingresado y aplica el tratamiento correcto.",
+      "explanation": "Detectar manipulaciones gráficas es una competencia profesional: los folletos de laboratorio, los informes de gestión y la prensa sanitaria están llenos de ellas."
+    },
+    {
+      "id": "w04-08",
+      "concept": "sectores",
+      "type": "claim-audit",
+      "difficulty": 2,
+      "xp": 20,
+      "prompt": "Sobre el diagrama de sectores, marca lo correcto.",
+      "claims": [
+        { "id": "c1", "text": "Solo es adecuado si las categorías son mutuamente excluyentes y suman el 100 %.", "correct": true, "why": "Si un paciente puede estar en dos categorías, los sectores dejan de tener sentido." },
+        { "id": "c2", "text": "Con ocho o más categorías sigue leyéndose bien.", "correct": false, "why": "El ojo humano compara ángulos mal: con más de 5–6 sectores conviene un diagrama de barras." },
+        { "id": "c3", "text": "Es mejor que un diagrama de barras para comparar magnitudes con precisión.", "correct": false, "why": "Es peor: comparamos longitudes mucho mejor que ángulos y áreas." },
+        { "id": "c4", "text": "Añadirle perspectiva 3D distorsiona la percepción de los tamaños.", "correct": true, "why": "La perspectiva agranda visualmente los sectores delanteros: es una manipulación clásica." }
+      ],
+      "explanation": "El diagrama de sectores tiene un único uso defendible: mostrar la composición de un total con pocas categorías (dos o tres) y cuando el mensaje es «esta parte es aproximadamente la mitad». Para todo lo demás, barras.",
+      "hints": [
+        "¿Qué pasa si las categorías se solapan?",
+        "¿Comparas mejor longitudes o ángulos?",
+        "Piensa en qué añade realmente el efecto 3D."
+      ]
+    }
+  ]
+}

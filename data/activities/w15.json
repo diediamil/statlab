@@ -1,0 +1,120 @@
+{
+  "world": "w15",
+  "activities": [
+    {
+      "id": "w15-01",
+      "concept": "plan-analisis",
+      "type": "order",
+      "difficulty": 3,
+      "xp": 30,
+      "stem": "Recibes una base de datos de 120 pacientes con seis variables y una pregunta: «¿el programa reduce las caídas?». Nadie te dice qué hacer.",
+      "prompt": "Ordena los pasos de un análisis defendible.",
+      "items": [
+        { "id": "s1", "text": "Identificar la pregunta, el diseño del estudio y la variable resultado principal", "pos": 1 },
+        { "id": "s2", "text": "Clasificar todas las variables por tipo y por su papel en el estudio", "pos": 2 },
+        { "id": "s3", "text": "Describir los datos: resúmenes numéricos y gráficos, valores faltantes y atípicos", "pos": 3 },
+        { "id": "s4", "text": "Formular H0 y H1 y comprobar los supuestos de las pruebas candidatas", "pos": 4 },
+        { "id": "s5", "text": "Elegir y aplicar el análisis principal", "pos": 5 },
+        { "id": "s6", "text": "Estimar el tamaño del efecto con su intervalo de confianza", "pos": 6 },
+        { "id": "s7", "text": "Interpretar en términos clínicos y enunciar las limitaciones del diseño", "pos": 7 }
+      ],
+      "explanation": "Este orden es el que distingue un análisis defendible de una pesca de p-valores. Dos puntos críticos: la descripción (paso 3) va SIEMPRE antes de la inferencia, porque es donde se detectan errores de datos, distribuciones raras y atípicos; y la interpretación (paso 7) está limitada por el diseño (paso 1), no por lo bonito que sea el resultado.",
+      "hints": [
+        "Todo empieza por la pregunta y el diseño, nunca por la prueba.",
+        "Describir va antes que inferir.",
+        "Los supuestos se comprueban antes de elegir la prueba, no después."
+      ]
+    },
+    {
+      "id": "w15-02",
+      "concept": "diseno-estudio",
+      "type": "decision",
+      "difficulty": 3,
+      "xp": 35,
+      "case": "E",
+      "stem": "Datos del caso PREVENCIÓN. Dos centros: uno aplicó el programa (n = 62) y otro mantuvo la práctica habitual (n = 58). Variable principal: puntuación de la escala de Berg a los 12 meses (0–56, cuantitativa). Los histogramas por centro son razonablemente simétricos, sin atípicos llamativos, y las varianzas son parecidas.",
+      "prompt": "¿Qué análisis corresponde a la comparación principal entre centros?",
+      "options": [
+        { "id": "t-independent", "text": "t de Student para muestras independientes", "why": "Correcto para la comparación entre centros: dos grupos independientes, variable cuantitativa, supuestos razonables." },
+        { "id": "t-paired", "text": "t para muestras relacionadas", "why": "Serviría para comparar antes y después DENTRO de un centro, no entre centros." },
+        { "id": "anova", "text": "ANOVA de un factor", "why": "Con solo dos grupos, el ANOVA equivale a la t: la prueba nombrada para dos grupos es la t." },
+        { "id": "chi2", "text": "Chi-cuadrado", "why": "La variable resultado es cuantitativa." },
+        { "id": "mann-whitney", "text": "U de Mann–Whitney", "why": "Sería la alternativa si la distribución fuera muy asimétrica o hubiera atípicos importantes; aquí no es necesaria." }
+      ],
+      "answer": "t-independent",
+      "justify": {
+        "prompt": "Marca las razones válidas y las limitaciones que hay que declarar.",
+        "min": 3,
+        "options": [
+          { "id": "j1", "text": "Dos grupos independientes y variable cuantitativa", "correct": true },
+          { "id": "j2", "text": "Distribuciones aproximadamente simétricas y varianzas similares", "correct": true },
+          { "id": "j3", "text": "Al no haber aleatorización individual, los centros pueden diferir en características basales: es un diseño cuasiexperimental", "correct": true },
+          { "id": "j4", "text": "Conviene ajustar por la puntuación basal y la edad (ANCOVA o regresión) para reducir la confusión", "correct": true },
+          { "id": "j5", "text": "El diseño permite concluir causalidad con la misma fuerza que un ensayo aleatorizado", "correct": false },
+          { "id": "j6", "text": "Los datos están emparejados porque hay medidas antes y después", "correct": false }
+        ]
+      },
+      "explanation": "Aquí hay dos decisiones distintas y las dos importan. La técnica: t independiente para comparar centros (y t pareada o Wilcoxon para el cambio dentro de cada centro). La metodológica: al asignar el programa POR CENTRO y no por paciente, cualquier diferencia entre centros (edad, comorbilidad, recursos, estilo profesional) se confunde con el efecto del programa. La solución habitual es ajustar por las covariables basales mediante regresión o ANCOVA, y declarar explícitamente la limitación. Sin aleatorización individual, el lenguaje debe ser de asociación, no de causalidad.",
+      "hints": [
+        "Distingue la comparación ENTRE centros de la comparación ANTES-DESPUÉS.",
+        "¿Los pacientes fueron aleatorizados individualmente?",
+        "¿Qué se puede hacer con las diferencias basales entre centros?"
+      ]
+    },
+    {
+      "id": "w15-03",
+      "concept": "conclusiones",
+      "type": "claim-audit",
+      "difficulty": 3,
+      "xp": 35,
+      "stem": "Resultado del caso PREVENCIÓN: Berg a 12 meses 44,8 (programa) frente a 41,1 (habitual). Diferencia 3,7 puntos; IC 95 % (1,2 a 6,2); p = 0,004; d = 0,54. La MCID de la escala de Berg se sitúa en torno a 4 puntos. Diseño cuasiexperimental por centros.",
+      "prompt": "Marca las conclusiones defendibles con ESTOS datos y ESTE diseño.",
+      "claims": [
+        { "id": "c1", "text": "Los pacientes del centro con programa presentaron mejor equilibrio a los 12 meses, con una diferencia media de 3,7 puntos (IC 95 %: 1,2 a 6,2).", "correct": true, "why": "Descripción exacta del resultado, sin lenguaje causal." },
+        { "id": "c2", "text": "El programa causa una mejora del equilibrio de 3,7 puntos.", "correct": false, "why": "El diseño no aleatorizado no sostiene una afirmación causal tan directa." },
+        { "id": "c3", "text": "El efecto es estadísticamente significativo, pero el intervalo incluye valores por debajo de la MCID, así que la relevancia clínica no queda establecida.", "correct": true, "why": "Lectura correcta: el intervalo va de 1,2 (irrelevante) a 6,2 (relevante)." },
+        { "id": "c4", "text": "d = 0,54 corresponde a un efecto moderado según la orientación de Cohen.", "correct": true, "why": "Está entre 0,5 y 0,8; y la etiqueta se presenta como orientación." },
+        { "id": "c5", "text": "El resultado se puede generalizar a toda la población mayor de España.", "correct": false, "why": "Dos centros concretos no representan a la población nacional." },
+        { "id": "c6", "text": "Las diferencias basales entre centros son una limitación que debe declararse.", "correct": true, "why": "Es la amenaza principal a la validez interna de este diseño." }
+      ],
+      "explanation": "Redactar conclusiones es una competencia estadística, no un adorno. Tres reglas: (1) el lenguaje causal exige un diseño que lo sostenga; (2) la relevancia se juzga con el intervalo frente a un umbral clínico, no con el p-valor; (3) la generalización está limitada por la población de la que salió la muestra. Un resultado significativo mal redactado es un resultado mal comunicado.",
+      "hints": [
+        "¿El diseño permite lenguaje causal?",
+        "Compara todo el intervalo con la MCID, no solo la estimación puntual.",
+        "¿A qué población puedes generalizar con dos centros?"
+      ]
+    },
+    {
+      "id": "w15-04",
+      "concept": "integracion",
+      "type": "mcq",
+      "difficulty": 3,
+      "xp": 30,
+      "prompt": "¿Cuál de estas frases de resultados está correctamente redactada para un artículo?",
+      "options": [
+        { "id": "a", "text": "«El tratamiento fue significativo (p < 0,05).»", "why": "No dice qué efecto, ni de qué magnitud, ni con qué precisión. Además, «el tratamiento fue significativo» no significa nada: lo significativo es la diferencia." },
+        { "id": "b", "text": "«El grupo tratado presentó una reducción media del dolor de 2,4 puntos mayor que el control (IC 95 %: 1,1 a 3,7; p = 0,001; d = 0,71).»", "why": "Correcto: dirección, magnitud, precisión, significación y tamaño del efecto." },
+        { "id": "c", "text": "«No hubo diferencias entre los grupos (p = 0,32), por lo que los tratamientos son equivalentes.»", "why": "Confunde ausencia de significación con equivalencia demostrada." },
+        { "id": "d", "text": "«El p-valor de 0,001 demuestra que el tratamiento funciona en el 99,9 % de los pacientes.»", "why": "Interpretación doblemente errónea del p-valor." }
+      ],
+      "answer": "b",
+      "explanation": "Una frase de resultados completa contiene cinco elementos: la comparación (quién frente a quién), la dirección del efecto, la magnitud con sus unidades, la precisión (intervalo de confianza) y la significación. El tamaño del efecto estandarizado (d) es un añadido útil para comparar con otros estudios. Fíjate en que la opción b no contiene ni una palabra causal de más ni ninguna interpretación del p-valor.",
+      "hints": [
+        "¿Qué elementos mínimos necesita una frase de resultados?",
+        "Busca la opción que incluye magnitud Y precisión.",
+        "Descarta las que interpretan mal el p-valor."
+      ]
+    },
+    {
+      "id": "w15-05",
+      "concept": "limitaciones",
+      "type": "sim",
+      "difficulty": 3,
+      "xp": 40,
+      "game": "choose-your-test",
+      "config": { "rounds": 10, "hardMode": true, "noHints": false },
+      "prompt": "Proyecto final: diez escenarios completos. Identifica el diseño, elige el análisis y justifícalo. Sin pistas sobre la prueba.",
+      "explanation": "Este es el examen real de la asignatura: no calcular, sino decidir qué hacer con unos datos y saber defenderlo."
+    }
+  ]
+}
