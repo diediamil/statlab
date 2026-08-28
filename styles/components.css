@@ -279,7 +279,7 @@ details.disclose > div { padding: 0 var(--s-4) var(--s-4); }
 /* Contenedor de desplazamiento para las tablas anchas. Se envuelve la tabla en
    lugar de cambiarle el `display`: así conserva el reparto normal de columnas. */
 .mathdoc__scroll { overflow-x: auto; max-width: 100%; }
-.mathdoc__scroll .mathdoc__t { min-width: 22rem; }
+.mathdoc__scroll .mathdoc__t--num { min-width: 22rem; }
 .mathdoc__t th, .mathdoc__t td {
   text-align: left; padding: var(--s-2) var(--s-3);
   border-bottom: 1px solid var(--line); vertical-align: baseline;
@@ -288,6 +288,17 @@ details.disclose > div { padding: 0 var(--s-4) var(--s-4); }
 .mathdoc__t th { font-weight: 600; color: var(--ink); }
 .mathdoc__t td { color: var(--ink-2); }
 .mathdoc__t--nom th { width: 1%; white-space: nowrap; }
+/* En pantallas estrechas la nomenclatura se apila: el símbolo arriba y su
+   definición debajo. Con dos columnas, el `nowrap` del símbolo obligaba a la
+   tabla a ser más ancha que la pantalla. */
+@media (max-width: 34rem) {
+  .mathdoc__t--nom, .mathdoc__t--nom tbody, .mathdoc__t--nom tr,
+  .mathdoc__t--nom th, .mathdoc__t--nom td { display: block; width: auto; }
+  .mathdoc__t--nom tr { padding: var(--s-2) 0; border-bottom: 1px solid var(--line); }
+  .mathdoc__t--nom tr:last-child { border-bottom: 0; }
+  .mathdoc__t--nom th { white-space: normal; border-bottom: 0; padding: 0 0 2px; }
+  .mathdoc__t--nom td { border-bottom: 0; padding: 0; }
+}
 /* Tablas clave→valor: se limita el ancho para que el valor no acabe a diez
    centímetros de su etiqueta en pantallas grandes. En móvil ocupan el 100 %. */
 .mathdoc__t--kv { max-width: 30rem; }
