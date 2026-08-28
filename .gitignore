@@ -3,7 +3,10 @@
 # así que puedes versionarla si te resulta más cómodo: basta con borrar
 # esta línea. Lo que NUNCA debe versionarse es la service_role key, que
 # no aparece en ningún archivo de este proyecto.
-config.js
+#
+# La barra inicial es IMPRESCINDIBLE: sin ella el patrón también excluiría
+# js/config.js, que es un módulo del programa y debe versionarse siempre.
+/config.js
 
 # Sistema operativo y editores
 .DS_Store
