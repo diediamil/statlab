@@ -229,8 +229,11 @@
 }
 .ach--locked { opacity: .5; }
 .ach__icon { font-size: 1.35rem; flex: none; }
-.ach__name { font-weight: 700; }
-.ach__desc { font-size: var(--fs-xs); color: var(--ink-3); }
+/* Nombre y descripción son dos <span>: sin este contenedor en columna se
+   pintarían seguidos en la misma línea («Primer contactoCompleta tu…»). */
+.ach__text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.ach__name { font-weight: 700; line-height: 1.3; }
+.ach__desc { font-size: var(--fs-xs); color: var(--ink-3); line-height: 1.4; }
 
 /* --- Racha ------------------------------------------------------------- */
 .streak { display: flex; gap: 3px; }
