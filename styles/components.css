@@ -248,6 +248,61 @@ details.disclose > summary::before { content: "▸"; margin-right: var(--s-2); c
 details.disclose[open] > summary::before { content: "▾"; }
 details.disclose > div { padding: 0 var(--s-4) var(--s-4); }
 
+/* --- Documentación matemática (MathML) -------------------------------- */
+/* Se usa MathML nativo: sin librerías, escalable, y los lectores de pantalla
+   lo leen como matemáticas. Toda ecuación puede desbordar en móvil, así que
+   cada una scrollea dentro de su caja y nunca la página entera. */
+.mathdoc { font-size: var(--fs-sm); line-height: 1.65; }
+.mathdoc math { font-size: 1.06em; }
+.mathdoc__lead { margin-bottom: var(--s-4); }
+.mathdoc__h {
+  font-size: var(--fs-sm); font-weight: 700; letter-spacing: .02em;
+  margin: var(--s-5) 0 var(--s-2); padding-bottom: var(--s-1);
+  border-bottom: 1px solid var(--line);
+}
+.mathdoc .small { color: var(--ink-2); margin: var(--s-2) 0; }
+
+.eq {
+  display: flex; align-items: center; gap: var(--s-3);
+  margin: var(--s-3) 0; padding: var(--s-3) var(--s-4);
+  background: var(--surface-2); border-radius: var(--r-2);
+  border-left: 3px solid var(--brand-1);
+}
+.eq__body { flex: 1 1 auto; min-width: 0; overflow-x: auto; text-align: center; }
+/* NO tocar el `display` de <math>: MathML usa `display: math` internamente y
+   forzarlo a `block` apila cada símbolo en su propia línea. El centrado y el
+   salto de bloque los da ya el atributo display="block" del elemento. */
+.eq__body math { margin: 0 auto; }
+.eq__n { flex: none; color: var(--ink-3); font-size: var(--fs-xs); font-variant-numeric: tabular-nums; }
+
+.mathdoc__t { width: 100%; border-collapse: collapse; margin: var(--s-2) 0; }
+/* Contenedor de desplazamiento para las tablas anchas. Se envuelve la tabla en
+   lugar de cambiarle el `display`: así conserva el reparto normal de columnas. */
+.mathdoc__scroll { overflow-x: auto; max-width: 100%; }
+.mathdoc__scroll .mathdoc__t { min-width: 22rem; }
+.mathdoc__t th, .mathdoc__t td {
+  text-align: left; padding: var(--s-2) var(--s-3);
+  border-bottom: 1px solid var(--line); vertical-align: baseline;
+}
+.mathdoc__t tr:last-child th, .mathdoc__t tr:last-child td { border-bottom: 0; }
+.mathdoc__t th { font-weight: 600; color: var(--ink); }
+.mathdoc__t td { color: var(--ink-2); }
+.mathdoc__t--nom th { width: 1%; white-space: nowrap; }
+/* Tablas clave→valor: se limita el ancho para que el valor no acabe a diez
+   centímetros de su etiqueta en pantallas grandes. En móvil ocupan el 100 %. */
+.mathdoc__t--kv { max-width: 30rem; }
+.mathdoc__t--kv td { text-align: right; color: var(--ink); font-variant-numeric: tabular-nums; }
+.mathdoc__t--num { text-align: center; font-variant-numeric: tabular-nums; }
+.mathdoc__t--num td { text-align: center; color: var(--ink); }
+.mathdoc__t--num thead td { color: var(--ink-3); font-weight: 600; }
+
+.mathdoc__warn, .mathdoc__note {
+  margin: var(--s-4) 0 0; padding: var(--s-3) var(--s-4);
+  border-radius: var(--r-2); background: var(--surface-2);
+  border-left: 3px solid var(--ink-3); color: var(--ink-2);
+}
+.mathdoc__note { border-left-color: var(--brand-2); }
+
 /* --- Cargando --------------------------------------------------------- */
 .spinner {
   width: 1.1em; height: 1.1em; border-radius: 50%;
