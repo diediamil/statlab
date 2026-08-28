@@ -24,6 +24,14 @@
 .brand { display: inline-flex; align-items: center; gap: var(--s-2); color: var(--brand-1); text-decoration: none; flex: none; }
 .brand__text { font-size: var(--fs-md); letter-spacing: .04em; color: var(--ink); font-weight: 500; }
 .brand__text b { font-weight: 800; color: var(--brand-1); }
+/* «Loyola» acompaña al nombre sin competir con él: más pequeño y en tono suave.
+   Se oculta en pantallas estrechas, donde la barra ya va justa de espacio. */
+.brand__suffix {
+  margin-left: .45em;
+  font-size: .72em; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--ink-3);
+}
+@media (max-width: 26rem) { .brand__suffix { display: none; } }
 
 .topbar__nav { display: flex; gap: 0.1rem; flex: 1 1 auto; overflow-x: auto; scrollbar-width: none; }
 .topbar__nav::-webkit-scrollbar { display: none; }
@@ -84,6 +92,25 @@
   padding: var(--s-4);
   font-size: var(--fs-xs); color: var(--ink-3); text-align: center;
 }
+/* El logotipo institucional es azul marino sobre transparente: sobre el tema
+   oscuro sería casi invisible. En vez de recolorearlo (nunca se debe alterar
+   una marca ajena) se apoya sobre una placa blanca con holgura. */
+.footer__logo {
+  display: block;
+  height: 2.4rem; width: auto;
+  margin: 0 auto var(--s-3);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .footer__logo {
+    background: #fff; padding: .4rem .7rem; border-radius: 8px;
+    box-sizing: content-box;
+  }
+}
+:root[data-theme="dark"] .footer__logo {
+  background: #fff; padding: .4rem .7rem; border-radius: 8px;
+  box-sizing: content-box;
+}
+
 .footer__author {
   margin-top: var(--s-2);
   line-height: 1.6;
@@ -180,6 +207,25 @@
 }
 .hero__logo { font-size: clamp(2.2rem, 8vw, 3.6rem); font-weight: 800; letter-spacing: .05em; margin-bottom: var(--s-2); }
 .hero__logo b { color: var(--brand-1); }
+.hero__suffix {
+  display: block;
+  font-size: .32em; font-weight: 600; letter-spacing: .22em;
+  text-transform: uppercase; color: var(--ink-3); margin-top: .35em;
+}
+.hero__institution {
+  display: block; height: 2.9rem; width: auto;
+  margin: var(--s-4) auto var(--s-4);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .hero__institution {
+    background: #fff; padding: .5rem .8rem; border-radius: 10px;
+    box-sizing: content-box;
+  }
+}
+:root[data-theme="dark"] .hero__institution {
+  background: #fff; padding: .5rem .8rem; border-radius: 10px;
+  box-sizing: content-box;
+}
 .hero__sub { font-size: var(--fs-lg); color: var(--ink-2); max-width: 40rem; margin: 0 auto var(--s-5); }
 .hero__cta { display: flex; gap: var(--s-3); justify-content: center; flex-wrap: wrap; }
 .hero__q { font-size: var(--fs-md); font-weight: 650; color: var(--brand-1-dark); margin-top: var(--s-5); }
