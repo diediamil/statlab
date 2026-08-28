@@ -136,7 +136,7 @@ export default async function progressView({ main }) {
             const got = mine.find((x) => x.achievement_code === a.code);
             return el('div', { class: `ach${got ? '' : ' ach--locked'}` }, [
               el('span', { class: 'ach__icon', 'aria-hidden': 'true', text: a.icon }),
-              el('span', {}, [
+              el('span', { class: 'ach__text' }, [
                 el('span', { class: 'ach__name', text: a.name }),
                 el('span', { class: 'ach__desc', text: a.description }),
               ]),
