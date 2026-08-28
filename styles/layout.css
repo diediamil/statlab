@@ -44,7 +44,7 @@
 .navlink:hover { background: var(--surface-2); color: var(--ink); }
 .navlink[aria-current="page"] { background: var(--brand-1-soft); color: var(--brand-1-dark); }
 
-.topbar__right { display: flex; align-items: center; gap: var(--s-2); flex: none; }
+.topbar__right { display: flex; align-items: center; gap: var(--s-2); flex: none; min-width: 0; }
 
 .hud { display: flex; gap: var(--s-3); align-items: center; font-size: var(--fs-sm); font-weight: 700; }
 .hud__item { display: inline-flex; align-items: center; gap: 0.25rem; font-variant-numeric: tabular-nums; }
@@ -77,6 +77,16 @@
 }
 .usermenu__pop a:hover, .usermenu__pop button:hover { background: var(--surface-2); }
 .usermenu__head { padding: 0.4rem 0.6rem var(--s-2); border-bottom: 1px solid var(--line); margin-bottom: var(--s-2); }
+
+/* En móvil, marca + indicadores + menú no caben en 390 px y la barra empujaba
+   la página entera hacia la derecha. Se ocultan los indicadores y el alias:
+   los mismos números están, con más detalle, en «Mi progreso».
+   Este bloque va DESPUÉS de `.hud` y `.usermenu__btn`: una media query no
+   añade especificidad, así que colocado antes no anularía nada. */
+@media (max-width: 40rem) {
+  .hud { display: none; }
+  .usermenu__btn > span:not(.avatar) { display: none; }
+}
 
 .demo-banner {
   background: var(--brand-3-soft); color: var(--warn);
