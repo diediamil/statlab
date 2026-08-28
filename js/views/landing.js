@@ -24,7 +24,16 @@ export default async function landing({ main }) {
 
   replace(main, [
     el('section', { class: 'hero' }, [
-      el('h1', { class: 'hero__logo' }, [el('b', { text: 'STAT' }), 'LAB']),
+      el('h1', { class: 'hero__logo' }, [
+        el('b', { text: 'STAT' }), 'LAB',
+        el('span', { class: 'hero__suffix', text: t('app.suffix') }),
+      ]),
+      el('img', {
+        class: 'hero__institution',
+        src: 'assets/loyola_principal.png',
+        alt: 'Universidad Loyola Andalucía',
+        width: 646, height: 200, loading: 'lazy',
+      }),
       el('p', { class: 'hero__sub', text: t('app.tagline') + ' · ' + t('app.taglineEs') }),
       el('p', { class: 'hero__sub', text: t('landing.heroSub') }),
       el('div', { class: 'hero__cta' }, [
