@@ -12,7 +12,7 @@ import { db } from '../data/store.js';
 import { fmt, fmtInt, fmtDurationLong, fmtDateTime } from '../utils.js';
 import { getWorlds, getConceptIndex, getActivities, getAchievements } from '../content.js';
 import { levelFromXp, worldStates, streakCalendar } from '../progress.js';
-import { averageMastery, MASTERY_DOC, masteryLevel } from '../mastery.js';
+import { averageMastery, masteryLevel } from '../mastery.js';
 import { meter } from './student.js';
 import { barChart } from '../viz.js';
 
@@ -144,11 +144,12 @@ export default async function progressView({ main }) {
           })),
         ]),
 
-        el('details', { class: 'disclose', open: true }, [
-          el('summary', { text: t('progress.masteryHow') }),
-          el('div', {}, [
-            el('div', { class: 'mathdoc', html: MASTERY_DOC.html }),
-          ]),
+        // Las fórmulas viven en su propia pantalla, a ancho completo: una
+        // fracción con sumatorios no cabe en esta columna lateral.
+        el('div', { class: 'card' }, [
+          el('h2', { text: t('metrics.title') }),
+          el('p', { class: 'small muted', text: t('metrics.cardLead') }),
+          el('a', { class: 'btn btn--sm btn--block', href: '#/metrics', text: t('metrics.cardCta') }),
         ]),
       ]),
     ]),
