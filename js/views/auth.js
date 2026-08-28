@@ -176,7 +176,7 @@ export async function registerView({ main }) {
       ])]);
       return;
     }
-    toast('Cuenta creada. ¡Bienvenida a STATLAB!', 'ok');
+    toast('Cuenta creada. ¡Bienvenida a STATLAB Loyola!', 'ok');
     navigate('/student');
   } }, [
     el('div', { class: 'grid grid--2' }, [fields.firstName, fields.lastName]),
