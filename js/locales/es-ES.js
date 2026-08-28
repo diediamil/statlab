@@ -556,5 +556,9 @@ export default {
 
   footer: {
     notAGrade: 'XP, Challenge Points y mastery son indicadores formativos: no son calificación académica.',
+    // La autoría (nombre y correo) va en el HTML: es un nombre propio y no se
+    // traduce. Aquí solo viven las etiquetas que la acompañan.
+    createdBy: 'Creado por',
+    affiliation: 'Departamento de Métodos Cuantitativos · Universidad Loyola Andalucía',
   },
 };
