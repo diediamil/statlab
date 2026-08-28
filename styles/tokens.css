@@ -62,6 +62,11 @@
   --data-6: #e8590c;
   --data-7: #5c7cfa;
   --data-8: #495057;
+  /* Serie única: cuando el color NO codifica nada (un solo grupo de barras, la
+     categoría ya la dice el eje X) se usa este azul y no la paleta categórica.
+     En claro es más intenso porque un azul pálido sobre blanco no alcanza el
+     contraste 3:1 que WCAG 1.4.11 pide a los objetos gráficos: aquí da 3,56. */
+  --data-single: #228be6;
   --grid: #dfe3ee;
   --axis: #6b7280;
 
@@ -147,6 +152,7 @@
     --data-6: #ffa8a8;
     --data-7: #a5b4fc;
     --data-8: #adb5bd;
+    --data-single: #74c0fc;   /* azul claro: 8,85 de contraste sobre la superficie oscura */
     --grid: #2a3040;
     --axis: #8d95a8;
     --state-locked: #5b6377;
@@ -196,6 +202,7 @@
   --data-6: #ffa8a8;
   --data-7: #a5b4fc;
   --data-8: #adb5bd;
+  --data-single: #74c0fc;   /* azul claro: 8,85 de contraste sobre la superficie oscura */
   --grid: #2a3040;
   --axis: #8d95a8;
   --state-locked: #5b6377;
