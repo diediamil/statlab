@@ -259,13 +259,9 @@ export default async function studentDashboard({ main }) {
           })),
         ]),
 
-        // Las fórmulas viven en su propia pantalla, a ancho completo: una
-        // fracción con sumatorios no cabe en esta columna lateral.
-        el('div', { class: 'card' }, [
-          el('h2', { text: t('metrics.title') }),
-          el('p', { class: 'small muted', text: t('metrics.cardLead') }),
-          el('a', { class: 'btn btn--sm btn--block', href: '#/metrics', text: t('metrics.cardCta') }),
-        ]),
+        // Sin tarjeta de fórmulas: en esta pantalla ya está el modo «Cómo se
+        // mide» en la rejilla de arriba, y repetir el mismo destino dos veces
+        // solo alarga la columna.
       ]),
     ]),
   ])]);
