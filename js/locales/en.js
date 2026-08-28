@@ -97,4 +97,10 @@ export default {
     points: 'Points',
     aliasOnly: 'Rankings show aliases only. Never names or email addresses.',
   },
+
+  footer: {
+    notAGrade: 'XP, Challenge Points and mastery are formative indicators, not academic grades.',
+    createdBy: 'Created by',
+    affiliation: 'Department of Quantitative Methods · Universidad Loyola Andalucía',
+  },
 };
