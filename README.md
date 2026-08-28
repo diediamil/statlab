@@ -7,6 +7,9 @@
 Plataforma docente de Estadística y Bioestadística para primer curso de
 Ciencias de la Salud.
 
+**Creado por Diego Díaz Milanés** · [ddiaz@uloyola.es](mailto:ddiaz@uloyola.es)
+Departamento de Métodos Cuantitativos · Universidad Loyola Andalucía
+
 </div>
 
 ---
@@ -582,7 +585,10 @@ alternativa táctil y de teclado.
 
 ---
 
-## Licencia
+## Autoría y licencia
+
+Creado por **Diego Díaz Milanés** — [ddiaz@uloyola.es](mailto:ddiaz@uloyola.es)
+Departamento de Métodos Cuantitativos, Universidad Loyola Andalucía.
 
 MIT. Ver [LICENSE](LICENSE).
 
