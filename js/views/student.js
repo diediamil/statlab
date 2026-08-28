@@ -16,7 +16,7 @@ import { navigate } from '../router.js';
 import { fmt, fmtInt, fmtDurationLong, fmtRelative, fmtDateTime } from '../utils.js';
 import { getWorlds, getConcept, getAchievements } from '../content.js';
 import { levelFromXp, streakCalendar, worldStates } from '../progress.js';
-import { averageMastery, conceptsToReview, MASTERY_DOC } from '../mastery.js';
+import { averageMastery, conceptsToReview } from '../mastery.js';
 import { challengeState, solutionAvailable } from '../challenges.js';
 
 const MODES = [
@@ -27,6 +27,7 @@ const MODES = [
   { id: 'assignments', href: '#/assignments', icon: '📋', accent: 'var(--info)' },
   { id: 'progress', href: '#/progress', icon: '📈', accent: 'var(--brand-2)' },
   { id: 'mistakes', href: '#/mistakes', icon: '🔧', accent: 'var(--brand-4)' },
+  { id: 'metrics', href: '#/metrics', icon: '📐', accent: 'var(--ink-3)' },
 ];
 
 export default async function studentDashboard({ main }) {
@@ -258,12 +259,12 @@ export default async function studentDashboard({ main }) {
           })),
         ]),
 
-        // mastery: cómo se calcula
-        el('details', { class: 'disclose' }, [
-          el('summary', { text: t('progress.masteryHow') }),
-          el('div', {}, [
-            el('div', { class: 'mathdoc', html: MASTERY_DOC.html }),
-          ]),
+        // Las fórmulas viven en su propia pantalla, a ancho completo: una
+        // fracción con sumatorios no cabe en esta columna lateral.
+        el('div', { class: 'card' }, [
+          el('h2', { text: t('metrics.title') }),
+          el('p', { class: 'small muted', text: t('metrics.cardLead') }),
+          el('a', { class: 'btn btn--sm btn--block', href: '#/metrics', text: t('metrics.cardCta') }),
         ]),
       ]),
     ]),
