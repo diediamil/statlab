@@ -171,6 +171,17 @@ export default {
     progressDesc: 'XP, mastery por concepto, racha y logros.',
     mistakes: 'Mis errores',
     mistakesDesc: 'Los conceptos que más te están costando, con práctica dirigida.',
+    metrics: 'Cómo se mide',
+    metricsDesc: 'Las fórmulas exactas del mastery, los Challenge Points y la XP.',
+  },
+
+  metrics: {
+    title: 'Cómo se mide tu aprendizaje',
+    subtitle: 'Las tres métricas de STATLAB Loyola, con su fórmula completa. Sin cajas negras.',
+    sourceNote: 'Estas fórmulas se leen directamente del código que las calcula '
+      + '(js/mastery.js y js/scoring.js): no pueden decir una cosa y hacer otra.',
+    cardLead: 'Mastery, Challenge Points y XP: qué miden y con qué fórmula exacta.',
+    cardCta: 'Ver las fórmulas',
   },
 
   worlds: {
