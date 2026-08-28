@@ -224,6 +224,7 @@ function registerRoutes(main) {
 
   route('/student', lazy(() => import('./views/student.js')), { requires: 'auth' });
   route('/account', lazy(() => import('./views/account.js')), { requires: 'auth' });
+  route('/metrics', lazy(() => import('./views/metrics.js')), { requires: 'auth' });
 
   route('/campaign', lazy(() => import('./views/campaign.js'), 'campaignView'), { requires: 'auth' });
   route('/world/:id', lazy(() => import('./views/campaign.js'), 'worldView'), { requires: 'auth' });
