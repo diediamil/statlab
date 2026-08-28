@@ -4,7 +4,11 @@
  */
 export default {
   app: {
-    name: 'STATLAB',
+    // «Loyola» distingue esta plataforma de otros productos que se llaman
+    // STATLAB. El nombre corto se usa donde el espacio manda (barra superior).
+    name: 'STATLAB Loyola',
+    nameShort: 'STATLAB',
+    suffix: 'Loyola',
     tagline: 'Learn statistics by experimenting',
     taglineEs: 'Aprende estadística experimentando',
     loading: 'Cargando…',
@@ -58,7 +62,7 @@ export default {
       teacherTitle: 'Para el profesor',
       teacherText: '¿Qué ha entendido la clase y qué hay que volver a explicar? Con datos, no con intuición.',
     },
-    footerNote: 'STATLAB es una herramienta formativa. XP y Challenge Points no son calificación académica.',
+    footerNote: 'STATLAB Loyola es una herramienta formativa. XP y Challenge Points no son calificación académica.',
   },
 
   auth: {
@@ -496,7 +500,7 @@ export default {
     reset: 'Reiniciar datos demo',
     resetDone: 'Datos demo reiniciados.',
     exit: 'Salir del modo demo',
-    noBackend: 'STATLAB no tiene backend configurado, así que funciona en modo demo. '
+    noBackend: 'STATLAB Loyola no tiene backend configurado, así que funciona en modo demo. '
       + 'Consulta el README para conectar Supabase.',
   },
 
