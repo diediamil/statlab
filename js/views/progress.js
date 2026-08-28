@@ -48,7 +48,7 @@ export default async function progressView({ main }) {
     el('div', { class: 'page-head' }, [
       el('div', {}, [
         el('h1', { text: t('progress.title') }),
-        el('p', { class: 'page-head__sub', text: 'Todo lo que STATLAB sabe de tu aprendizaje, y cómo lo calcula.' }),
+        el('p', { class: 'page-head__sub', text: 'Todo lo que STATLAB Loyola sabe de tu aprendizaje, y cómo lo calcula.' }),
       ]),
       el('a', { class: 'btn btn--sm', href: '#/student', text: t('common.back') }),
     ]),
