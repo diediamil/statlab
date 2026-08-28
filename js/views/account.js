@@ -82,7 +82,7 @@ export default async function accountView({ main }) {
     ]),
 
     el('div', { class: 'card stack', style: { marginTop: 'var(--s-5)' } }, [
-      el('h2', { text: 'Qué datos guarda STATLAB' }),
+      el('h2', { text: 'Qué datos guarda STATLAB Loyola' }),
       el('div', { class: 'table-wrap' }, [
         el('table', {}, [
           el('thead', {}, [el('tr', {}, ['Dato', 'Para qué', 'Quién lo ve'].map((h) => el('th', { text: h })))]),
