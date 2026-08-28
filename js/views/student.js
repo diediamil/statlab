@@ -250,7 +250,7 @@ export default async function studentDashboard({ main }) {
             const got = myAchievements.some((x) => x.achievement_code === a.code);
             return el('div', { class: `ach${got ? '' : ' ach--locked'}`, title: a.description }, [
               el('span', { class: 'ach__icon', 'aria-hidden': 'true', text: a.icon }),
-              el('span', {}, [
+              el('span', { class: 'ach__text' }, [
                 el('span', { class: 'ach__name', text: a.name }),
                 el('span', { class: 'ach__desc', text: got ? 'Conseguido' : a.description }),
               ]),
