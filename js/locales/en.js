@@ -7,7 +7,9 @@
  */
 export default {
   app: {
-    name: 'STATLAB',
+    name: 'STATLAB Loyola',
+    nameShort: 'STATLAB',
+    suffix: 'Loyola',
     tagline: 'Learn statistics by experimenting',
     loading: 'Loading…',
     error: 'Something went wrong',
