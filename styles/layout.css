@@ -87,28 +87,48 @@
 .demo-banner .btn { margin-left: var(--s-2); }
 
 /* --- Pie -------------------------------------------------------------- */
+/* El logotipo va discreto, a la derecha. Para que el texto quede centrado en
+   la página —y no desplazado por el ancho del logo— se reserva a la izquierda
+   un hueco idéntico con ::before. De ahí que el ancho sea fijo y no `auto`. */
 .footer {
+  --footer-logo-w: 6.5rem;
   border-top: 1px solid var(--line);
   padding: var(--s-4);
   font-size: var(--fs-xs); color: var(--ink-3); text-align: center;
+  display: flex; align-items: center; justify-content: center;
+  gap: var(--s-4); flex-wrap: wrap;
 }
+.footer::before {
+  content: ''; flex: 0 0 auto; width: var(--footer-logo-w);
+}
+.footer__text { flex: 1 1 20rem; min-width: 0; }
+.footer__logo {
+  flex: 0 0 auto;
+  width: var(--footer-logo-w); height: auto;   /* 646 × 200 → proporción 3,23 */
+  opacity: .9;
+}
+/* En pantallas estrechas el hueco sobra: el logo pasa debajo, centrado.
+   Ojo: en columna el `flex-basis` pasa a ser ALTURA, así que hay que anularlo
+   o el texto reserva 20rem de alto y deja un vacío enorme sobre el logo. */
+@media (max-width: 48rem) {
+  .footer { flex-direction: column; gap: var(--s-3); }
+  .footer::before { display: none; }
+  .footer__text { flex: 0 0 auto; }
+  .footer__logo { order: 2; }
+}
+
 /* El logotipo institucional es azul marino sobre transparente: sobre el tema
    oscuro sería casi invisible. En vez de recolorearlo (nunca se debe alterar
    una marca ajena) se apoya sobre una placa blanca con holgura. */
-.footer__logo {
-  display: block;
-  height: 2.4rem; width: auto;
-  margin: 0 auto var(--s-3);
-}
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .footer__logo {
-    background: #fff; padding: .4rem .7rem; border-radius: 8px;
-    box-sizing: content-box;
+    background: #fff; padding: .35rem .55rem; border-radius: 7px;
+    box-sizing: border-box;
   }
 }
 :root[data-theme="dark"] .footer__logo {
-  background: #fff; padding: .4rem .7rem; border-radius: 8px;
-  box-sizing: content-box;
+  background: #fff; padding: .35rem .55rem; border-radius: 7px;
+  box-sizing: border-box;
 }
 
 .footer__author {
