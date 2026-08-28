@@ -262,8 +262,7 @@ export default async function studentDashboard({ main }) {
         el('details', { class: 'disclose' }, [
           el('summary', { text: t('progress.masteryHow') }),
           el('div', {}, [
-            el('p', { class: 'small', text: MASTERY_DOC.formula }),
-            el('ul', { class: 'small' }, MASTERY_DOC.steps.map((s) => el('li', {}, [el('b', { text: s.title + ': ' }), s.text]))),
+            el('div', { class: 'mathdoc', html: MASTERY_DOC.html }),
           ]),
         ]),
       ]),
