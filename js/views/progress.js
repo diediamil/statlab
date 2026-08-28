@@ -147,8 +147,7 @@ export default async function progressView({ main }) {
         el('details', { class: 'disclose', open: true }, [
           el('summary', { text: t('progress.masteryHow') }),
           el('div', {}, [
-            el('p', { class: 'small mono', text: MASTERY_DOC.formula }),
-            el('ul', { class: 'small' }, MASTERY_DOC.steps.map((s) => el('li', {}, [el('b', { text: s.title + ': ' }), s.text]))),
+            el('div', { class: 'mathdoc', html: MASTERY_DOC.html }),
           ]),
         ]),
       ]),
