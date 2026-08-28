@@ -24,7 +24,7 @@ import { levelFromXp } from './progress.js';
 
 async function boot() {
   const main = document.getElementById('main');
-  replace(main, [el('div', { class: 'loading' }, [el('span', { class: 'spinner' }), 'Cargando STATLAB…'])]);
+  replace(main, [el('div', { class: 'loading' }, [el('span', { class: 'spinner' }), 'Cargando STATLAB Loyola…'])]);
 
   const cfg = await getConfig();
   await setLocale(detectLocale(cfg.DEFAULT_LOCALE));
