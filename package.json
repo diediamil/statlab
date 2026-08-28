@@ -1,7 +1,7 @@
 {
-  "name": "statlab",
+  "name": "statlab-loyola",
   "version": "1.0.0",
-  "description": "STATLAB — aprende estadística experimentando. Plataforma docente de Bioestadística para Ciencias de la Salud.",
+  "description": "STATLAB Loyola — aprende estadística experimentando. Plataforma docente de Bioestadística para Ciencias de la Salud.",
   "type": "module",
   "private": true,
   "author": "Diego Díaz Milanés <ddiaz@uloyola.es> (Departamento de Métodos Cuantitativos, Universidad Loyola Andalucía)",
