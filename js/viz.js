@@ -25,6 +25,13 @@ const PAL = ['var(--data-1)', 'var(--data-2)', 'var(--data-3)', 'var(--data-4)',
 
 export const palette = (i) => PAL[i % PAL.length];
 
+/** Color de una serie única. El color solo debe codificar información: en un
+ *  diagrama de barras de un solo grupo la categoría ya la dice el eje X, así
+ *  que pintar cada barra de un color distinto sugiere una diferencia que no
+ *  existe. Se usa la paleta categórica únicamente con `colorByCategory: true`
+ *  o cuando el propio dato trae su `color` (estados, semáforos…). */
+export const SINGLE = 'var(--data-single)';
+
 const DEF = { w: 560, h: 340, mt: 18, mr: 18, mb: 46, ml: 54 };
 
 /**
@@ -146,7 +153,7 @@ export function barChart(data, opts = {}) {
     const x = p.x0 + bw * i + (bw - inner) / 2;
     g.appendChild(svgEl('rect', {
       x, y: Math.min(y, p.y0), width: inner, height: Math.abs(p.y0 - y), rx: 3,
-      fill: d.color || palette(i),
+      fill: d.color || (opts.colorByCategory ? palette(i) : (opts.color || SINGLE)),
       'aria-label': `${d.label}: ${fmt(d.value, 2)}`,
     }));
     if (opts.showValues !== false) {
@@ -267,7 +274,7 @@ export function histogram(values, opts = {}) {
     const x = p.sx(b.from), w = Math.max(1, p.sx(b.to) - p.sx(b.from) - 1);
     g.appendChild(svgEl('rect', {
       x, y: p.sy(b.count), width: w, height: p.y0 - p.sy(b.count),
-      fill: opts.color || 'var(--data-1)', 'fill-opacity': 0.85, stroke: 'var(--surface)',
+      fill: opts.color || SINGLE, 'fill-opacity': 0.85, stroke: 'var(--surface)',
       'aria-label': `De ${fmt(b.from, 1)} a ${fmt(b.to, 1)}: ${b.count}`,
     }));
   });
@@ -418,7 +425,7 @@ export function scatter(points, opts = {}) {
   points.forEach((d, i) => {
     g.appendChild(svgEl('circle', {
       cx: p.sx(d.x), cy: p.sy(d.y), r: d.r || opts.r || 4.5,
-      fill: d.color || opts.color || 'var(--data-1)',
+      fill: d.color || opts.color || SINGLE,
       'fill-opacity': d.highlight ? 1 : 0.78,
       stroke: d.highlight ? 'var(--ink)' : 'var(--surface)', 'stroke-width': d.highlight ? 2 : 1,
       class: opts.draggable ? 'draggable' : null,
@@ -577,7 +584,7 @@ export function dotplot(values, opts = {}) {
     placed.push({ x, level });
     g.appendChild(svgEl('circle', {
       cx: x, cy: p.y0 - 6 - level * (r * 2 + 1), r,
-      fill: opts.color || 'var(--data-1)', 'fill-opacity': 0.85, stroke: 'var(--surface)',
+      fill: opts.color || SINGLE, 'fill-opacity': 0.85, stroke: 'var(--surface)',
     }));
   });
   p.svg.appendChild(g);
