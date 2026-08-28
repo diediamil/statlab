@@ -1,6 +1,6 @@
 <div align="center">
 
-# STATLAB
+# STATLAB Loyola
 
 **Learn statistics by experimenting** · *Aprende estadística experimentando*
 
