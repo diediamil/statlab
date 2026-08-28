@@ -28,12 +28,18 @@ export default async function landing({ main }) {
         el('b', { text: 'STAT' }), 'LAB',
         el('span', { class: 'hero__suffix', text: t('app.suffix') }),
       ]),
-      el('img', {
+      el('a', {
         class: 'hero__institution',
-        src: 'assets/loyola_principal.png',
-        alt: 'Universidad Loyola Andalucía',
-        width: 646, height: 200, loading: 'lazy',
-      }),
+        href: 'https://www.uloyola.es/',
+        target: '_blank', rel: 'noopener noreferrer',
+        'aria-label': 'Universidad Loyola Andalucía — se abre en una pestaña nueva',
+      }, [
+        el('img', {
+          src: 'assets/loyola_principal.png',
+          alt: 'Universidad Loyola Andalucía',
+          width: 646, height: 200, loading: 'lazy',
+        }),
+      ]),
       el('p', { class: 'hero__sub', text: t('app.tagline') + ' · ' + t('app.taglineEs') }),
       el('p', { class: 'hero__sub', text: t('landing.heroSub') }),
       el('div', { class: 'hero__cta' }, [
