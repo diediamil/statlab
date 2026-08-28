@@ -1,24 +1,72 @@
 # Concept Mastery (0–100)
 
-> Requisito de diseño: **nada de algoritmos opacos.** Esta es la fórmula
-> completa, y la propia aplicación se la muestra al alumnado cuando pulsa
+> Requisito de diseño: **nada de algoritmos opacos.** Esta es la definición
+> completa, y es la misma que la aplicación muestra al alumnado cuando pulsa
 > «¿cómo se calcula?».
 
-Implementación: `js/mastery.js`. Pruebas: `tests/app.test.js`.
+Implementación: [`js/mastery.js`](../js/mastery.js) · Pruebas: [`tests/app.test.js`](../tests/app.test.js)
+
+El **mastery** resume en una escala de 0 a 100 la evidencia disponible de que
+una persona domina *en este momento* un concepto. Mide el estado actual, no el
+histórico acumulado: por eso puede bajar si se deja de acertar lo que antes se
+acertaba.
 
 ---
 
-## La fórmula
+## Nomenclatura
 
-```
-mastery = 100 · [ Σ(w_d · λ^k · q) / Σ(w_d · λ^k) ] · n / (n + 2)
-```
+| Símbolo | Significado |
+|---|---|
+| $n$ | número total de respuestas registradas en el concepto |
+| $N = 12$ | tamaño de la ventana |
+| $m = \min(n, N)$ | respuestas que entran efectivamente en la media |
+| $i$ | índice de respuesta, de reciente a antigua; $i = 1$ es la última |
+| $q_i \in [0,1]$ | calidad de la respuesta $i$ |
+| $d_i \in \{1,2,3\}$ | dificultad del ejercicio: fácil, media, difícil |
+| $w(d)$ | peso por dificultad |
+| $\lambda = 0{,}85$ | factor de decaimiento por recencia |
+| $\omega_i$ | peso total de la respuesta $i$ |
+| $\bar{q}$ | valor bruto: calidad media ponderada |
+| $\kappa(n)$ | factor de contracción por falta de evidencia |
+| $M$ | mastery del concepto |
 
-con `λ = 0,85` y las 12 respuestas más recientes.
+---
 
-### 1. Calidad de cada respuesta (`q`)
+## Definición
 
-| Situación | q |
+Cada respuesta recibe un peso que combina dificultad y recencia:
+
+$$\omega_i = w(d_i)\,\lambda^{\,i-1} \tag{1}$$
+
+El valor bruto es la media de las calidades ponderada por esos pesos:
+
+$$\bar{q} = \frac{\sum_{i=1}^{m} \omega_i\,q_i}{\sum_{i=1}^{m} \omega_i}
+\;\in\; [0,1] \tag{2}$$
+
+Y se contrae hacia cero cuando hay poca evidencia:
+
+$$\kappa(n) = \frac{n}{n+2} \tag{3}$$
+
+$$M = 100 \cdot \bar{q} \cdot \kappa(n) \tag{4}$$
+
+Sustituyendo (1)–(3) en (4):
+
+$$\boxed{\;M \;=\; 100 \cdot
+\frac{\sum_{i=1}^{m} w(d_i)\,\lambda^{\,i-1}\,q_i}
+     {\sum_{i=1}^{m} w(d_i)\,\lambda^{\,i-1}}
+\cdot \frac{n}{n+2}\;} \tag{5}$$
+
+> **Detalle que importa.** La media (2) usa las $m$ respuestas más recientes,
+> pero la contracción (3) usa $n$, el total histórico. Practicar de más nunca
+> resta: aumenta $\kappa$ y acerca el mastery a su valor bruto.
+
+---
+
+## Los componentes
+
+### Calidad de la respuesta $q_i$
+
+| Situación | $q_i$ |
 |---|---:|
 | Correcta a la primera, sin pistas | 1,00 |
 | Correcta a la primera, con pista | 0,85 |
@@ -26,53 +74,48 @@ con `λ = 0,85` y las 12 respuestas más recientes.
 | Correcta tras tres o más intentos | 0,40 |
 | Incorrecta | 0,00 |
 
-Con crédito parcial (por ejemplo, clasificar bien 4 de 6), `q` parte del propio
-crédito y se le aplican los mismos descuentos.
+Con crédito parcial $c \in (0,1)$ —por ejemplo, clasificar bien 4 de 6— la
+calidad es el producto del crédito por el descuento de la tabla:
 
-### 2. Peso por dificultad (`w_d`)
+$$q_i = c \cdot q_{\text{tabla}}$$
 
-| Dificultad | Peso |
-|---|---:|
-| Fácil | 1,0 |
-| Media | 1,3 |
-| Difícil | 1,6 |
+### Peso por dificultad $w(d)$
 
-Acertar ejercicios difíciles demuestra más dominio que acertar fáciles.
+| $d$ | Nivel | $w(d)$ |
+|---:|---|---:|
+| 1 | fácil | 1,0 |
+| 2 | media | 1,3 |
+| 3 | difícil | 1,6 |
 
-### 3. Peso por recencia (`λ^k`)
+Acertar un ejercicio difícil es más informativo sobre el dominio real que
+acertar uno fácil.
 
-Las respuestas se ordenan de la más reciente a la más antigua. La k-ésima más
-reciente (con `k = 0` para la última) pesa `0,85^k`:
+### Decaimiento por recencia $\lambda^{\,i-1}$
 
-| k | 0 | 1 | 2 | 3 | 5 | 10 |
+| $i$ | 1 | 2 | 3 | 4 | 6 | 11 |
 |---|---:|---:|---:|---:|---:|---:|
-| Peso | 1,00 | 0,85 | 0,72 | 0,61 | 0,44 | 0,20 |
+| $\lambda^{\,i-1}$ | 1,00 | 0,85 | 0,72 | 0,61 | 0,44 | 0,20 |
 
-Consecuencia: un concepto que se dominaba hace tres meses y ahora se falla
-**baja**; y uno que se falló al principio y ahora se acierta **sube**. Es lo que
-hace que el mastery mida el estado actual y no el histórico acumulado.
+Consecuencia buscada: un concepto que se dominaba hace tres meses y ahora se
+falla **baja**; uno que se falló al principio y ahora se acierta **sube**.
 
-### 4. Contracción por falta de evidencia
+### Contracción $\kappa(n)$
 
-```
-factor = n / (n + 2)
-```
-
-| n (respuestas) | 1 | 2 | 5 | 10 | 20 | 50 |
+| $n$ | 1 | 2 | 5 | 10 | 20 | 50 |
 |---|---:|---:|---:|---:|---:|---:|
-| Factor | 0,33 | 0,50 | 0,71 | 0,83 | 0,91 | 0,96 |
+| $\kappa(n)$ | 0,33 | 0,50 | 0,71 | 0,83 | 0,91 | 0,96 |
 
-Sin esto, dos aciertos sueltos darían un 100 y el indicador sería inútil. Con
-esto, **el techo real solo se alcanza con evidencia sostenida**.
+Sin este factor, dos aciertos sueltos darían un 100 y el indicador no valdría
+nada. El techo solo se alcanza con evidencia sostenida.
 
-### 5. Niveles
+### Niveles
 
 | Rango | Etiqueta |
 |---|---|
-| 0–39 | iniciando |
-| 40–59 | en desarrollo |
-| 60–79 | consolidando |
-| 80–100 | dominado |
+| $0 \le M < 40$ | iniciando |
+| $40 \le M < 60$ | en desarrollo |
+| $60 \le M < 80$ | consolidando |
+| $80 \le M \le 100$ | dominado |
 
 ---
 
@@ -80,11 +123,11 @@ esto, **el techo real solo se alcanza con evidencia sostenida**.
 
 1. **Panel del estudiante**: mastery medio y conceptos fuertes/débiles.
 2. **Mis errores**: prioridad de repaso, calculada como
-   `(100 − mastery) · log(1 + errores recientes)`.
+   $(100 - M)\log(1 + e)$, con $e$ el número de errores recientes.
 3. **Dificultad adaptativa**: decide qué ejercicio se ofrece a continuación
    (`nextDifficulty`).
 4. **Estado de los mundos**: un mundo no se marca «completado» solo por hacer
-   actividades; hace falta además un mastery medio ≥ 60 en sus conceptos.
+   actividades; hace falta además $\bar{M} \ge 60$ en sus conceptos.
 5. **Panel del profesor**: mastery medio de la clase y detección de conceptos
    problemáticos.
 
@@ -94,9 +137,9 @@ Reglas deterministas y auditables:
 
 | Mastery del concepto | Dificultad ofrecida |
 |---|---|
-| < 40 | 1 (fácil, muy guiada) |
-| 40–69 | 2 (media) |
-| ≥ 70 | 3 (difícil, enunciado menos explícito) |
+| $M < 40$ | 1 (fácil, muy guiada) |
+| $40 \le M < 70$ | 2 (media) |
+| $M \ge 70$ | 3 (difícil, enunciado menos explícito) |
 
 Ajustes:
 
@@ -113,5 +156,5 @@ Ajustes:
 
 El mastery **no es una nota**. Es un indicador formativo del estado actual de
 un concepto para una persona concreta, construido con la evidencia disponible.
-Un mastery de 55 no significa «un 5,5»: significa «hay evidencia parcial de
-dominio, conviene seguir practicando».
+Un $M = 55$ no significa «un 5,5»: significa que hay evidencia parcial de
+dominio y conviene seguir practicando.
