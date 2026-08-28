@@ -259,14 +259,142 @@ export function conceptsToReview(masteryMap, attempts, { limit = 8, recentDays =
 }
 
 /** Documentación legible de la fórmula (se muestra en la interfaz). */
+/* ===========================================================================
+   DOCUMENTACIÓN QUE VE EL USUARIO
+   ---------------------------------------------------------------------------
+   El requisito «nada de algoritmos opacos» obliga a que la fórmula que se
+   muestra sea LA MISMA que se ejecuta. Por eso este bloque vive aquí, junto a
+   `conceptMastery()`, y no en los archivos de idioma: si alguien cambia el
+   cálculo y no actualiza la explicación, el descuadre salta a la vista.
+
+   Las ecuaciones van en MathML nativo. No hace falta ninguna librería: los
+   navegadores actuales lo componen como LaTeX y los lectores de pantalla lo
+   leen como matemáticas, no como una ristra de símbolos sueltos.
+   =========================================================================== */
+
+const EQ = {
+  peso: `<math display="block"><msub><mi>ω</mi><mi>i</mi></msub><mo>=</mo>
+    <mi>w</mi><mo stretchy="false">(</mo><msub><mi>d</mi><mi>i</mi></msub><mo stretchy="false">)</mo>
+    <mo>·</mo><msup><mi>λ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msup></math>`,
+
+  bruto: `<math display="block"><mover accent="true"><mi>q</mi><mo>‾</mo></mover><mo>=</mo>
+    <mfrac>
+      <mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover>
+        <msub><mi>ω</mi><mi>i</mi></msub><mspace width="0.1em"/><msub><mi>q</mi><mi>i</mi></msub></mrow>
+      <mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover>
+        <msub><mi>ω</mi><mi>i</mi></msub></mrow>
+    </mfrac>
+    <mo>,</mo><mspace width="0.6em"/>
+    <mover accent="true"><mi>q</mi><mo>‾</mo></mover><mo>∈</mo>
+    <mo stretchy="false">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false">]</mo></math>`,
+
+  contraccion: `<math display="block"><mi>κ</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo>
+    <mo>=</mo><mfrac><mi>n</mi><mrow><mi>n</mi><mo>+</mo><mn>2</mn></mrow></mfrac></math>`,
+
+  mastery: `<math display="block"><mi>M</mi><mo>=</mo><mn>100</mn><mo>·</mo>
+    <mover accent="true"><mi>q</mi><mo>‾</mo></mover><mo>·</mo>
+    <mi>κ</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></math>`,
+
+  completa: `<math display="block"><mi>M</mi><mo>=</mo><mn>100</mn><mo>·</mo>
+    <mfrac>
+      <mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover>
+        <mi>w</mi><mo stretchy="false">(</mo><msub><mi>d</mi><mi>i</mi></msub><mo stretchy="false">)</mo>
+        <msup><mi>λ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msup>
+        <msub><mi>q</mi><mi>i</mi></msub></mrow>
+      <mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover>
+        <mi>w</mi><mo stretchy="false">(</mo><msub><mi>d</mi><mi>i</mi></msub><mo stretchy="false">)</mo>
+        <msup><mi>λ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msup></mrow>
+    </mfrac>
+    <mo>·</mo><mfrac><mi>n</mi><mrow><mi>n</mi><mo>+</mo><mn>2</mn></mrow></mfrac></math>`,
+};
+
+const eq = (m, n) => `<div class="eq"><div class="eq__body">${m}</div><span class="eq__n">(${n})</span></div>`;
+
 export const MASTERY_DOC = {
-  steps: [
-    { title: 'Calidad de cada respuesta (q)', text: '1,00 acierto a la primera sin pistas · 0,85 con pista · 0,70 en el segundo intento · 0,40 tras varios intentos · 0 fallo. Con crédito parcial, q parte del propio crédito.' },
-    { title: 'Peso por dificultad', text: 'Fácil 1,0 · Media 1,3 · Difícil 1,6. Acertar difícil demuestra más dominio.' },
-    { title: 'Peso por recencia', text: 'La respuesta más reciente pesa 1; la anterior 0,85; la siguiente 0,85² … Se usan las 12 más recientes.' },
-    { title: 'Valor bruto', text: 'Media ponderada de las calidades: Σ(w_dificultad · w_recencia · q) / Σ(w_dificultad · w_recencia).' },
-    { title: 'Contracción por poca evidencia', text: 'mastery = 100 · bruto · n/(n+2). Con una sola respuesta el factor es 0,33: dos aciertos sueltos no producen un 100.' },
-    { title: 'Niveles', text: '0–39 iniciando · 40–59 en desarrollo · 60–79 consolidando · 80–100 dominado.' },
-  ],
-  formula: 'mastery = 100 · [Σ(w_d · λ^k · q) / Σ(w_d · λ^k)] · n/(n+2),  λ = 0,85',
+  /** Versión de una línea, en texto plano: cabeceras de CSV, avisos, consola. */
+  formula: 'M = 100 · [Σ ωᵢ·qᵢ / Σ ωᵢ] · n/(n+2),  con ωᵢ = w(dᵢ)·λ^(i−1) y λ = 0,85',
+
+  /** Explicación completa. Marcado propio, sin datos de usuario interpolados. */
+  html: `
+<p class="mathdoc__lead">El <b>mastery</b> resume en una escala de 0 a 100 la evidencia disponible de que
+dominas <em>ahora mismo</em> un concepto. Mide el estado actual, no el histórico acumulado, y
+por eso puede bajar si dejas de acertar lo que antes acertabas.</p>
+
+<h4 class="mathdoc__h">Nomenclatura</h4>
+<table class="mathdoc__t mathdoc__t--nom"><tbody>
+<tr><th><math><mi>n</mi></math></th><td>número total de respuestas registradas en ese concepto</td></tr>
+<tr><th><math><mi>N</mi><mo>=</mo><mn>12</mn></math></th><td>tamaño de la ventana: solo las respuestas más recientes pesan en la media</td></tr>
+<tr><th><math><mi>m</mi><mo>=</mo><mi>mín</mi><mo stretchy="false">(</mo><mi>n</mi><mo>,</mo><mi>N</mi><mo stretchy="false">)</mo></math></th><td>respuestas que entran efectivamente en la media</td></tr>
+<tr><th><math><mi>i</mi></math></th><td>índice de respuesta, ordenadas de reciente a antigua: <math><mi>i</mi><mo>=</mo><mn>1</mn></math> es la última</td></tr>
+<tr><th><math><msub><mi>q</mi><mi>i</mi></msub><mo>∈</mo><mo stretchy="false">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false">]</mo></math></th><td>calidad de la respuesta <math><mi>i</mi></math></td></tr>
+<tr><th><math><msub><mi>d</mi><mi>i</mi></msub><mo>∈</mo><mo stretchy="false">{</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo>,</mo><mn>3</mn><mo stretchy="false">}</mo></math></th><td>dificultad del ejercicio: fácil, media, difícil</td></tr>
+<tr><th><math><mi>w</mi><mo stretchy="false">(</mo><mi>d</mi><mo stretchy="false">)</mo></math></th><td>peso por dificultad</td></tr>
+<tr><th><math><mi>λ</mi><mo>=</mo><mn>0,85</mn></math></th><td>factor de decaimiento por recencia</td></tr>
+<tr><th><math><msub><mi>ω</mi><mi>i</mi></msub></math></th><td>peso total de la respuesta <math><mi>i</mi></math></td></tr>
+<tr><th><math><mover accent="true"><mi>q</mi><mo>‾</mo></mover></math></th><td>valor bruto: calidad media ponderada</td></tr>
+<tr><th><math><mi>κ</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></math></th><td>factor de contracción por falta de evidencia</td></tr>
+<tr><th><math><mi>M</mi></math></th><td>mastery del concepto, entre 0 y 100</td></tr>
+</tbody></table>
+
+<h4 class="mathdoc__h">Definición</h4>
+<p class="small">Cada respuesta recibe un peso que combina lo difícil que era el ejercicio y lo
+reciente que es la respuesta:</p>
+${eq(EQ.peso, 1)}
+<p class="small">El valor bruto es la media de las calidades ponderada por esos pesos:</p>
+${eq(EQ.bruto, 2)}
+<p class="small">Y se contrae hacia cero cuando hay pocas respuestas, para que dos aciertos
+sueltos no produzcan un 100:</p>
+${eq(EQ.contraccion, 3)}
+${eq(EQ.mastery, 4)}
+<p class="small">Sustituyendo (1)–(3) en (4), la definición completa es:</p>
+${eq(EQ.completa, 5)}
+<p class="mathdoc__warn">Atención al detalle: la media (2) usa las <math><mi>m</mi></math> respuestas más
+recientes, pero la contracción (3) usa <math><mi>n</mi></math>, el total histórico. Practicar de más
+nunca resta: aumenta <math><mi>κ</mi></math> y acerca el mastery a su valor bruto.</p>
+
+<h4 class="mathdoc__h">Calidad de la respuesta <math><msub><mi>q</mi><mi>i</mi></msub></math></h4>
+<table class="mathdoc__t mathdoc__t--kv"><tbody>
+<tr><th>Correcta a la primera, sin pistas</th><td>1,00</td></tr>
+<tr><th>Correcta a la primera, con pista</th><td>0,85</td></tr>
+<tr><th>Correcta en el segundo intento</th><td>0,70</td></tr>
+<tr><th>Correcta tras tres o más intentos</th><td>0,40</td></tr>
+<tr><th>Incorrecta</th><td>0,00</td></tr>
+</tbody></table>
+<p class="small">Con crédito parcial <math><mi>c</mi><mo>∈</mo><mo stretchy="false">(</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false">)</mo></math>
+—por ejemplo, clasificar bien 4 de 6— la calidad es el producto del crédito por el descuento anterior:
+<math><msub><mi>q</mi><mi>i</mi></msub><mo>=</mo><mi>c</mi><mo>·</mo><msub><mi>q</mi><mtext>tabla</mtext></msub></math>.</p>
+
+<h4 class="mathdoc__h">Peso por dificultad <math><mi>w</mi><mo stretchy="false">(</mo><mi>d</mi><mo stretchy="false">)</mo></math></h4>
+<table class="mathdoc__t mathdoc__t--kv"><tbody>
+<tr><th><math><mi>w</mi><mo stretchy="false">(</mo><mn>1</mn><mo stretchy="false">)</mo></math> fácil</th><td>1,0</td></tr>
+<tr><th><math><mi>w</mi><mo stretchy="false">(</mo><mn>2</mn><mo stretchy="false">)</mo></math> media</th><td>1,3</td></tr>
+<tr><th><math><mi>w</mi><mo stretchy="false">(</mo><mn>3</mn><mo stretchy="false">)</mo></math> difícil</th><td>1,6</td></tr>
+</tbody></table>
+<p class="small">Acertar un ejercicio difícil es más informativo sobre el dominio real que acertar uno fácil.</p>
+
+<h4 class="mathdoc__h">Decaimiento por recencia <math><msup><mi>λ</mi><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow></msup></math></h4>
+<div class="mathdoc__scroll"><table class="mathdoc__t mathdoc__t--num"><thead><tr>
+<th><math><mi>i</mi></math></th><td>1</td><td>2</td><td>3</td><td>4</td><td>6</td><td>11</td></tr></thead>
+<tbody><tr><th>peso</th><td>1,00</td><td>0,85</td><td>0,72</td><td>0,61</td><td>0,44</td><td>0,20</td></tr></tbody></table></div>
+<p class="small">Consecuencia buscada: un concepto que se dominaba hace tres meses y ahora se falla
+<b>baja</b>; y uno que se falló al principio y ahora se acierta <b>sube</b>.</p>
+
+<h4 class="mathdoc__h">Contracción <math><mi>κ</mi><mo stretchy="false">(</mo><mi>n</mi><mo stretchy="false">)</mo></math></h4>
+<div class="mathdoc__scroll"><table class="mathdoc__t mathdoc__t--num"><thead><tr>
+<th><math><mi>n</mi></math></th><td>1</td><td>2</td><td>5</td><td>10</td><td>20</td><td>50</td></tr></thead>
+<tbody><tr><th><math><mi>κ</mi></math></th><td>0,33</td><td>0,50</td><td>0,71</td><td>0,83</td><td>0,91</td><td>0,96</td></tr></tbody></table></div>
+<p class="small">Sin este factor, dos aciertos sueltos darían un 100 y el indicador no valdría nada.
+El techo solo se alcanza con evidencia sostenida.</p>
+
+<h4 class="mathdoc__h">Niveles</h4>
+<table class="mathdoc__t mathdoc__t--kv"><tbody>
+<tr><th><math><mn>0</mn><mo>≤</mo><mi>M</mi><mo>&lt;</mo><mn>40</mn></math></th><td>iniciando</td></tr>
+<tr><th><math><mn>40</mn><mo>≤</mo><mi>M</mi><mo>&lt;</mo><mn>60</mn></math></th><td>en desarrollo</td></tr>
+<tr><th><math><mn>60</mn><mo>≤</mo><mi>M</mi><mo>&lt;</mo><mn>80</mn></math></th><td>consolidando</td></tr>
+<tr><th><math><mn>80</mn><mo>≤</mo><mi>M</mi><mo>≤</mo><mn>100</mn></math></th><td>dominado</td></tr>
+</tbody></table>
+
+<p class="mathdoc__note"><b>Lo que no es.</b> El mastery no es una calificación. Un
+<math><mi>M</mi><mo>=</mo><mn>55</mn></math> no significa «un 5,5»: significa que hay evidencia
+parcial de dominio y conviene seguir practicando.</p>`,
 };
