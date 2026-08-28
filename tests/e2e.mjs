@@ -188,8 +188,14 @@ try {
   /* 7. Progreso y errores --------------------------------------------------- */
   await goto('#/progress');
   await page.waitForSelector('.stats');
+  // La fórmula se publica en MathML, así que no basta con buscar texto: se
+  // comprueba que existan las ecuaciones compuestas y la nomenclatura.
+  const mathdoc = await page.locator('.mathdoc').first();
+  const ecuaciones = await page.locator('.mathdoc .eq math').count();
   step('El progreso documenta la fórmula del mastery',
-    /mastery = 100/.test(await page.textContent('.wrap')));
+    (await mathdoc.count()) > 0 && ecuaciones >= 5
+    && /Nomenclatura/i.test(await page.textContent('.mathdoc'))
+    && /κ/.test(await page.textContent('.mathdoc')));
 
   await goto('#/mistakes');
   await page.waitForSelector('.wrap');
