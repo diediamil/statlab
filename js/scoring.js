@@ -268,3 +268,121 @@ export function scoringExplanation(cfg = DEFAULT_SCORING) {
     { key: 'hints', max: cfg.hintsMax, formula: `${cfg.hintsMax} · (1 − usadas / disponibles)`, note: 'Íntegros si no usas ninguna.' },
   ];
 }
+
+/* ===========================================================================
+   DOCUMENTACIÓN QUE VE EL USUARIO
+   ---------------------------------------------------------------------------
+   Misma disciplina que en `js/mastery.js`: la explicación vive junto al código
+   que la implementa, para que un cambio en la fórmula sin cambio en el texto
+   cante. Ecuaciones en MathML nativo, sin librerías.
+   =========================================================================== */
+
+const S = {
+  total: `<math display="block"><mi>P</mi><mo>=</mo>
+    <msub><mi>P</mi><mtext>exac</mtext></msub><mo>+</mo>
+    <msub><mi>P</mi><mtext>efic</mtext></msub><mo>+</mo>
+    <msub><mi>P</mi><mtext>tiempo</mtext></msub><mo>+</mo>
+    <msub><mi>P</mi><mtext>pistas</mtext></msub>
+    <mo>≤</mo><mn>1000</mn></math>`,
+
+  exactitud: `<math display="block"><msub><mi>P</mi><mtext>exac</mtext></msub><mo>=</mo><mn>700</mn><mo>·</mo>
+    <mfrac>
+      <mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>k</mi></munderover>
+        <msub><mi>w</mi><mi>i</mi></msub><msub><mi>s</mi><mi>i</mi></msub></mrow>
+      <mrow><munderover><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>k</mi></munderover>
+        <msub><mi>w</mi><mi>i</mi></msub></mrow>
+    </mfrac></math>`,
+
+  eficiencia: `<math display="block"><msub><mi>P</mi><mtext>efic</mtext></msub><mo>=</mo><mn>150</mn><mo>·</mo>
+    <mfrac><mi>E</mi><mrow><mi>E</mi><mo>+</mo><mi>e</mi></mrow></mfrac>
+    <mo>,</mo><mspace width="0.6em"/>
+    <mi>E</mi><mo>=</mo><mi>máx</mi><mo stretchy="false">(</mo><mn>2</mn><mo>,</mo>
+    <mi>k</mi><mo>/</mo><mn>2</mn><mo stretchy="false">)</mo></math>`,
+
+  tiempo: `<math display="block"><msub><mi>P</mi><mtext>tiempo</mtext></msub><mo>=</mo>
+    <mrow><mo>{</mo><mtable columnalign="left left">
+      <mtr><mtd><mn>100</mn></mtd><mtd><mtext>si&#xA0;</mtext><mi>r</mi><mo>≤</mo><mn>1</mn></mtd></mtr>
+      <mtr><mtd><mi>máx</mi><mo stretchy="false">(</mo><mn>25</mn><mo>,</mo>
+        <mfrac><mn>100</mn><mrow><mn>1</mn><mo>+</mo>
+        <msup><mrow><mo stretchy="false">(</mo><mi>r</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><mn>1,35</mn></msup>
+        </mrow></mfrac><mo stretchy="false">)</mo></mtd>
+        <mtd><mtext>si&#xA0;</mtext><mi>r</mi><mo>&gt;</mo><mn>1</mn></mtd></mtr>
+    </mtable></mrow>
+    <mo>,</mo><mspace width="0.6em"/>
+    <mi>r</mi><mo>=</mo><mfrac><msub><mi>t</mi><mtext>activo</mtext></msub><msub><mi>t</mi><mtext>ref</mtext></msub></mfrac></math>`,
+
+  pistas: `<math display="block"><msub><mi>P</mi><mtext>pistas</mtext></msub><mo>=</mo><mn>50</mn>
+    <mrow><mo>(</mo><mn>1</mn><mo>−</mo>
+    <mfrac><msub><mi>h</mi><mtext>usadas</mtext></msub><msub><mi>h</mi><mtext>disp</mtext></msub></mfrac>
+    <mo>)</mo></mrow></math>`,
+
+  nivel: `<math display="block"><mi>XP</mi><mo stretchy="false">(</mo><mi>L</mi><mo stretchy="false">)</mo>
+    <mo>=</mo><mn>60</mn><mo stretchy="false">(</mo><mi>L</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo>
+    <mo>+</mo><mn>20</mn><msup><mrow><mo stretchy="false">(</mo><mi>L</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo></mrow><mn>2</mn></msup></math>`,
+};
+
+const eqs = (m, n) => `<div class="eq"><div class="eq__body">${m}</div><span class="eq__n">(${n})</span></div>`;
+
+export const SCORING_DOC = {
+  html: `
+<p class="mathdoc__lead">Los <b>Challenge Points</b> ordenan el ranking del reto semanal. La regla que
+gobierna todo el diseño: <b>premian saber estadística, no responder rápido</b>. Por eso la exactitud
+vale siete veces más que el tiempo, y ninguna componente cae nunca a cero.</p>
+
+<h4 class="mathdoc__h">Nomenclatura</h4>
+<table class="mathdoc__t mathdoc__t--nom"><tbody>
+<tr><th><math><mi>k</mi></math></th><td>número de pasos del reto (8 en los retos estándar)</td></tr>
+<tr><th><math><msub><mi>s</mi><mi>i</mi></msub><mo>∈</mo><mo stretchy="false">[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo stretchy="false">]</mo></math></th><td>acierto del paso <math><mi>i</mi></math>, con crédito parcial</td></tr>
+<tr><th><math><msub><mi>w</mi><mi>i</mi></msub></math></th><td>peso del paso: 1 por defecto, 1,5–2 en los decisivos</td></tr>
+<tr><th><math><mi>e</mi></math></th><td>errores acumulados en todo el reto</td></tr>
+<tr><th><math><mi>E</mi></math></th><td>errores de referencia</td></tr>
+<tr><th><math><msub><mi>t</mi><mtext>activo</mtext></msub></math></th><td>tiempo <em>activo</em>: se detiene tras 90 s sin interacción o al cambiar de pestaña</td></tr>
+<tr><th><math><msub><mi>t</mi><mtext>ref</mtext></msub></math></th><td>tiempo de referencia que fija el profesor</td></tr>
+<tr><th><math><mi>r</mi></math></th><td>razón entre tiempo empleado y de referencia</td></tr>
+<tr><th><math><msub><mi>h</mi><mtext>usadas</mtext></msub><mo>,</mo><msub><mi>h</mi><mtext>disp</mtext></msub></math></th><td>pistas usadas y disponibles</td></tr>
+<tr><th><math><mi>P</mi></math></th><td>Challenge Points del intento</td></tr>
+</tbody></table>
+
+<h4 class="mathdoc__h">Definición</h4>
+${eqs(S.total, 1)}
+<p class="small"><b>Exactitud (máx. 700).</b> Media del acierto por paso, ponderada por su importancia:</p>
+${eqs(S.exactitud, 2)}
+<p class="small"><b>Eficiencia (máx. 150).</b> Una hipérbola: el primer error penaliza más que el octavo,
+y el resultado nunca llega a cero.</p>
+${eqs(S.eficiencia, 3)}
+<div class="mathdoc__scroll"><table class="mathdoc__t mathdoc__t--num"><thead><tr>
+<th>errores</th><td>0</td><td>1</td><td>2</td><td>4</td><td>8</td></tr></thead>
+<tbody><tr><th>puntos</th><td>150</td><td>120</td><td>100</td><td>75</td><td>50</td></tr></tbody></table></div>
+<p class="small"><b>Tiempo (máx. 100).</b> Por debajo del tiempo de referencia <em>no hay carrera</em>:</p>
+${eqs(S.tiempo, 4)}
+<div class="mathdoc__scroll"><table class="mathdoc__t mathdoc__t--num"><thead><tr>
+<th><math><mi>r</mi></math></th><td>≤ 1</td><td>1,5</td><td>2</td><td>3</td><td>≥ 5</td></tr></thead>
+<tbody><tr><th>puntos</th><td>100</td><td>72</td><td>50</td><td>34</td><td>25</td></tr></tbody></table></div>
+<p class="small"><b>Pistas (máx. 50).</b> Íntegros si no usas ninguna. Si el reto no ofrece pistas se
+conceden los 50: no se penaliza por algo que no existía.</p>
+${eqs(S.pistas, 5)}
+
+<h4 class="mathdoc__h">La comprobación que define el sistema</h4>
+<p class="small">Con <math><msub><mi>t</mi><mtext>ref</mtext></msub><mo>=</mo><mn>10</mn></math> minutos:</p>
+<table class="mathdoc__t"><tbody>
+<tr><th>A — 9 min, todo correcto, 0 errores, 0 pistas</th><td><b>1000</b></td></tr>
+<tr><th>B — 4 min, 6 de 8 pasos, 3 errores, 0 pistas</th><td>761</td></tr>
+</tbody></table>
+<p class="mathdoc__warn">Quien tarda <b>más del doble</b> pero razona bien gana por 239 puntos. Esto no es
+una casualidad de los números: es el requisito que fija los pesos, y hay una prueba automática que
+falla si alguien los cambia y lo rompe.</p>
+
+<h4 class="mathdoc__h">XP y niveles: un sistema aparte</h4>
+<p class="small">La XP mide tu progresión general y <b>nunca</b> ordena el ranking. Si lo hiciera, quien
+lleva más tiempo jugando quedaría por delante para siempre. La XP acumulada al llegar al nivel
+<math><mi>L</mi></math> es:</p>
+${eqs(S.nivel, 6)}
+<div class="mathdoc__scroll"><table class="mathdoc__t mathdoc__t--num"><thead><tr>
+<th>nivel</th><td>2</td><td>3</td><td>5</td><td>10</td><td>20</td></tr></thead>
+<tbody><tr><th>XP</th><td>80</td><td>200</td><td>560</td><td>2160</td><td>8360</td></tr></tbody></table></div>
+<p class="small">Un reto da entre 40 y 100 XP según la exactitud, más un pequeño extra por podio
+(🥇 100 · 🥈 75 · 🥉 50). <b>La XP ganada nunca se resta.</b></p>
+
+<p class="mathdoc__note"><b>Lo que no es.</b> Ni los Challenge Points ni la XP son una calificación
+académica, y no se convierten automáticamente en nota.</p>`,
+};
